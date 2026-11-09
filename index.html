@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>마주의 꿈 – 경주마 육성·경마 경영 웹게임</title>
+<meta name="description" content="경매에서 경주마를 사고, 훈련시키고, 기수를 고용해 G1 우승을 노리는 무료 경마 경영 웹게임. 라이벌 목장, 교배, 해외 원정, 7개 나라, 10년 커리어. 설치 없이 브라우저에서 바로 플레이하고 자동 저장돼요.">
+<meta name="keywords" content="경마 게임, 경주마 육성, 말 키우기 게임, 마주 게임, 경마 경영 게임, 웹게임, 무료 게임, 브라우저 게임">
+<meta property="og:type" content="website">
+<meta property="og:title" content="마주의 꿈 – 경주마 육성·경마 경영 웹게임">
+<meta property="og:description" content="경매에서 경주마를 사고, 훈련시키고, 기수를 고용해 G1 우승을 노리는 무료 경마 경영 웹게임. 라이벌 목장, 교배, 해외 원정, 7개 나라, 10년 커리어. 설치 없이 브라우저에서 바로 플레이하고 자동 저장돼요.">
+<meta property="og:image" content="https://megumin0908.github.io/horse-owner/og-image.png">
+<meta property="og:url" content="https://megumin0908.github.io/horse-owner/">
+<link rel="canonical" href="https://megumin0908.github.io/horse-owner/">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1f5c3a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="마주의 꿈">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏇%3C/text%3E%3C/svg%3E">
+<!-- 구글 서치 콘솔 소유 확인 태그는 이 줄 바로 아래에 붙여넣으세요 -->
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1f5c3a;--g2:#2f7a50;--gold:#d4a017;--bg:#f4efe3;--card:#fffdf7;--ink:#24301f;--mut:#7b7f6e;--bad:#c0392b;--line:#e3dccb}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',sans-serif;font-size:14px}
+#app{max-width:520px;margin:0 auto;padding:12px 12px 140px}
+h1,h2,h3,.disp{font-family:'Black Han Sans',sans-serif;font-weight:400;letter-spacing:.5px}
+h3{margin:4px 0 8px;font-size:17px;color:var(--g)}
+button{font-family:inherit;border:none;border-radius:12px;cursor:pointer;font-weight:700;font-size:14px;color:inherit}
+button:disabled{opacity:.4;cursor:not-allowed}
+.btn{background:var(--g);color:#fff;padding:11px 16px}
+.btn.gold{background:var(--gold);color:#2a1d00}
+.btn.ghost{background:transparent;color:var(--g);border:2px solid var(--g)}
+.btn.red{background:var(--bad);color:#fff}
+.btn.sm{padding:7px 12px;font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
+.row{display:flex;gap:8px;align-items:center}
+.sp{flex:1}
+.mut{color:var(--mut);font-size:12px}
+.title-wrap{text-align:center;padding:36px 10px}
+.title-wrap h1{font-size:46px;color:var(--g);margin:10px 0 0;line-height:1.1}
+.big-emoji{font-size:72px;display:inline-block;animation:gallop .5s infinite alternate}
+@keyframes gallop{from{transform:scaleX(-1) translateY(0)}to{transform:scaleX(-1) translateY(-8px)}}
+input.name{width:100%;padding:12px;border-radius:12px;border:2px solid var(--line);font-size:16px;font-family:inherit;background:#fff}
+.hdr{background:var(--g);color:#fff;border-radius:16px;padding:12px 14px;margin-bottom:10px}
+.hdr .nm{font-family:'Black Han Sans';font-size:20px}
+.chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chip{background:#ffffff1f;padding:3px 9px;border-radius:20px;font-size:12px}
+.tag{display:inline-block;padding:1px 7px;border-radius:6px;background:#eee8d6;font-size:12px;margin:2px 2px 0 0}
+.tag b{color:var(--g)}
+.tag.bad{background:#fde2df;color:var(--bad)}
+.tag.ok{background:#dcf3e3;color:var(--g)}
+.bar{height:8px;background:#eee8d6;border-radius:6px;overflow:hidden;flex:1;position:relative}
+.bar i{display:block;height:100%;border-radius:6px}
+.bar u{position:absolute;top:0;bottom:0;background:#0000001a}
+.plans{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:8px}
+.plans button{background:#fff;border:2px solid var(--line);padding:5px 0;font-size:11px;display:flex;flex-direction:column;align-items:center}
+.plans button.sel{border-color:var(--gold);background:#fff8e1}
+.plans .ic{font-size:16px}
+.hc .hn{font-weight:900;font-size:16px}
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);z-index:5}
+.nav .in{max-width:520px;margin:0 auto;padding:8px 10px 12px}
+.nav .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:8px}
+.nav .tabs button{background:transparent;padding:4px 0;font-size:11px;display:flex;flex-direction:column;align-items:center;color:var(--mut)}
+.nav .tabs button.on{color:var(--g)}
+.nav .tabs .ic{font-size:20px}
+.next{width:100%;padding:13px;font-size:16px}
+.overlay{position:fixed;inset:0;background:#0008;display:flex;align-items:flex-end;justify-content:center;z-index:9}
+.sheet{background:var(--card);width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:16px 16px 28px;max-height:88vh;overflow:auto}
+.opt{background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px;margin-bottom:6px;cursor:pointer;text-align:left;width:100%;display:block}
+.opt.sel{border-color:var(--gold);background:#fff8e1}
+.opt.dis{opacity:.45;cursor:not-allowed}
+.sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.sgrid button{background:#fff;border:2px solid var(--line);padding:8px 0;font-size:12px}
+.sgrid button.sel{border-color:var(--gold);background:#fff8e1}
+canvas{width:100%;display:block;border-radius:14px;background:#3d8a4f}
+.comm{font-weight:900;font-size:15px;text-align:center;min-height:22px;margin:8px 0;color:var(--g)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left}
+tr.me{background:#fff3c4;font-weight:900}
+.rk{font-family:'Black Han Sans';font-size:16px}
+.toast{position:fixed;left:50%;top:16px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;z-index:20;font-weight:700;max-width:90%;text-align:center;animation:pop .25s}
+@keyframes pop{from{opacity:0;transform:translate(-50%,-8px)}}
+.gr{display:inline-block;padding:1px 7px;border-radius:6px;color:#fff;font-size:12px;font-weight:900;background:#6b7280}
+.gr.G1{background:#1d4ed8}.gr.G2{background:#b91c1c}.gr.G3{background:#15803d}.gr.OP{background:#7c3aed}
+.stline{display:flex;align-items:center;gap:6px;margin:5px 0;font-size:12px}
+.stline .k{width:52px;font-weight:700}
+.stline .v{width:34px;text-align:right;font-weight:900}
+.stline .r{width:22px;font-family:'Black Han Sans'}
+.rep li{margin:3px 0}
+.rep{padding-left:18px;margin:6px 0;font-size:13px}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.8}}
+.cf{position:fixed;top:-12px;width:9px;height:14px;z-index:30;animation:fall linear forwards;pointer-events:none}
+.tut{position:fixed;left:50%;transform:translateX(-50%);bottom:132px;width:calc(100% - 24px);max-width:496px;background:#24301f;color:#fff;border-radius:16px;padding:14px;z-index:8;box-shadow:0 8px 24px #0005}
+.tut b{color:#ffd23f}
+.slow{position:absolute;right:8px;top:20px;background:#ef4444;color:#fff;font-weight:900;font-size:11px;padding:2px 8px;border-radius:8px}
+.ach{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ach div{background:#f6f1e4;border-radius:10px;padding:8px;font-size:12px}
+.ach div.on{background:#fff3c4;border:1px solid var(--gold)}
+.trt{display:inline-block;padding:1px 7px;border-radius:6px;font-size:11px;margin:2px 2px 0 0;background:#e0e7ff;color:#3730a3;font-weight:700}
+.trt.neg{background:#fde2df;color:#b91c1c}
+.silk{display:inline-block;vertical-align:middle;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px #0002}
+.coat{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:middle;box-shadow:0 0 0 1px #0003;margin-right:3px}
+.bubble{background:#fff;border:2px solid #b91c1c;border-radius:14px;padding:8px 12px;font-size:13px;margin:6px 0;position:relative}
+.bubble b{color:#b91c1c}
+.swatch{width:30px;height:30px;border-radius:8px;border:3px solid transparent;cursor:pointer}
+.swatch.sel{border-color:var(--ink)}
+.cal-w{font-weight:900;color:var(--g);margin-top:8px}
+.plan{display:inline-block;padding:3px 8px;border-radius:12px;border:1.5px solid var(--line);font-size:12px;margin:3px 3px 0 0;background:#fff;cursor:pointer}
+.plan.on{background:var(--gold);border-color:var(--gold);color:#2a1d00;font-weight:900}
+textarea.code{width:100%;height:120px;font-size:11px;font-family:monospace;border-radius:10px;border:2px solid var(--line);padding:8px;word-break:break-all}
+.subtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.subtabs button{background:#fff;border:2px solid var(--line);padding:9px 0}
+.subtabs button.on{background:var(--g);color:#fff;border-color:var(--g)}
+.paper{background:#fbf8ef;border:2px solid #24301f;border-radius:6px;padding:10px 12px;margin-bottom:10px;font-family:'Noto Sans KR',serif}
+.paper .mast{font-family:'Black Han Sans';font-size:18px;border-bottom:3px double #24301f;padding-bottom:4px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:baseline}
+.paper .hl{font-weight:900;font-size:14px;padding:4px 0;border-bottom:1px dashed #24301f55}
+.paper .hl:first-of-type{font-size:16px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<div id="app"><h1>마주의 꿈</h1><p>경매에서 경주마를 사고, 훈련시키고, 기수를 고용해 G1 우승을 노리는 무료 경마 경영 웹게임. 라이벌 목장, 교배, 해외 원정, 7개 나라, 10년 커리어. 설치 없이 브라우저에서 바로 플레이하고 자동 저장돼요.</p></div>
+<noscript><p style="padding:20px">마주의 꿈을 플레이하려면 자바스크립트를 켜 주세요.</p></noscript>
+<script>
+/* ===== 기본 ===== */
+const $=s=>document.querySelector(s);
+const R=(a,b)=>a+Math.random()*(b-a);
+const RI=(a,b)=>Math.floor(R(a,b+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const won=n=>{n=Math.round(n);const neg=n<0;n=Math.abs(n);const s=n>=10000?(Math.floor(n/10000)+'억'+(n%10000?' '+(n%10000).toLocaleString()+'만':''))+'원':n.toLocaleString()+'만원';return (neg?'-':'')+s};
+
+const STATS=[['spd','스피드','#3b82f6'],['sta','스태미나','#ef4444'],['pow','파워','#f59e0b'],['guts','근성','#ec4899'],['wit','지능','#10b981']];
+const SN=Object.fromEntries(STATS.map(s=>[s[0],s[1]]));
+const CONDS=[{t:'최악',e:'😫',m:.9},{t:'나쁨',e:'😞',m:.95},{t:'보통',e:'😐',m:1},{t:'좋음',e:'🙂',m:1.05},{t:'최고',e:'😆',m:1.1}];
+const APTM={S:1.05,A:1,B:.96,C:.92,D:.88,E:.84};
+const DCAT=d=>d<=1400?'sprint':d<=1800?'mile':d<=2400?'mid':'long';
+const DCATN={sprint:'단거리',mile:'마일',mid:'중거리',long:'장거리'};
+const PLANS={spd:{n:'스피드',ic:'⚡',sub:{pow:.35}},sta:{n:'스태미나',ic:'❤️',sub:{guts:.35}},pow:{n:'파워',ic:'💪',sub:{sta:.35}},guts:{n:'근성',ic:'🔥',sub:{spd:.2,pow:.2}},wit:{n:'지능',ic:'🧠',sub:{spd:.25}},rest:{n:'휴식',ic:'😴'}};
+const STRATD={'도주':'처음부터 선두로! 스태미나 소모 큼','선행':'앞쪽에서 안정적으로','선입':'중간에서 기회를 노림','추입':'뒤에서 막판 폭발'};
+const STRAT={'도주':[1.045,1.0,0.97],'선행':[1.015,1.0,1.0],'선입':[0.99,1.0,1.025],'추입':[0.97,0.995,1.05]};
+const CLS={
+ '2세신마':{n:'2세 신마전',p:700,fee:20,o:140,rep:1},
+ '미승리':{n:'미승리전',p:700,fee:20,o:185,rep:1},
+ '1승':{n:'1승 클래스',p:1000,fee:30,o:255,rep:2},
+ 'OP':{n:'오픈 특별',p:1800,fee:50,o:335,rep:3},
+ 'PR':{n:'시범 경주',p:0,fee:0,o:170,rep:0},
+ G3:{p:3500,fee:80,o:390,rep:5},G2:{p:5500,fee:100,o:440,rep:8},G1:{p:12000,fee:150,o:510,rep:15}};
+const RANKP=[1,.4,.25,.15,.1,.05,0,0,0,0,0,0];
+const GRADED=[
+ {w:6,n:'신춘 스테이크스',g:'G3',d:2000,age:'3+'},{w:10,n:'스프링 마일',g:'G3',d:1600,age:'3+'},
+ {w:12,n:'클래식 트라이얼',g:'G2',d:2000,age:'3'},{w:14,n:'은하 2000기니',g:'G1',d:1600,age:'3'},
+ {w:16,n:'천상배 (봄)',g:'G1',d:3200,age:'3+'},{w:20,n:'은하 더비',g:'G1',d:2400,age:'3'},
+ {w:22,n:'여름 스프린트',g:'G3',d:1200,age:'3+'},{w:24,n:'여름 그랑프리',g:'G1',d:2200,age:'3+'},
+ {w:28,n:'바다 스테이크스',g:'G2',d:1800,age:'3+'},{w:32,n:'황금 레저',g:'G1',d:3000,age:'3'},
+ {w:34,n:'번개 스프린트',g:'G1',d:1200,age:'3+'},{w:36,n:'천상배 (가을)',g:'G1',d:2000,age:'3+'},
+ {w:38,n:'주니어 스테이크스',g:'G2',d:1600,age:'2'},{w:40,n:'월드 컵',g:'G1',d:2400,age:'3+'},
+ {w:42,n:'마일 챔피언십',g:'G1',d:1600,age:'3+'},{w:44,n:'주니어 챔피언십',g:'G1',d:1600,age:'2'},
+ {w:46,n:'드림 그랑프리',g:'G1',d:2500,age:'3+'}];
+const AGEN={'2':'2세 한정','3':'3세 한정','3+':'3세 이상'};
+const JOCKEYS=[
+ {id:1,n:'김태풍',skill:93,style:'추입',fee:300,rep:100},{id:2,n:'박선두',skill:89,style:'도주',fee:240,rep:70},
+ {id:3,n:'이민준',skill:85,style:'선행',fee:190,rep:50},{id:4,n:'최강수',skill:81,style:'선입',fee:150,rep:35},
+ {id:5,n:'정하늘',skill:76,style:'선행',fee:110,rep:20},{id:6,n:'한바람',skill:72,style:'추입',fee:80,rep:10},
+ {id:7,n:'윤서진',skill:67,style:'선입',fee:60,rep:5},{id:8,n:'오세찬',skill:62,style:'도주',fee:40,rep:0},
+ {id:9,n:'신예린',skill:57,style:'선행',fee:30,rep:0,young:1},{id:10,n:'강도윤',skill:52,style:'추입',fee:20,rep:0,young:1}];
+const FAC={
+ stable:{n:'마구간',ic:'🏠',lv:[3,5,8,12],cost:[0,4000,12000,30000],d:l=>`수용 ${l}두`},
+ train:{n:'훈련장',ic:'🏟️',lv:[1,1.15,1.3,1.5,1.7],cost:[0,3000,9000,22000,50000],d:l=>`훈련 효율 ×${l}`},
+ vet:{n:'수의 센터',ic:'🩺',lv:[1,.7,.45],cost:[0,5000,15000],d:l=>`부상 확률 ×${l}`},
+ pool:{n:'수영장',ic:'🏊',lv:[0,6,12],cost:[0,20000,60000],d:l=>l?`매주 피로 추가 회복 -${l}`:'없음'},
+ lab:{n:'스포츠 과학 연구소',ic:'🔬',lv:[1,1.1,1.2,1.35],cost:[0,50000,150000,400000],d:l=>`훈련 효율 ×${l}`}};
+const NAMES=['번개질주','은빛갈기','새벽바람','황금말굽','푸른혜성','달빛사냥꾼','천둥발굽','붉은태양','초원의왕','별똥별','폭풍전야','하늘구름','불꽃심장','백야','은하수','바람의노래','흑진주','금빛여명','질풍노도','설원의늑대','청룡','사막의별','무지개다리','한라의바람','강철의지','파도소리','태풍의눈','봄날의꿈','밤하늘','용맹이','모래시계','붉은여우','흰눈송이','철갑기사','오로라','석양빛','독수리날개','황야의방랑자','푸른초원','은방울','검은번개','새벽별','들불','바다의왕','달려라희망','첫눈','개선문','왕관','유성우','남풍','북극성','산들바람','명량','백두','진주만','청춘','기적','불사조','회오리','장군'];
+const COLORS=['#e11d48','#2563eb','#16a34a','#9333ea','#ea580c','#0891b2','#ca8a04','#db2777','#4b5563','#65a30d','#7c3aed','#0f766e'];
+
+let G=null,ui={tab:'stable',sheet:null,report:null},screen='title',RS=null;
+
+/* ===== 유틸 ===== */
+const woy=w=>w%48;
+function wl(w){const y=Math.floor(w/48)+1,x=w%48;return `${y}년차 ${Math.floor(x/4)+1}월 ${x%4+1}주`}
+function srank(v){return [[1000,'SS'],[850,'S'],[700,'A'],[560,'B'],[430,'C'],[320,'D'],[220,'E'],[0,'F']].find(x=>v>=x[0])[1]}
+const GORD=['E','D','C','B','A','S'];
+function pgrade(v){return [[880,'S'],[760,'A'],[640,'B'],[520,'C'],[420,'D'],[0,'E']].find(x=>v>=x[0])[1]}
+const capAvg=h=>STATS.reduce((a,[k])=>a+h.cap[k],0)/5;
+const statSum=h=>STATS.reduce((a,[k])=>a+h.s[k],0);
+function clsOf(h){return h.wins===0?'미승리':h.wins===1?'1승':'오픈'}
+function log(m){G.log.unshift(`<span class="mut">${wl(G.week)}</span> ${m}`);G.log=G.log.slice(0,40)}
+function toast(m){const d=document.createElement('div');d.className='toast';d.innerHTML=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
+function grTag(r){return r.cls==='PR'?'<span class="gr" style="background:#0891b2">시범</span>':r.abroad?'<span class="gr G1">🌏 G1</span>':r.g?`<span class="gr ${r.g}">${r.g}</span>`:`<span class="gr">${r.cls==='OP'?'OP':'일반'}</span>`}
+function jById(id){return G.jockeys.find(j=>j.id===id)}
+function hById(id){return G.horses.find(h=>h.id===id)}
+function save(){try{localStorage.setItem('owner-save',JSON.stringify(G))}catch(e){}}
+function loadSave(){try{const s=localStorage.getItem('owner-save');return s?JSON.parse(s):null}catch(e){return null}}
+let _lotTmp=[];
+function usedNames(){return new Set([...G.horses,...G.market,...G.retired,..._lotTmp,...(G.rv||[]).flatMap(r=>r.horses),...(G.studs||[])].map(h=>h.name))}
+const namePool=cc=>(COUNTRIES[cc||(G&&G.country)||'kr'].names)||NAMES;
+function newName(){const P=namePool(),u=usedNames();const pool=P.filter(n=>!u.has(n));return pool.length?pick(pool):pick(P)+' '+['II','III','Jr.'][RI(0,2)]}
+
+/* ===== 말 생성 ===== */
+function genApt(){
+ const a={sprint:'C',mile:'C',mid:'C',long:'C'};
+ const ty=pick([['sprint','mile'],['mile','mid'],['mid','long'],['mid','mile'],['sprint','sprint']]);
+ a[ty[0]]=pick(['A','A','S']);if(ty[1]!==ty[0])a[ty[1]]=pick(['A','B']);
+ for(const k in a)if(a[k]==='C')a[k]=pick(['B','C','D','E']);
+ return a;
+}
+function genHorse(age,q){
+ const h={id:G.nextId++,name:newName(),color:pick(COLORS),age,fatigue:0,cond:2,inj:0,wins:0,starts:0,earn:0,g:0,g1:0,rec:[],plan:'spd',fam:{},apt:genApt(),cap:{},s:{},sex:pick(['M','F']),mud:pick(['A','B','B','C']),style:pick(['도주','선행','선입','추입']),tr:genTraits(),coat:wpick(COATW),mark:pick(MARKS)};
+ for(const [k] of STATS){h.cap[k]=Math.round(clamp(q*R(.82,1.18),260,1100));h.s[k]=Math.min(h.cap[k]-40,Math.round(R(100,160)+(age-2)*R(70,120)))}
+ h.est=Math.round(capAvg(h)+R(-70,70));
+ h.price=Math.max(300,Math.round(C().auc*(300+Math.pow(Math.max(0,h.est-300)/100,2)*400+statSum(h)*.5)/10)*10);
+ return h;
+}
+function refreshMarket(){
+ G.market=[];const n=5;
+ for(let i=0;i<n;i++){const q=350+520*Math.pow(Math.random(),1.6);G.market.push(genHorse(Math.random()<.7?2:3,q))}
+}
+function horseValue(h){return Math.max(100,Math.round((statSum(h)*1.6+h.g*2500+h.g1*9000+(h.age<=3?capAvg(h)*3:0))*(h.age>=6?.5:1)/10)*10)}
+
+/* ===== 주간 레이스 ===== */
+function genWeekRaces(){
+ const w=woy(G.week),D=C().dists,L=[];let id=1;
+ const tracks=C().tracks;
+ L.push({id:id++,cls:'PR',n:'🏁 시범 경주',d:pick([1200,1600,2000])});
+ if(w>=8)L.push({id:id++,cls:'2세신마',n:'2세 신마전',d:pick([1200,1400,1600,1800])});
+ {const sh=D.filter(d=>d<=1600),lo=D.filter(d=>d>=1800);L.push({id:id++,cls:'미승리',n:'미승리전 (단거리·마일)',d:pick(sh.length?sh:D)});L.push({id:id++,cls:'미승리',n:'미승리전 (중장거리)',d:pick(lo.length?lo:D)})}
+ L.push({id:id++,cls:'1승',n:'1승 클래스',d:pick(D)});
+ L.push({id:id++,cls:'OP',n:`${pick(tracks)} ${pick(['특별','배','스테이크스','컵'])}`,d:pick(D)});
+ const gr=GRADED.find(x=>x.w===w);
+ if(gr)L.push({id:id++,cls:gr.g,g:gr.g,n:C().g1[w]||gr.n,d:gr.d,age:gr.age});
+ const ab=ABROAD.find(x=>x.w===w&&x.c!==G.country);
+ if(ab){const cc=COUNTRIES[ab.c];L.push({id:id++,cls:'G1',g:'G1',abroad:ab.c,n:`${cc.f} ${cc.g1[ab.k]}`,d:ab.d,age:'3+'})}
+ const gw=G.country==='gb'?[40,35,25]:G.country==='ae'?[85,10,5]:[60,25,15];
+ for(const r of L){const x=Math.random()*100;r.going=x<gw[0]?'양호':x<gw[0]+gw[1]?'다습':'불량'}
+ G.weekRaces=L;planRivalEntries();
+}
+const GOINGS=[['양호','☀️'],['다습','🌦️'],['불량','🌧️']];
+const MUDM={A:1.03,B:1,C:.96};
+const ABROAD=[{c:'ae',w:12,k:46,d:2000},{c:'gb',w:26,k:24,d:2400},{c:'kr',w:33,k:40,d:1800},{c:'fr',w:38,k:40,d:2400},{c:'us',w:41,k:40,d:2000},{c:'au',w:43,k:40,d:3200},{c:'jp',w:45,k:40,d:2400}];
+const raceFee=r=>r.abroad?2500:CLS[r.cls].fee;
+const entryCost=(r,j)=>r.cls==='PR'?0:raceFee(r)+(j?jFee(j):0);
+const raceRep=r=>r.abroad?30:CLS[r.cls].rep;
+const goingIc=g=>(GOINGS.find(x=>x[0]===g)||GOINGS[0])[1];
+function goingMul(h,r){if(!r.going||r.going==='양호')return 1;const m=MUDM[h.mud||'B'];return r.going==='불량'?m:Math.sqrt(m)}
+const capNow=()=>FAC.stable.lv[G.fac.stable];
+function raceStr(r){if(r.abroad)return Math.round(495*COUNTRIES[r.abroad].str);let o=CLS[r.cls].o;if(r.age==='2')o=r.g==='G1'?340:300;if(r.age==='3')o-=40;return Math.round(o*C().str)}
+function racePrize(r){if(r.abroad)return Math.round(20000*COUNTRIES[r.abroad].prize/10)*10;return Math.round((r.age==='2'&&r.g==='G1'?7000:CLS[r.cls].p)*C().prize/10)*10}
+function eligible(h,r){
+ if(h.inj>0)return '부상 중';
+ if(r.cls==='PR')return '';
+ if(h.age===2&&woy(G.week)<8)return '2세는 3월부터 데뷔 (시범 경주는 가능)';
+ if(r.abroad)return h.age<3?'3세 이상만':h.g<1?'중상 우승마만':(h.own===undefined&&G.rep<40)?'명성 40 필요':'';
+ if(r.cls==='2세신마')return h.age===2&&h.wins===0?'':'2세 미승리마만';
+ if(r.cls==='미승리')return h.age>=3&&h.wins===0?'':'3세 이상 미승리마만';
+ if(r.cls==='1승')return h.wins===1?'':'1승마만';
+ if(r.cls==='OP')return h.wins>=2?'':'2승 이상(오픈)만';
+ if(r.age==='2')return h.age===2&&h.wins>=1?'':'2세 승리마만';
+ if(h.wins<2)return '2승 이상(오픈)만';
+ if(r.age==='3')return h.age===3?'':'3세마만';
+ return h.age>=3?'':'3세 이상만';
+}
+function rating(st,d,apt){const need=Math.max(50,(.27*d-200)/1.6),sf=Math.min(1,st.sta/need);return (st.spd+st.pow*.4+st.guts*.2+st.wit*.2)*APTM[apt]*(.75+.25*sf)}
+function compare(h,r){const o=raceStr(r),fr=rating({spd:o,sta:o,pow:o,guts:o,wit:o},r.d,'A'),hr=rating(h.s,r.d,h.apt[DCAT(r.d)])*CONDS[h.cond].m*goingMul(h,r);const x=hr/fr;
+ return x>1.12?['압도적 우세','ok',x]:x>1.03?['우세','ok',x]:x>.96?['호각','',x]:x>.88?['열세','bad',x]:['큰 열세','bad',x]}
+/* ===== 추천 ===== */
+const AORD=['E','D','C','B','A','S'];
+const WEIGHT={sprint:{spd:1.2,pow:1.1,sta:.45,guts:.7,wit:.6},mile:{spd:1.15,pow:1,sta:.7,guts:.7,wit:.7},mid:{spd:1,sta:1,pow:.8,guts:.8,wit:.7},long:{spd:.9,sta:1.25,pow:.6,guts:1,wit:.8}};
+const DREP={sprint:1200,mile:1600,mid:2200,long:3000};
+function bestCat(h){return Object.keys(DCATN).reduce((a,b)=>AORD.indexOf(h.apt[b])>AORD.indexOf(h.apt[a])||(AORD.indexOf(h.apt[b])===AORD.indexOf(h.apt[a])&&b==='mid')?b:a)}
+function recPlan(h){
+ if(h.fatigue>=55||h.cond===0)return {k:'rest',why:h.fatigue>=55?'피로가 높아 부상 위험':'컨디션 회복 필요'};
+ const cat=bestCat(h),w=WEIGHT[cat],need=(.27*DREP[cat]-200)/1.6;let best=null,bs=-1;
+ for(const [k] of STATS){const room=Math.max(0,(h.cap[k]-h.s[k])/h.cap[k]);let sc=w[k]*Math.sqrt(room);if(k==='sta'&&h.s.sta<need*1.1)sc*=1.6;if(sc>bs){bs=sc;best=k}}
+ if(bs<=0.05)return {k:'rest',why:'모든 능력치가 한계에 가까움'};
+ return {k:best,why:best==='sta'&&h.s.sta<need*1.1?`${DCATN[cat]} 완주에 스태미나 부족`:`주력 ${DCATN[cat]}(적성 ${h.apt[cat]})에 중요 · 성장 여지 큼`};
+}
+function recRaces(){
+ const busy=new Set(G.entries.map(e=>e.hid)),out={};
+ for(const h of G.horses){if(busy.has(h.id)||h.fatigue>50)continue;let best=null,bv=0;
+  for(const r of G.weekRaces){if(r.cls==='PR'||eligible(h,r))continue;const x=compare(h,r)[2];if(x<.97)continue;
+   const v=clamp((x-.9)/.25,0,1)*racePrize(r);if(v>bv){bv=v;best=r}}
+  if(best)(out[best.id]=out[best.id]||[]).push(h.id)}
+ {const pr=G.weekRaces.find(r=>r.cls==='PR'),has=new Set(Object.values(out).flat());if(pr)for(const h of G.horses)if(!busy.has(h.id)&&!has.has(h.id)&&!h.inj&&h.fatigue<=40&&!G.weekRaces.some(r=>r.cls!=='PR'&&!eligible(h,r)))(out[pr.id]=out[pr.id]||[]).push(h.id)}
+ return out;
+}
+
+/* ===== 원클릭·자동 진행 ===== */
+function bestJockey(h,r,busyJ){const sc=j=>j.skill+(h.fam[j.id]||0)*.6+(G.excl===j.id||j.appr?6:0)-(r.cls==='PR'?0:jFee(j)/40);
+ return G.jockeys.filter(j=>G.rep>=j.rep&&(r.cls==='PR'||!busyJ.has(j.id))&&G.money>=entryCost(r,j)).sort((a,b)=>sc(b)-sc(a))[0]}
+function autoAll(silent){let tn=0,en=0;const rc=recRaces();
+ for(const h of G.horses){if(G.entries.some(e=>e.hid===h.id)||h.inj)continue;const rp=recPlan(h).k;if(h.plan!==rp){h.plan=rp;tn++}}
+ for(const [rid,hs] of Object.entries(rc))for(const hid of hs){const h=hById(hid),r=G.weekRaces.find(x=>x.id==rid);if(!h||!r||G.entries.some(e=>e.hid===hid))continue;
+  const busyJ=new Set(G.entries.filter(e=>{const rr=G.weekRaces.find(x=>x.id===e.rid);return rr&&rr.cls!=='PR'}).map(e=>e.jid)),j=bestJockey(h,r,busyJ);if(!j)continue;
+  const cost=entryCost(r,j);if(G.money<cost)continue;G.money-=cost;G.entries.push({rid:r.id,hid,jid:j.id,strat:'맡김',cost});en++}
+ if(!silent){toast(`⭐ 훈련 ${tn}건 변경 · 출주 ${en}건 등록`);save();render()}return en}
+function simInstant(race){const saved=RS;RS={race,runners:buildField(race,G.entries.filter(e=>e.rid===race.id)),time:0,flags:{}};let g=0;
+ while(RS.runners.some(r=>r.fin===null)&&g++<30000)simStep(.1);const order=[...RS.runners].sort((a,b)=>a.fin-b.fin);RS=saved;return applyResults(race,order)}
+const VIEWS={all:'전부 보기',graded:'중상·G1만',none:'결과만'};
+function watchRace(r){const v=G.view||'all';return v==='all'?true:v==='graded'?!!(r.g||r.abroad):false}
+function autoRun(maxW){ui.sheet=null;const all=[],start=G.week;let stop='';
+ for(let k=0;k<maxW;k++){autoAll(true);G.wkNews=[];
+  RS={queue:[],idx:0,results:[]};const races=[...new Set(G.entries.map(e=>e.rid))].map(id=>G.weekRaces.find(r=>r.id===id));for(const r of races)RS.results.push(...simInstant(r));
+  const wk=wl(G.week);weekEnd();const rep=ui.report;ui.report=null;
+  if(rep){const imp=rep.lines.filter(l=>/🏆|🏁|🩹|🍼|🏅|🎆|👑|🎉|🌏|⚔️|🔥|🆘|⚠️|📣|🌱|💼|☀️|🎍|🌸|🍂|📌|🎖️/.test(l));if(imp.length)all.push(`<b style="color:var(--g)">— ${wk}</b>`,...imp)}
+  if(screen!=='main')return;
+  if((ui.evQ||[]).length){stop='결정할 일이 생겼어요';break}
+  if(G.debt>0){stop='적자가 났어요';break}
+  if(!G.marketDone&&G.market.length&&G.week%4===0&&G.mode!=='pure'&&G.horses.length<capNow()){stop='정기 경매가 열렸어요';break}
+  if(G.elite.length&&!G.eliteDone&&G.mode!=='pure'){stop='프리미엄 경매가 열렸어요';break}
+  {const rc=recRaces(),big=G.weekRaces.find(r=>(r.g==='G1'||r.abroad)&&(rc[r.id]||[]).length);if(big){stop=`이번 주 ${big.n}에 ⭐ 추천 출주마가 있어요`;break}}
+  if((G.plans[G.week]||[]).length){stop='📌 출전 계획 주간이에요';break}}
+ ui.report={title:`⏩ ${G.week-start}주 자동 진행`,lines:[...(stop?[`<b>⏸️ 멈춤: ${stop}</b>`]:[]),...(all.length?all:['특별한 일 없이 지나갔어요'])],news:(G.news[0]||{}).h};render();window.scrollTo(0,0)}
+/* ===== 정렬·비교 ===== */
+const SORTS={def:'기본',age:'나이',pow:'능력',wins:'승수',fat:'피로'};
+function sortedHorses(){const a=[...G.horses],k=ui.sort||'def';if(k==='age')a.sort((x,y)=>x.age-y.age);else if(k==='pow')a.sort((x,y)=>statSum(y)-statSum(x));else if(k==='wins')a.sort((x,y)=>y.wins-x.wins||y.g1-x.g1);else if(k==='fat')a.sort((x,y)=>y.fatigue-x.fatigue);return a}
+/* ===== 은퇴식 ===== */
+function ceremony(h){const rep=Math.min(20,5*h.g1),bonus=Math.round(1000*h.g1*C().prize);G.rep+=rep;G.money+=bonus;news(9,`🎊 G1 ${h.g1}승의 명마 ${esc(h.name)}, 팬들의 박수 속에 은퇴`);
+ return {t:`🎊 ${h.name} 은퇴식`,html:`<div style="text-align:center;font-size:44px">🎊🐎🎊</div><div class="card" style="text-align:center;background:#fff8e1;border:2px solid var(--gold)">${coatDot(h)}<b style="font-size:18px">${esc(h.name)}</b><div class="mut" style="margin-top:4px">${h.starts}전 ${h.wins}승 · 중상 ${h.g}승 · <b>G1 ${h.g1}승</b> · 획득 ${won(h.earn)}</div>
+ <div style="margin:10px 0">경마장을 가득 메운 팬들이 마지막 퍼레이드에 박수를 보냈다.<br>"고마웠어, ${esc(h.name)}!"</div><div style="font-weight:900;color:var(--g)">명성 +${rep} · 은퇴식 수익 +${won(bonus)}</div><div class="mut">${h.sex==='F'?'번식 암말로 새 출발해요':'종마로 새 출발해요'}</div></div>`}}
+/* ===== 월드 시리즈 ===== */
+const WSP=[10,6,4,3,2];
+function wsYear(){const y=Math.floor(G.week/48);if(!G.ws||G.ws.y!==y)G.ws={y,pts:0,res:[]};return G.ws}
+function wsHTML(){const ws=wsYear(),list=ABROAD.filter(a=>a.c!==G.country);return `<div class="card" style="border:2px solid #1d4ed8"><div class="row"><b>🌏 월드 시리즈 ${ws.y+1}년</b><span class="sp"></span><b style="color:#1d4ed8">${ws.pts}pt</b></div>
+ <div class="mut" style="margin:4px 0">해외 G1 착순 포인트 (1착 10 · 2착 6 · 3착 4 · 4착 3 · 5착 2 · 출전 1). 연말에 <b>20pt 이상이면 월드 챔피언</b>!</div>
+ ${list.map(a=>{const cc=COUNTRIES[a.c],r=ws.res.find(x=>x.w===a.w),past=woy(G.week)>a.w;return `<div class="row" style="padding:3px 0;font-size:13px"><span>${cc.f} ${cc.g1[a.k]}</span><span class="sp"></span><span class="mut">${Math.floor(a.w/4)+1}월</span>&nbsp;${r?`<b>${r.rank}착 +${r.p}</b>`:past?'<span class="mut">-</span>':'<span class="mut">예정</span>'}</div>`}).join('')}</div>`}
+
+/* ===== 견습 기수 ===== */
+const APN={kr:['한빛','최고은','류태오','남궁찬','손하윤','지수혁'],jp:['아사히 렌','후지이 소라','야마다 하루키','니시 미쿠','오다 유토','카토 린'],us:['마일로 브룩스','제이든 쿡','릴리 파커','엘리 로건','케일럽 웨스트','노라 벨'],
+ gb:['아치 그린','피비 레인','오스카 헤일','이지 몬크','프레디 노스','로지 웰'],fr:['노아 르페브르','앙브르 가뉴','라파엘 비달','조에 마샹','에밀 드루','이네스 로셰'],ae:['자이드 사미','레엔 카말','오마르 니자르','하야 술탄','유세프 바심','다나 카림'],au:['코디 플린','태시 레인','잭슨 리드','엠마 콜','브로디 스톤','키라 웨일']};
+const apprCost=()=>Math.round(1000*C().prize/10)*10;
+const apprSal=j=>Math.round(10+j.skill*.4);
+const talent=c=>'★'.repeat(clamp(Math.round((c-72)/6),1,4))+'☆'.repeat(4-clamp(Math.round((c-72)/6),1,4));
+function scoutList(){if(!ui.scout){const used=new Set(G.jockeys.map(j=>j.n));const pool=(APN[G.country]||APN.kr).filter(n=>!used.has(n));ui.scout=[0,1,2].map(i=>({n:pool[i]||pick(APN.kr)+' '+(i+2),skill:RI(44,54),cap:RI(76,97),style:pick(Object.keys(STRAT))}))}return ui.scout}
+function hireAppr(i){const c=scoutList()[i];if(G.money<apprCost()||G.jockeys.filter(j=>j.appr).length>=2)return;G.money-=apprCost();const id=Math.max(10,...G.jockeys.map(j=>j.id))+1;
+ G.jockeys.push({id,n:c.n,skill:c.skill,cap:c.cap,style:c.style,fee:0,rep:0,appr:1,rides:0,wins:0,ms:0});ui.scout=null;log(`🌱 견습 기수 ${esc(c.n)} 입단!`);toast(`🌱 ${esc(c.n)} 입단!`);sfx.coin();save();render()}
+function fireAppr(id){G.jockeys=G.jockeys.filter(j=>j.id!==id);save();render()}
+function apprGrow(j,amt,lines){if(!j.appr)return;const before=j.skill;j.skill=Math.min(j.cap,j.skill+amt);for(const m of [65,75,85,92])if(before<m&&j.skill>=m){const t=m>=92?'전설의 기수로 각성':m>=85?'일류 기수로 성장':m>=75?'중견 기수로 성장':'한 단계 성장';const msg=`🌱 견습 기수 ${esc(j.n)}, ${t}! (기량 ${m})`;log(msg);news(m>=85?7:4,msg);if(lines)lines.push(msg);toast(msg)}}
+/* ===== 합숙·계절 ===== */
+const CAMPS={sea:{n:'🏖️ 바다 합숙',d:'스태미나·근성 훈련 ×1.4, 피로 회복 +5',st:{sta:1.4,guts:1.4},fat:5,cost:800},mount:{n:'⛰️ 고원 합숙',d:'스피드·파워 훈련 ×1.4',st:{spd:1.4,pow:1.4},fat:0,cost:800},abroad:{n:'✈️ 해외 합숙',d:'모든 훈련 ×1.3',st:{spd:1.3,sta:1.3,pow:1.3,guts:1.3,wit:1.3},fat:3,cost:3000}};
+const campCost=k=>Math.round(CAMPS[k].cost*C().prize/10)*10;
+const campOn=()=>G.camp&&G.week<G.camp.until;
+function campEvent(){return {t:'☀️ 여름 합숙 시즌! 8주 동안 어디서 훈련할까요?',o:[...Object.entries(CAMPS).map(([k,c])=>[`${c.n} (${won(campCost(k))}) — ${c.d}`,()=>{if(G.money<campCost(k))return '자금이 부족해 목장에 남았다...';G.money-=campCost(k);G.camp={t:k,until:G.week+8};return `${c.n} 출발! 8주 동안 특훈한다`}]),['🏠 목장에 남는다 (무료)',()=>'올여름은 목장에서 평소대로 보낸다']]}}
+function xmasEvent(){const cake=Math.round(200*C().prize),bon=Math.round(500*C().prize);return {t:'🎄 메리 크리스마스! 목장 식구들에게 어떤 선물을?',o:[[`🎂 당근 케이크 파티 (-${won(cake)}) — 모든 말 컨디션 +2`,()=>{G.money-=cake;G.horses.forEach(h=>h.cond=Math.min(4,h.cond+2));return '말들이 케이크를 맛있게 먹었다! 모두 기분 최고'}],
+ [`🎁 기수 보너스 (-${won(bon)}) — 견습·전속 기수 기량 +1`,()=>{G.money-=bon;G.jockeys.filter(j=>j.appr||j.id===G.excl).forEach(j=>{j.skill=Math.min(j.appr?j.cap:99,j.skill+1)});return '기수들의 사기가 올랐다!'}],['🕯️ 조용히 보낸다',()=>'평화로운 크리스마스']]}}
+/* ===== 목장 이전 ===== */
+const moveCost=()=>Math.round(10000*C().prize/10)*10;
+const canMove=()=>G.week>=144&&(G.movedW===undefined||G.week-G.movedW>=144);
+function relocate(cc){if(!canMove()||cc===G.country||G.money<moveCost())return;
+ for(const e of [...G.entries])cancelEntry(e.hid,true);G.money-=moveCost();const from=C();G.country=cc;G.movedW=G.week;G.moves=(G.moves||0)+1;const c=C(),yr=Math.floor(G.week/48);
+ const ap=G.jockeys.filter(j=>j.appr);G.jockeys=JOCKEYS.map((j,i)=>({...j,n:c.jk[i],rides:0,wins:0})).concat(ap);G.excl=null;
+ G.rv=null;initRivals();for(const rv of G.rv){rv.money=Math.round(rv.money*(1+yr*.3));for(let k=0;k<3;k++){const h=genHorse(RI(2,4),R(480,700));h.own=rv.i;h.wins=h.age>=3?RI(0,3):0;h.starts=h.wins*2+RI(0,4);rv.horses.push(h)}}
+ G.season={me:{earn:0,wins:0,g1:0},rv:G.rv.map(()=>({earn:0,wins:0,g1:0}))};G.h2h=G.rv.map(()=>({w:0,l:0}));G.plans={};G.rvEntries=[];G.spOffers=[genOffer(),genOffer()];
+ migrate(G);refreshMarket();G.marketDone=false;genWeekRaces();
+ log(`✈️ ${from.f} ${from.n} → ${c.f} ${c.n}(으)로 목장 이전!`);ui.ftab='biz';ui.tab='stable';
+ ui.report={title:`✈️ ${c.f} ${c.n}에 새 출발!`,lines:[`${from.n}에서 ${c.n}(으)로 목장을 옮겼어요.`,`🏇 새 라이벌: ${G.rv.map(r=>esc(r.n)).join(', ')}`,`🧢 기수진이 ${c.n} 기수들로 바뀌었어요 (견습 기수는 함께 이동)`,`🏆 주요 G1: ${Object.values(c.g1).slice(0,4).join(' · ')}`,'말·시설·은퇴마는 모두 함께 옮겨왔어요.']};
+ sfx.fanfare();save();render();window.scrollTo(0,0)}
+const STANDC={kr:'#1f5c3a',jp:'#7c2d12',us:'#1d4ed8',gb:'#14532d',fr:'#1e3a8a',ae:'#a16207',au:'#065f46'};
+
+/* ===== 도전 모드 ===== */
+const MODES={normal:{n:'일반',d:'기본 규칙',x:1},poor:{n:'💸 빈털터리',d:'시작 자금 40%',x:1.3},pure:{n:'🧬 순혈주의',d:'정기·프리미엄 경매 불가. 교배로 키워라',x:1.4},hard:{n:'💀 하드코어',d:'라이벌 강화·은행 없음·2주 적자면 파산',x:1.5}};
+const mode=()=>(G&&G.mode)||'normal';
+const bankLim=()=>mode()==='hard'?2:G.week<48?6:4;
+const CAREER=480;
+/* ===== 엔딩 ===== */
+function endScore(){const t=G.tot,a=Object.keys(G.ach).length;const base=t.g1*120+t.g*30+t.wins*6+G.leadN*250+a*60+(G.awards||0)*100+Math.max(0,G.money)/2000;return Math.round(base*MODES[mode()].x)}
+const EGR=[[26000,'SSS','전설의 마주'],[17000,'SS','경마계의 제왕'],[11000,'S','명문 목장의 주인'],[6500,'A','일류 마주'],[3500,'B','중견 마주'],[1500,'C','성실한 마주'],[0,'D','소박한 마주']];
+function loadHOF(){try{return JSON.parse(localStorage.getItem('owner-hof')||'[]')}catch(e){return []}}
+function addHOF(e){try{const h=loadHOF();h.push(e);h.sort((a,b)=>b.score-a.score);localStorage.setItem('owner-hof',JSON.stringify(h.slice(0,10)))}catch(e){}}
+function doEnding(){const sc=endScore(),[,gr,ti]=EGR.find(x=>sc>=x[0]);G.ended={score:sc,grade:gr,title:ti,week:G.week};
+ addHOF({farm:G.farm,f:C().f,mode:MODES[mode()].n,score:sc,grade:gr,title:ti,g1:G.tot.g1});save();screen='ending';render();window.scrollTo(0,0);confetti();sfx.fanfare()}
+const V_ending=()=>{const e=G.ended,t=G.tot;return `<div class="title-wrap" style="padding:20px 0 10px"><div class="mut">${C().f} ${esc(G.farm)} 목장 · 10년 커리어 종료 · ${MODES[mode()].n} 모드</div>
+ <div style="font-size:56px;margin:8px 0">🏆</div><div class="disp" style="font-size:72px;color:var(--gold);line-height:1">${e.grade}</div><h1 style="font-size:28px;margin:6px 0">${e.title}</h1><div class="mut">최종 점수 ${e.score.toLocaleString()}${MODES[mode()].x>1?` (도전 보너스 ×${MODES[mode()].x})`:''}</div></div>
+ <div class="card"><table>${[['통산 성적',`${t.starts}전 ${t.wins}승`],['중상 / G1',`${t.g}승 / <b>${t.g1}승</b>`],['리딩 오너',`${G.leadN}회`],['연말 시상',`${G.awards||0}회`],['업적',`${Object.keys(G.ach).length}/${ACH.length}`],['최종 자금',won(G.money)],['총 획득 상금',won(t.earn)]].map(r=>`<tr><td class="mut">${r[0]}</td><td style="text-align:right">${r[1]}</td></tr>`).join('')}</table></div>
+ <div class="card"><b>🐎 최고의 말</b>${[...G.horses,...G.retired].sort((a,b)=>b.g1-a.g1||b.earn-a.earn).slice(0,3).map(h=>`<div class="row" style="padding:4px 0">${coatDot(h)}<b>${esc(h.name)}</b><span class="mut">${h.wins}승 · G1 ${h.g1}승</span><span class="sp"></span>${won(h.earn)}</div>`).join('')}</div>
+ <div class="row"><button class="btn ghost sp" onclick="save();screen='title';render()">타이틀로</button><button class="btn gold sp" onclick="screen='main';render()">계속 플레이 ▶</button></div>`};
+/* ===== 시상식 ===== */
+function seasonOf(h,y){return h.sy&&h.sy.y===y?h.sy:null}
+function doAwards(y,lines){
+ const all=[...G.horses,...G.rv.flatMap(r=>r.horses)].filter(h=>seasonOf(h,y));if(!all.length)return null;
+ const sc=h=>{const x=h.sy;return x.g1*1000+x.w*100+x.e/100},best=f=>all.filter(f).sort((a,b)=>sc(b)-sc(a))[0];
+ const cats=[['🏆 연도 대표마',()=>true],['🌱 최우수 2세마',h=>h.age===2],['🌸 최우수 암말',h=>h.sex==='F']],res=[];
+ for(const [n,f] of cats){const h=best(f);if(!h||sc(h)<100)continue;const mine=h.own===undefined;res.push({n,h,mine,own:mine?G.farm+' 목장':G.rv[h.own].n});
+  if(mine){G.awards=(G.awards||0)+1;G.rep+=10;const b=Math.round(2000*C().prize);G.money+=b;lines.push(`${n}: <b>${esc(h.name)}</b> 수상! 명성 +10, +${won(b)}`);log(`${n} 수상: ${esc(h.name)}`)}}
+ if(!res.length)return null;
+ return {t:`🎉 ${y+1}년차 연말 시상식`,html:`<div style="text-align:center;font-size:40px">🏆</div>${res.map(r=>`<div class="card" style="${r.mine?'background:#fff3c4;border:2px solid var(--gold)':''}"><div class="mut">${r.n}</div><div class="row">${coatDot(r.h)}<b style="font-size:16px">${esc(r.h.name)}</b><span class="sp"></span><span class="mut">${esc(r.own)}</span></div><div class="mut">${r.h.sy.w}승 · G1 ${r.h.sy.g1}승 · 상금 ${won(r.h.sy.e)}</div>${r.mine?'<div style="font-weight:900;color:var(--g);margin-top:4px">🎉 우리 목장 수상!</div>':''}</div>`).join('')}`};
+}
+/* ===== 은퇴마 목장 ===== */
+const tourOf=h=>Math.round((h.g1*25+h.g*6+(h.statue?60:0))*C().prize);
+const tourism=()=>G.retired.reduce((a,h)=>a+tourOf(h),0);
+const statueCost=()=>Math.round(20000*C().prize/10)*10;
+function buildStatue(id){const h=G.retired.find(x=>x.id===id);if(!h||h.statue||G.money<statueCost())return;G.money-=statueCost();h.statue=1;log(`🗿 ${esc(h.name)} 동상 건립!`);toast(`🗿 ${esc(h.name)} 동상 완성!`);sfx.fanfare();save();render()}
+/* ===== 주간 신문 ===== */
+function news(pri,t){(G.wkNews=G.wkNews||[]).push({pri,t})}
+const FILLER=['관중 수 역대 최고 기록 경신','신인 기수 돌풍, 데뷔 3연승','경마장 새 관람석 공사 시작','올해 경매 평균 낙찰가 상승세','유명 배우, 마주 데뷔 선언','기상청 "다음 주 비 소식"... 중마장 변수','명문 혈통 망아지 쏟아진다','라이벌 목장들, 해외 원정 검토 중'];
+function makeNews(){const N=(G.wkNews||[]).sort((a,b)=>b.pri-a.pri).map(x=>x.t);
+ const nx=GRADED.find(g=>g.w===woy(G.week));if(nx){const nm=C().g1[nx.w]||nx.n,race={cls:nx.g,g:nx.g,d:nx.d,age:nx.age,going:'양호'};
+  const cand=[...G.horses.map(h=>({h,o:G.farm})),...G.rv.flatMap(r=>r.horses.map(h=>({h,o:r.n})))].filter(x=>!eligible(x.h,race)).map(x=>({...x,v:compare(x.h,race)[2]})).sort((a,b)=>b.v-a.v);
+  N.push(`📣 이번 주 ${nm}! ${cand.length?`유력 후보는 ${esc(cand[0].h.name)} (${esc(cand[0].o)})`:'혼전 예상'}`)}
+ while(N.length<2)N.push(pick(FILLER));G.wkNews=[];
+ const out=N.slice(0,3);G.news=[{w:G.week,h:out},...(G.news||[])].slice(0,20);return out}
+function paperHTML(h,w){return `<div class="paper"><div class="mast"><span>📰 주간 경마</span><span class="mut" style="font-size:11px">${wl(w)}</span></div>${h.map(x=>`<div class="hl">${x}</div>`).join('')}</div>`}
+
+/* ===== 효과음 ===== */
+let AC=null,SND=(()=>{try{return localStorage.getItem('owner-sound')!=='off'}catch(e){return true}})();
+function ac(){if(!SND)return null;try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC}catch(e){return null}}
+function tone(f,t0,d,type,v){const a=ac();if(!a)return;try{const o=a.createOscillator(),g=a.createGain(),t=a.currentTime+t0;o.type=type||'square';o.frequency.value=f;g.gain.setValueAtTime(v||.06,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
+function noise(t0,d,v,fq){const a=ac();if(!a)return;try{const n=Math.floor(a.sampleRate*d),b=a.createBuffer(1,n,a.sampleRate),ch=b.getChannelData(0);for(let i=0;i<n;i++)ch[i]=Math.random()*2-1;
+ const sr=a.createBufferSource();sr.buffer=b;const f=a.createBiquadFilter();f.type='bandpass';f.frequency.value=fq||800;const g=a.createGain(),t=a.currentTime+t0;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v,t+d*.3);g.gain.linearRampToValueAtTime(.0001,t+d);sr.connect(f);f.connect(g);g.connect(a.destination);sr.start(t)}catch(e){}}
+const sfx={gate:()=>{tone(880,0,.15,'square',.05);tone(880,.22,.15,'square',.05);tone(1320,.44,.55,'square',.06)},
+ hoof:()=>{noise(0,.05,.14,320);noise(.1,.05,.11,260)},cheer:()=>{noise(0,2.8,.2,1100);noise(.3,2.4,.12,2200)},
+ fanfare:()=>[523,659,784,1047,784,1047].forEach((f,i)=>tone(f,i*.15,i===5?.7:.14,'triangle',.11)),
+ coin:()=>{tone(988,0,.08,'square',.04);tone(1319,.08,.22,'square',.04)},sad:()=>{tone(392,0,.25,'triangle',.07);tone(330,.25,.45,'triangle',.07)}};
+function toggleSnd(){SND=!SND;try{localStorage.setItem('owner-sound',SND?'on':'off')}catch(e){}if(SND)sfx.coin();render()}
+/* ===== 털색·승부복 ===== */
+const COATS={'밤색':'#8b4513','갈색':'#6b3a1f','흑갈색':'#3b2416','흑색':'#1f1f1f','율모':'#c2732e','회색':'#9ca3af','청모':'#4b5563','백모':'#e7e5e4'};
+const COATW=[['밤색',30],['갈색',22],['흑갈색',15],['율모',10],['회색',10],['흑색',6],['청모',5],['백모',2]];
+const MARKS=['없음','없음','별','유성','작','흰 양말'];
+function wpick(a){let t=a.reduce((x,y)=>x+y[1],0)*Math.random();for(const [k,w] of a){if((t-=w)<0)return k}return a[0][0]}
+const coatHex=h=>COATS[h.coat]||'#8b4513';
+const coatDot=h=>`<span class="coat" style="background:${coatHex(h)}" title="${h.coat||''}"></span>`;
+const SILKC=['#e11d48','#2563eb','#16a34a','#facc15','#9333ea','#ea580c','#111827','#ffffff','#0891b2','#db2777','#65a30d','#92400e'];
+const SILKP={solid:'단색',stripe:'세로줄',hoop:'가로띠',cross:'십자',half:'좌우 반반',dots:'물방울',diamond:'다이아'};
+const randSilk=()=>({c1:pick(SILKC),c2:pick(SILKC),p:pick(Object.keys(SILKP))});
+function silkSVG(k,w){w=w||28;const h=Math.round(w*.8),c1=k.c1,c2=k.c2;let pat='';
+ if(k.p==='stripe')for(let i=0;i<5;i++)pat+=`<rect x="${i*w/5+w/10-w/20}" y="0" width="${w/10}" height="${h}" fill="${c2}"/>`;
+ else if(k.p==='hoop')pat=`<rect x="0" y="${h*.38}" width="${w}" height="${h*.24}" fill="${c2}"/>`;
+ else if(k.p==='cross')pat=`<rect x="${w*.42}" y="0" width="${w*.16}" height="${h}" fill="${c2}"/><rect x="0" y="${h*.4}" width="${w}" height="${h*.2}" fill="${c2}"/>`;
+ else if(k.p==='half')pat=`<rect x="${w/2}" y="0" width="${w/2}" height="${h}" fill="${c2}"/>`;
+ else if(k.p==='dots')for(let i=0;i<3;i++)for(let j=0;j<2;j++)pat+=`<circle cx="${w*(.2+.3*i)}" cy="${h*(.3+.4*j)}" r="${w*.08}" fill="${c2}"/>`;
+ else if(k.p==='diamond')pat=`<polygon points="${w/2},${h*.1} ${w*.8},${h/2} ${w/2},${h*.9} ${w*.2},${h/2}" fill="${c2}"/>`;
+ return `<svg class="silk" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${c1}"/>${pat}</svg>`}
+function drawSilk(ctx,x,y,k){const w=9,h=7,l=x-w/2,t=y-h/2;ctx.save();ctx.beginPath();ctx.rect(l,t,w,h);ctx.clip();ctx.fillStyle=k.c1;ctx.fillRect(l,t,w,h);ctx.fillStyle=k.c2;
+ if(k.p==='stripe')for(let i=0;i<3;i++)ctx.fillRect(l+1+i*3,t,1.4,h);else if(k.p==='hoop')ctx.fillRect(l,y-1.2,w,2.4);else if(k.p==='cross'){ctx.fillRect(x-1,t,2,h);ctx.fillRect(l,y-1,w,2)}
+ else if(k.p==='half')ctx.fillRect(x,t,w/2,h);else if(k.p==='dots'){for(const [a,b] of [[-2.5,-1.5],[2.5,-1.5],[0,1.8]]){ctx.beginPath();ctx.arc(x+a,y+b,1.1,0,7);ctx.fill()}}
+ else if(k.p==='diamond'){ctx.beginPath();ctx.moveTo(x,t);ctx.lineTo(x+3,y);ctx.lineTo(x,t+h);ctx.lineTo(x-3,y);ctx.fill()}
+ ctx.restore();ctx.beginPath();ctx.arc(x+1.5,t-2,2.4,0,7);ctx.fillStyle=k.c2===k.c1?'#fff':k.c2;ctx.fill()}
+function drawHorse(ctx,x,y,r,ph){const c=r.coatHex;ctx.save();ctx.translate(x,y);ctx.fillStyle=c;ctx.strokeStyle=c;ctx.lineCap='round';
+ const a=Math.sin(ph)*3.5,b=Math.cos(ph)*3.5;ctx.lineWidth=1.8;
+ for(const [lx,o] of [[-6,a],[-4,-a],[5,b],[7,-b]]){ctx.beginPath();ctx.moveTo(lx,2);ctx.lineTo(lx+o*.7,8);ctx.stroke()}
+ ctx.beginPath();ctx.ellipse(0,0,9,4.6,0,0,7);ctx.fill();
+ ctx.beginPath();ctx.moveTo(6,-2.5);ctx.lineTo(11,-8.5);ctx.lineTo(15.5,-7.2);ctx.lineTo(12.5,-4.5);ctx.lineTo(8.5,1.5);ctx.closePath();ctx.fill();
+ if(r.mark==='별'||r.mark==='유성'){ctx.fillStyle='#fff';ctx.fillRect(12.5,-8,1.6,r.mark==='유성'?3:1.6)}
+ ctx.strokeStyle=c;ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(-8.5,-1.5);ctx.quadraticCurveTo(-14,0,-13,5+a*.3);ctx.stroke();
+ if(r.mark==='흰 양말'){ctx.strokeStyle='#fff';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(5+b*.5,6);ctx.lineTo(5+b*.7,8);ctx.stroke()}
+ drawSilk(ctx,0,-7.5,r.silk);
+ if(r.isP||r.nem){ctx.strokeStyle=r.isP?'#ffd23f':'#ef4444';ctx.lineWidth=1.6;ctx.strokeRect(-5.5,-12,11,8.5)}
+ ctx.restore()}
+/* ===== 라이벌 마주 캐릭터 ===== */
+const ONAMES={kr:['황보 회장','마 사장','진 이사','백 여사'],jp:['오가와 회장','쿠로다 사장','미야모토 씨','타치바나 여사'],us:['빅 톰 해리스','J.D. 콜트','미스 베로니카','닥터 펠프스'],
+ gb:['로드 애슐리','배런 크로포드','레이디 펜우드','시릴 경'],fr:['드 몽포르 백작','마담 뒤랑','무슈 르블랑','셀린 부인'],ae:['셰이크 하즈미','미스터 알 라시드','파티마 여사','타릭 회장'],au:['빅 대니','로니 맥그래스','셰일라 퀸','더 프로페서']};
+const PERS={'도발형':{pre:['오늘도 우리 {h}가 한 수 가르쳐 주지.','{me} 목장? 이름은 들어봤는데... 아, 아닌가?','{p}? 그 말로 나오다니 용감하군!'],win:['역시 상대가 안 되는군!','다음에도 기대하지 마시라고!'],lose:['...운이 좋았을 뿐이오.','다음엔 이렇게 안 될 거요!']},
+ '신사형':{pre:['좋은 레이스 합시다.','당신의 {p}, 기대하고 있습니다.','오늘은 날씨가 승부를 가를지도 모르겠군요.'],win:['좋은 승부였습니다. 감사합니다.','{p}도 훌륭했어요.'],lose:['훌륭합니다. 진심으로 축하드려요.','완패입니다. 멋진 말이군요.']},
+ '허세형':{pre:['우리 {h}는 몸값만 수십억이라고!','이번 레이스는 이미 끝났지, 하하하!','트로피 놓을 자리는 벌써 비워뒀어!'],win:['봤지? 돈은 거짓말을 안 해!','하하! 샴페인 준비해!'],lose:['마, 말이 좀 피곤했던 거야!','이, 이건 무효야! 재경기!']},
+ '냉철형':{pre:['데이터상 우리 {h}의 승률이 더 높소.','감정은 레이스에 불필요하오.','{p}의 약점은 이미 분석했소.'],win:['예측대로군.','변수는 없었소.'],lose:['...변수를 재계산해야겠군.','흥미로운 결과요. 기록해 두지.']}};
+function ownerLine(rv,kind,h,p){const L=PERS[rv.pers||'신사형'][kind];return pick(L).replace('{h}',h||'').replace('{p}',p||'').replace('{me}',G.farm)}
+/* ===== 마주 스킬 ===== */
+const SKILLS={eye:{n:'🔍 감정안',d:'경매 추정 잠재력이 실제에 가까워짐'},nego:{n:'🤝 협상가',d:'낙찰가 5% 환급'},care:{n:'🌾 마사 관리',d:'사육비 -8%'},doc:{n:'🩺 명의',d:'부상 확률 -15%'},show:{n:'🎪 흥행사',d:'상금 +4%'},scout:{n:'📇 인맥',d:'기수·조교사 비용 -10%'}};
+const sk=k=>(G.skills&&G.skills[k])||0;
+const olv=()=>Math.min(31,1+Math.floor(G.rep/40));
+const spts=()=>olv()-1-Object.values(G.skills||{}).reduce((a,b)=>a+b,0);
+function learn(k){if(spts()<=0||sk(k)>=3)return;G.skills[k]=sk(k)+1;toast(`${SKILLS[k].n} Lv${sk(k)}!`);sfx.coin();save();render()}
+const estShown=h=>Math.round(h.est+(capAvg(h)-h.est)*.3*sk('eye'));
+/* ===== 백업 ===== */
+function exportCode(){try{return btoa(unescape(encodeURIComponent(JSON.stringify(G))))}catch(e){return ''}}
+function importCode(txt){try{const g=JSON.parse(decodeURIComponent(escape(atob((txt||'').replace(/\s/g,'')))));if(!g||!g.farm||!Array.isArray(g.horses))throw 0;
+ migrate(g);save();screen='main';ui={tab:'stable',sheet:null,report:{title:'📥 불러오기 완료',lines:[`${COUNTRIES[G.country||'kr'].f} ${esc(G.farm)} 목장 (${wl(G.week)})을 불러왔어요.`]}};render()}catch(e){toast('❌ 올바른 백업 코드가 아니에요')}}
+function copyCode(){const t=$('#bk');if(!t)return;t.select&&t.select();try{navigator.clipboard.writeText(t.value).then(()=>toast('📋 복사했어요! 메모장 등에 보관하세요')).catch(()=>toast('길게 눌러 전체 선택 후 복사해 주세요'))}catch(e){toast('길게 눌러 전체 선택 후 복사해 주세요')}}
+const V_import=()=>`<h2 style="color:var(--g)">📥 백업 코드로 불러오기</h2><div class="mut" style="margin-bottom:8px">다른 기기에서 복사한 백업 코드를 붙여넣으세요. 이 브라우저의 기존 저장은 덮어씌워져요.</div>
+ <textarea class="code" id="imp" placeholder="여기에 붙여넣기"></textarea><div class="row" style="margin-top:10px"><button class="btn ghost" onclick="screen='title';render()">뒤로</button><button class="btn gold sp" onclick="importCode($('#imp').value)">불러오기</button></div>`;
+/* ===== 부상 치료 ===== */
+function injuryEvent(h){const cost=Math.round(1500*C().prize/10)*10;return {t:`🚑 ${h.name}가 큰 부상을 당했다! (${h.inj}주 진단)`,o:[
+ [`수술한다 (-${won(cost)}, 1주 만에 복귀)`,()=>{G.money-=cost;h.inj=1;if(Math.random()<.12){h.cap.spd=Math.max(260,h.cap.spd-25);return '수술은 성공했지만 한계치가 조금 떨어졌다 (스피드 한계 -25)'}return '수술 대성공! 다음 주면 훈련에 복귀한다'}],
+ ['자연 치유 (돈은 안 들지만 오래 걸림)',()=>{h.inj+=RI(1,3);const k=pick(STATS)[0],d=RI(8,16);h.s[k]=Math.max(50,h.s[k]-d);return `${h.inj}주 휴양. 쉬는 동안 근육이 빠졌다 (${SN[k]} -${d})`}],
+ ['은퇴시킨다',()=>{doRetire(h);return `${h.name}는 은퇴해 ${h.sex==='F'?'번식 암말':'종마'}이 됐다`}]]}}
+function nextEvent(){ui.event=(ui.evQ||[]).shift()||null;render()}
+
+/* ===== 특성 ===== */
+const TRAITS={'막판 괴물':{d:'막판 스퍼트 +2%'},'출발 귀재':{d:'출발이 빠르고 초반 +1%'},'비의 신':{d:'다습·불량 마장 +3%'},'철의 심장':{d:'스태미나 +10%'},
+ '큰 무대 체질':{d:'G1에서 +2%'},'승부사':{d:'막판 경합 시 +2%'},'외로운 늑대':{d:'선두일 때 +1.5%'},'노력파':{d:'훈련 효율 +15%'},
+ '긴장형':{d:'G1에서 -2%',neg:1},'유리 다리':{d:'부상 확률 ×1.8',neg:1},'변덕쟁이':{d:'컨디션 변화가 심함',neg:1}};
+function genTraits(){const x=Math.random(),n=x<.55?1:x<.75?2:0,ks=Object.keys(TRAITS),o=[];while(o.length<n){const k=pick(ks);if(!o.includes(k))o.push(k)}return o}
+const hasT=(h,t)=>(h.tr||[]).includes(t);
+const trHTML=h=>(h.tr||[]).map(t=>`<span class="trt ${TRAITS[t].neg?'neg':''}" title="${TRAITS[t].d}">${TRAITS[t].neg?'▼':'★'} ${t}</span>`).join('');
+const trList=h=>(h.tr||[]).length?`<div class="mut" style="margin-top:4px">${h.tr.map(t=>`<b>${t}</b>: ${TRAITS[t].d}`).join(' · ')}</div>`:'';
+
+/* ===== 라이벌 ===== */
+function initRivals(){
+ const base=C().money*((G&&G.mode)==='hard'?1.5:1);
+ G.rv=(C().rivals||RIVALS).map((n,i)=>({n,i,horses:[],tot:{wins:0,g1:0},money:Math.round(base*R(.9,1.1)/10)*10}));
+}
+function rvH(id){for(const r of G.rv){const h=r.horses.find(x=>x.id===id);if(h)return h}return null}
+function planRivalEntries(){
+ G.rvEntries=[];if(!G.rv)return;const cnt={};
+ for(const rv of G.rv)for(const h of rv.horses){
+  if(h.inj||h.fatigue>45||Math.random()<.5)continue;let best=null,bv=0;
+  for(const r of G.weekRaces){if(r.abroad||r.cls==='PR'||eligible(h,r)||(cnt[r.id]||0)>=3)continue;const x=compare(h,r)[2];const v=clamp((x-.85)/.3,.02,1)*racePrize(r);if(v>bv){bv=v;best=r}}
+  if(best){G.rvEntries.push({rid:best.id,hid:h.id});cnt[best.id]=(cnt[best.id]||0)+1}
+ }
+}
+function rvTag(h){return `${(h.beatMe||0)>=2?'🔥':''}${esc(h.name)}`}
+function standings(){const s=G.season;return [{n:G.farm+' 목장 (나)',me:1,...s.me},...G.rv.map((r,i)=>({n:r.n,...s.rv[i]}))].sort((a,b)=>b.earn-a.earn||b.wins-a.wins)}
+/* ===== 생산 ===== */
+function publicStuds(){
+ if(!G.studs){G.studs=[];for(let i=0;i<4;i++){const h=genHorse(8,R(640,900));h.sex='M';h.g=RI(1,4);h.g1=RI(0,3);h.public=1;h.fee=Math.round(Math.pow(capAvg(h)/100,2)*90*C().prize/10)*10;G.studs.push(h)}}
+ return G.studs;
+}
+const pcopy=h=>({coat:h.coat,name:h.name,cap:{...h.cap},apt:{...h.apt},mud:h.mud||'B',tr:[...(h.tr||[])]});
+function breed(mid,sid){
+ const m=G.retired.find(x=>x.id===mid),sr=G.retired.find(x=>x.id===sid)||publicStuds().find(x=>x.id===sid);if(!m||!sr)return;
+ const fee=sr.public?sr.fee:0;if(G.money<fee)return;G.money-=fee;const y=Math.floor(G.week/48);m.bred=y;
+ G.preg.push({due:y+1,sire:pcopy(sr),dam:pcopy(m)});log(`🧬 ${esc(m.name)} × ${esc(sr.name)} 교배${fee?` (종부료 ${won(fee)})`:''}. 내년에 망아지가 태어나요!`);
+ ui.sheet=null;toast('🧬 교배 완료! 내년 1월에 망아지 입사');save();render();
+}
+function makeFoal(p){
+ const h=genHorse(2,500);
+ for(const [k] of STATS){h.cap[k]=Math.round(clamp((p.sire.cap[k]+p.dam.cap[k])/2*R(.9,1.12)+R(-20,40),260,1150));h.s[k]=Math.min(h.cap[k]-40,RI(100,160))}
+ for(const k of Object.keys(DCATN)){let a=pick([p.sire.apt[k],p.dam.apt[k]]);if(Math.random()<.15)a=AORD[clamp(AORD.indexOf(a)+pick([-1,1]),0,5)];h.apt[k]=a}
+ h.tr=[];for(const t of [...(p.sire.tr||[]),...(p.dam.tr||[])])if(!h.tr.includes(t)&&h.tr.length<2&&Math.random()<.35)h.tr.push(t);if(h.tr.length<2&&Math.random()<.25){const t=pick(Object.keys(TRAITS));if(!h.tr.includes(t))h.tr.push(t)}
+ {const cs=[p.sire.coat,p.dam.coat].filter(Boolean);h.coat=cs.includes('회색')&&Math.random()<.5?'회색':Math.random()<.8&&cs.length?pick(cs):wpick(COATW)}
+ h.mud=pick([p.sire.mud,p.dam.mud]);h.sire=p.sire.name;h.dam=p.dam.name;h.est=Math.round(capAvg(h));h.home=1;return h;
+}
+function migrate(g){
+ G=g;if(!G.rv)initRivals();
+ if(!G.season)G.season={me:{earn:0,wins:0,g1:0},rv:G.rv.map(()=>({earn:0,wins:0,g1:0}))};
+ G.preg=G.preg||[];G.rvEntries=G.rvEntries||[];if(G.excl===undefined)G.excl=null;
+ if(G.tut===undefined)G.tut=-1;G.ach=G.ach||{};G.flags=G.flags||{};if(G.trainer===undefined)G.trainer=null;G.spOffers=G.spOffers||[];if(G.sponsor===undefined)G.sponsor=null;
+ G.loan=G.loan||0;G.g1hist=G.g1hist||[];G.h2h=G.h2h||G.rv.map(()=>({w:0,l:0}));G.leadN=G.leadN||0;G.tot.top3=G.tot.top3||0;
+ for(const h of [...G.horses,...G.retired,...G.market,...G.rv.flatMap(r=>r.horses)]){if(!h.tr)h.tr=genTraits();if(!h.coat)h.coat=wpick(COATW);if(!h.mark)h.mark=pick(MARKS)}
+ if(!G.silk)G.silk={c1:'#16a34a',c2:'#facc15',p:'hoop'};G.fac.pool=G.fac.pool||0;G.fac.lab=G.fac.lab||0;if(!G.mode)G.mode='normal';G.news=G.news||[];G.elite=G.elite||[];if(G.camp===undefined)G.camp=null;G.skills=G.skills||{};G.plans=G.plans||{};
+ const on=ONAMES[G.country]||ONAMES.kr,ps=Object.keys(PERS);G.rv.forEach((r,i)=>{if(r.money===undefined)r.money=Math.round(20000*C().prize);if(!r.silk)r.silk=randSilk();if(!r.owner)r.owner=on[i%on.length];if(!r.pers)r.pers=ps[i%ps.length]});
+ for(const h of [...G.horses,...G.retired,...G.market]){if(!h.sex)h.sex=pick(['M','F']);if(!h.mud)h.mud=pick(['A','B','B','C']);if(!h.style)h.style=pick(Object.keys(STRAT))}
+ for(const r of G.weekRaces)if(!r.going)r.going='양호';
+ return G;
+}
+
+/* ===== 조교사 ===== */
+const TRAINERS=[{id:1,spec:'all',m:1.12,fee:500,rep:80,d:'모든 훈련 +12%'},{id:2,spec:'spd',m:1.3,fee:260,rep:30,d:'스피드 훈련 +30%'},{id:3,spec:'sta',m:1.3,fee:260,rep:30,d:'스태미나 훈련 +30%'},
+ {id:4,spec:'heal',m:1,fee:220,rep:15,d:'부상 확률 ×0.5 · 휴식 회복 +10'},{id:5,spec:'pow',m:1.3,fee:160,rep:5,d:'파워 훈련 +30%'},{id:6,spec:'all',m:1.05,fee:80,rep:0,d:'모든 훈련 +5% (신참)'}];
+const TNAMES={kr:['강철호','문영식','배수정','조민혁','홍지훈','서다은'],jp:['스즈키 타츠오','나카무라 겐','야마모토 아이','이토 다이스케','와타나베 코지','하야시 유이'],us:['빌 앤더슨','레이 마르티네즈','수잔 클라크','데릭 존스','마커스 리','에이미 터너'],
+ gb:['아치 포스터','헨리 쿠퍼','마거릿 웰스','로저 프라이스','니겔 혹스','루시 패짓'],fr:['알랭 가르니에','파스칼 르루','이자벨 루소','장 크루아','미셸 바르테','카미유 노엘'],
+ ae:['사이드 알 하르비','칼리드 만수르','아이샤 카림','무스타파 줄','자이드 하킴','살마 유수프'],au:['그레그 쿠퍼','배리 셰퍼드','린다 맥케이','토드 니콜스','숀 라일리','앨리 브룩']};
+const trName=t=>(TNAMES[G.country]||TNAMES.kr)[t.id-1];
+const trById=id=>TRAINERS.find(t=>t.id===id);
+function hireTr(id){const t=trById(id);if(G.rep<t.rep)return;G.trainer=id;log(`🎓 ${trName(t)} 조교사 고용 (주급 ${won(t.fee)})`);toast(`🎓 ${trName(t)} 조교사 합류!`);save();render()}
+function fireTr(){G.trainer=null;save();render()}
+/* ===== 스폰서 ===== */
+const SPN=['황금사료','번개편자','은하항공','푸른은행','초원음료','별빛시계','하늘보험','파도통신'];
+const SPT={wins:{n:'승리',k:'wins'},top3:{n:'3착 이내',k:'top3'},g:{n:'중상 우승',k:'g'},g1:{n:'G1 우승',k:'g1'}};
+function genOffer(){const opts=[['wins',RI(2,4),16,800],['top3',RI(4,7),16,400],['g',1,24,4500]];if(G.rep>=40)opts.push(['g1',1,36,14000]);
+ const [t,n,w,base]=pick(opts),rw=Math.round(base*n*C().prize/10)*10;return {name:pick(SPN),t,n,w,reward:rw,up:Math.round(rw*.2/10)*10}}
+function signSp(i){const o=G.spOffers[i];if(!o||G.sponsor)return;G.sponsor={...o,base:G.tot[SPT[o.t].k]||0,until:G.week+o.w};G.money+=o.up;G.spOffers=[];log(`💼 ${o.name} 스폰서 계약 (계약금 +${won(o.up)})`);toast(`💼 ${o.name} 계약!`);save();render()}
+function spProg(){const s=G.sponsor;return s?(G.tot[SPT[s.t].k]||0)-s.base:0}
+/* ===== 은행 ===== */
+const loanMax=()=>mode()==='hard'?0:Math.min(100000,5000+G.rep*150);
+function borrow(a){a=Math.min(a,loanMax()-G.loan);if(a<=0)return;G.loan+=a;G.money+=a;log(`🏦 대출 ${won(a)}`);save();render()}
+function repay(a){a=Math.min(a,G.loan,Math.max(0,G.money));if(a<=0)return;G.loan-=a;G.money-=a;log(`🏦 상환 ${won(a)}`);save();render()}
+/* ===== 업적 ===== */
+const ACH=[
+ ['firstwin','첫 승리','첫 1착',{m:500},()=>G.tot.wins>=1],['w10','10승','통산 10승',{m:1000,rep:3},()=>G.tot.wins>=10],['w50','50승','통산 50승',{rep:10},()=>G.tot.wins>=50],['w100','100승','통산 100승',{rep:20},()=>G.tot.wins>=100],
+ ['g','중상 첫 승','첫 중상 우승',{m:2000,rep:5},()=>G.tot.g>=1],['g1','첫 G1','첫 G1 우승',{m:5000,rep:10},()=>G.tot.g1>=1],['g1x5','G1 5승','G1 통산 5승',{rep:20},()=>G.tot.g1>=5],
+ ['derby','더비 제패','더비 우승',{m:5000,rep:10},()=>G.flags.derby],['abroad','세계 정복','해외 G1 우승',{m:10000,rep:25},()=>G.flags.abroad],
+ ['home','내 손으로 키운 말','자가생산마 첫 승',{m:1500,rep:5},()=>G.flags.home],['homeg1','혈통의 증명','자가생산마 G1 우승',{m:8000,rep:15},()=>G.flags.homeg1],
+ ['leading','리딩 오너','연간 마주 순위 1위',{rep:10},()=>G.leadN>=1],['lead3','왕조','리딩 오너 3회',{rep:30},()=>G.leadN>=3],
+ ['revenge','복수 성공','숙적이 나온 레이스 우승',{m:2000,rep:5},()=>G.flags.revenge],['rain','빗속의 질주','불량 마장에서 우승',{m:1000},()=>G.flags.rain],
+ ['photo','코차의 승부','사진 판정 끝에 우승',{m:1000},()=>G.flags.photo],['ss','괴물','능력치 SS(1000+) 보유',{rep:10},()=>G.horses.some(h=>STATS.some(([k])=>h.s[k]>=1000))],
+ ['big','대목장','마구간 최대 확장',{rep:5},()=>G.fac.stable>=3],['rich','억만장자','자금 10억 돌파',{rep:10},()=>G.money>=100000],
+ ['appr','사제의 꿈','견습 기수로 G1 우승',{m:5000,rep:15},()=>G.flags.apprG1],['wsc','월드 챔피언','월드 시리즈 20pt 달성',{m:10000,rep:20},()=>(G.wsWins||0)>=1],['world','세계를 누비는 마주','목장 이전',{rep:5},()=>(G.moves||0)>=1],
+ ['sponsor','스폰서의 신뢰','스폰서 목표 달성',{rep:3},()=>G.flags.sponsor],['award','시상대의 주인공','연말 시상식 수상',{rep:5},()=>(G.awards||0)>=1],['statue','불멸의 명마','은퇴마 동상 건립',{rep:5},()=>G.retired.some(h=>h.statue)]];
+function checkAch(lines){for(const [id,n,d,rw,t] of ACH){if(G.ach[id]||!t())continue;G.ach[id]=G.week;if(rw.m)G.money+=Math.round(rw.m*C().prize);if(rw.rep)G.rep+=rw.rep;
+ const msg=`🏅 업적 달성: <b>${n}</b> (${d})${rw.m?` +${won(Math.round(rw.m*C().prize))}`:''}${rw.rep?` 명성 +${rw.rep}`:''}`;lines.push(msg);log(msg);toast(`🏅 업적: ${n}`)}}
+/* ===== 교감 이벤트 ===== */
+const BOND=[
+ h=>({t:`🌙 ${h.name}가 밤에 마구간을 탈출했다!`,o:[['직접 찾으러 간다',()=>{h.fatigue=Math.min(100,h.fatigue+10);h.cond=Math.min(4,h.cond+1);h.s.guts=Math.min(h.cap.guts,h.s.guts+6);return '새벽 들판에서 찾았다. 둘 사이가 더 가까워졌다! (컨디션↑ 근성+6, 피로+10)'}],
+  ['내버려 둔다',()=>{if(Math.random()<.5){h.cond=Math.min(4,h.cond+1);return '아침에 스스로 돌아왔다. 기분 좋아 보인다 (컨디션↑)'}h.inj=Math.max(h.inj,2);return '돌아오다 다리를 삐끗했다... 2주 부상'}]]}),
+ h=>({t:`🥕 ${h.name}가 사료를 거부한다.`,o:[['특제 사료를 사 온다 (-300만원)',()=>{G.money-=300;h.cond=Math.min(4,h.cond+2);return '맛있게 먹었다! 컨디션 크게 상승'}],['배고프면 먹겠지',()=>{h.cond=Math.max(0,h.cond-1);h.s.guts=Math.min(h.cap.guts,h.s.guts+8);return '결국 먹었다. 독기가 생겼다 (근성+8, 컨디션↓)'}]]}),
+ h=>({t:`📰 기자가 ${h.name} 취재를 요청했다.`,o:[['수락한다',()=>{G.rep+=3;h.fatigue=Math.min(100,h.fatigue+10);return '기사가 화제가 됐다! 명성+3 (피로+10)'}],['거절한다',()=>{h.fatigue=Math.max(0,h.fatigue-5);return '조용히 쉬었다 (피로-5)'}]]}),
+ h=>({t:`💢 ${h.name}가 옆 마방 말과 싸웠다!`,o:[['엄하게 혼낸다',()=>{h.s.wit=Math.min(h.cap.wit,h.s.wit+8);h.cond=Math.max(0,h.cond-1);return '얌전해졌다 (지능+8, 컨디션↓)'}],['달래준다',()=>{h.cond=Math.min(4,h.cond+1);return '금세 기분이 풀렸다 (컨디션↑)'}]]}),
+ h=>({t:`🏊 ${h.name}가 물을 좋아하는 것 같다.`,o:[['수영 훈련을 시켜본다',()=>{h.s.sta=Math.min(h.cap.sta,h.s.sta+12);h.fatigue=Math.min(100,h.fatigue+8);return '신나게 헤엄쳤다! (스태미나+12, 피로+8)'}],['다음에 하자',()=>'평소대로 지냈다']]}),
+ h=>({t:`👧 동네 아이들이 ${h.name}를 보러 오고 싶어 한다.`,o:[['목장을 개방한다',()=>{G.rep+=2;G.money+=300;h.cond=Math.min(4,h.cond+1);return '아이들이 무척 기뻐했다! 명성+2, 후원금 +300만원'}],['훈련에 집중한다',()=>{h.fatigue=Math.max(0,h.fatigue-10);return '조용한 하루 (피로-10)'}]]})];
+function bondPick(i){const e=ui.event;if(!e||!e.o||!e.o[i])return;const res=e.o[i][1]();save();log(`💬 ${esc(e.t)} → ${esc(res)}`);ui.event={t:e.t,res};render()}
+function eventHTML(){const e=ui.event;return `<div class="overlay"><div class="sheet"><h2 style="margin:0 0 8px;font-size:19px">${e.html?e.t:e.t.startsWith('🚑')?'🚑 부상 치료':'💬 마구간 이야기'}</h2><div style="font-size:15px;margin-bottom:12px">${e.html?'':esc(e.t)}</div>
+ ${e.html?`${e.html}<button class="btn gold" style="width:100%;padding:13px" onclick="nextEvent()">확인</button>`:e.res?`<div class="card" style="background:#fff8e1">${esc(e.res)}</div><button class="btn gold" style="width:100%;padding:13px" onclick="nextEvent()">확인</button>`:e.o.map((o,i)=>`<button class="opt" onclick="bondPick(${i})"><b>${esc(o[0])}</b></button>`).join('')}</div></div>`}
+/* ===== 튜토리얼 ===== */
+const TUT=[['stable','🐴 <b>마구간</b>: 말마다 이번 주 훈련을 골라요. <b>⭐</b>가 추천 훈련이에요. 말 이름을 누르면 능력치·특성·전적을 볼 수 있어요.'],
+ ['races','🏁 <b>레이스</b>: 출주 등록 → <b>말 → 기수 → 작전</b> 순서로 골라요. <b>⭐</b> 추천 레이스, ☀️🌧️ 날씨, ⚔️ 라이벌도 확인!'],
+ ['market','🔨 <b>경매장</b>: 4주마다 정기 경매가 열려요. 놓친 말은 라이벌에게 가요.'],
+ ['jockeys','🧢 <b>스태프</b>: 조교사를 고용하면 훈련이 강해지고, 기수와 전속 계약도 할 수 있어요.'],
+ ['farm','🏡 <b>목장</b>: 💼경영(스킬·스폰서·은행·시설) / 🧬생산(교배·은퇴마 목장·승부복) / 📊기록(순위·업적·신문)으로 나뉘어 있어요. 10년차가 끝나면 엔딩!'],
+ ['stable','📅 준비가 끝나면 아래 <b>다음 주 ▶</b>! 귀찮으면 <b>⭐ 추천대로 한 번에</b>와 <b>⏩ 자동</b>(결정할 일이 생길 때까지 진행)을 써보세요. 사육비가 매주 나가고, <b>4주 연속 적자면 파산</b>이에요. 행운을 빌어요!']];
+function tutGo(n){if(n>=TUT.length){G.tut=-1;save();render();return}G.tut=n;ui.tab=TUT[n][0];render();window.scrollTo(0,0)}
+function tutHTML(){const t=TUT[G.tut];return `<div class="tut"><div class="row" style="margin-bottom:6px"><b style="color:#fff">📖 튜토리얼 ${G.tut+1}/${TUT.length}</b><span class="sp"></span><button class="btn sm" style="background:#ffffff22;color:#fff" onclick="tutGo(99)">건너뛰기 ✕</button></div>
+ <div style="font-size:14px;line-height:1.5">${t[1]}</div><div class="row" style="margin-top:10px">${G.tut>0?`<button class="btn sm" style="background:#ffffff22;color:#fff" onclick="tutGo(${G.tut-1})">◀ 이전</button>`:''}<span class="sp"></span><button class="btn gold sm" onclick="tutGo(${G.tut+1})">${G.tut+1<TUT.length?'다음 ▶':'시작하기!'}</button></div></div>`}
+
+/* ===== 새 게임 ===== */
+function newGame(){
+ const farm=pendingFarm||'초록',country=ui.country||'kr',c=COUNTRIES[country];
+ G={farm,country,week:0,money:c.money,rep:0,horses:[],retired:[],market:[],entries:[],jockeys:JOCKEYS.map((j,i)=>({...j,n:c.jk[i],rides:0,wins:0})),fac:{stable:0,train:0,vet:c.vet||0},log:[],debt:0,nextId:1,tot:{starts:0,wins:0,g:0,g1:0,earn:0},weekRaces:[]};
+ G.mode=ui.mode||'normal';if(G.mode==='poor')G.money=Math.round(G.money*.4);
+ migrate(G);G.tut=0;G.spOffers=[genOffer(),genOffer()];
+ log(`🎉 ${c.f} ${c.n}에 ${esc(farm)} 목장 개장!${G.mode!=='normal'?' ['+MODES[G.mode].n+' 모드]':''}`);
+ startAuction('open');
+}
+
+/* ===== 오프닝 경매 ===== */
+const V={};V.import=V_import;V.ending=V_ending;V.intro=()=>V_intro();
+/* ===== 나라 ===== */
+const COUNTRIES={
+ kr:{rivals:['청룡 목장','한라 스테이블','백두 레이싱','은하수 목장'],f:'🇰🇷',n:'한국',d:'균형 잡힌 무난한 시작. 초보 마주에게 추천!',money:8000,upkeep:1,prize:1,str:1,auc:1,lots:6,train:1,
+  dists:[1200,1400,1600,1800,2000,2200,2400],tracks:['서울','부산','제주','광주','대전'],
+  g1:{14:'아리랑 2000기니',20:'한반도 더비',24:'한강 그랑프리',40:'무궁화 컵',46:'백두 그랑프리'},
+  jk:['김태풍','박선두','이민준','최강수','정하늘','한바람','윤서진','오세찬','신예린','강도윤']},
+ jp:{rivals:['홋카이도 팜','시라카바 목장','사쿠라 레이싱','미나토 스테이블'],names:['하야테오','츠키노히카리','사쿠라스톰','유키카제','호시노유메','아카츠키','카제노오','미나모토킹','하루노소라','아오이토리','시라누이','긴노츠바사','쿠레나이','타이요노코','야마부키','카가야키','니지노카나타','후지노미네','사쿠라번','하나후부키','오보로즈키','미카즈키','라이덴','시로가네','유메노츠즈키','킨이로','하쿠초','아라시','코하쿠','모미지','카스미','텐쿠','히비키','하야부사','토키노카네','나루카미','소요카제','우미노오','스즈란','히노데','마이히메','쿄쿠지츠','아마노가와','킷세키','렌게','토와','카이도','쿠로하네'],f:'🇯🇵',n:'일본',d:'상금이 크지만 말값도 비싸고 상대가 강해요. 중거리 중심.',money:9000,upkeep:1.1,prize:1.35,str:1.06,auc:1.3,lots:6,train:1,
+  dists:[1400,1600,1800,2000,2200,2400,2500],tracks:['무사시노','미나토','오카','시라하마','키타노'],
+  g1:{14:'사쿠라 2000기니',16:'봄의 황금배',20:'무사시노 더비',24:'여름 그랑프리',36:'단풍 황금배',40:'후지 인터내셔널',46:'연말 그랑프리'},
+  jk:['타카하시 쇼','후지모토 켄','아오키 류','요시다 렌','이시카와 미오','마츠다 하루','니시무라 타쿠','오노 아키라','사토 히나','키무라 소타']},
+ us:{rivals:['켄터키 오크 팜','블루그래스 스테이블','론스타 레이싱','골든게이트 팜'],names:['미드나잇 러너','썬더 볼트','골든 프론티어','리버티 벨','와일드 캣','블루 그래스','하이 눈','스틸 트레인','레드 록','러키 스트라이크','캡틴 아메리카나','텍사스 스톰','실버 불릿','브루클린 보이','하트랜드','데저트 이글','빅 스카이','루트 식스티식스','골드 러시','카우보이 킹','애틀랜틱 웨이브','스타 스팽글','파이어 워크','문라이트 드라이브','하이웨이 스타','로데오 퀸','블랙 다이아몬드','퍼스트 프레지던트','뉴 프론티어','썬셋 스트립','스모키 마운틴','캐니언 런','재즈 나이트','라스베가스 럭','굿 타임 찰리','브레이브 하트','이글 아이','로켓 맨','라이트닝 레이디','오션 드라이브'],f:'🇺🇸',n:'미국',d:'단거리·마일 레이스가 많고 경매 매물이 많아요. 말값은 저렴한 편.',money:8000,upkeep:1,prize:1.1,str:1.02,auc:.85,lots:8,train:1,
+  dists:[1200,1200,1400,1600,1600,1800,2000],tracks:['블루리지','실버레이크','오크힐','레드캐니언','골든베이'],
+  g1:{14:'블루리지 마일',16:'아메리칸 스테이어',20:'프론티어 더비',24:'선셋 그랑프리',34:'스타라이트 스프린트',40:'리버티 클래식',46:'이글 월드컵'},
+  jk:['잭 모리슨','대니 리브스','카를로스 몬테스','제이크 베일리','에밀리 로즈','타일러 브룩스','루이스 산체스','벤 하트','올리비아 킹','노아 그레이']},
+ gb:{rivals:['로열 오크 스터드','하이필드 스테이블','윈저 레이싱','노스게이트 스터드'],names:['로열 헤리티지','킹스 랜섬','노던 라이트','윈저 그레이','크라운 주얼','올드 블라이티','템스 미스트','하이랜드 치프','브리티시 오크','서 랜슬롯','레이디 엘리너','나이츠브리지','스톤헨지','블랙 프린스','포기 런던','커스틀 록','에메랄드 아일','던 패트롤','레드 코트','옥스퍼드 블루','골든 시티','윈터 로즈','엠파이어 스테이트먼트','어거스트 문','로드 넬슨','버킹엄','클라우디 스카이','허니 브룩','그린 슬리브스','투더 킹','위스퍼링 윈드','바론 오브 요크','브리스톨 벨','카멜롯','솔즈베리','랜드 엔드','실버 핀치','오크 하트','던디 스타','캔터베리 테일'],f:'🇬🇧',n:'영국',d:'경마의 본고장. 장거리 레이스가 많고 사육비가 비싸요. 훈련 효율 +10%.',money:8500,upkeep:1.2,prize:1.15,str:1.04,auc:1.1,lots:6,train:1.1,
+  dists:[1600,2000,2400,2400,2800,3200],tracks:['로즈필드','킹스워스','하이브리지','노스게이트','웨스트모어'],
+  g1:{14:'로열 2000기니',16:'캐슬 골드컵',20:'에메랄드 더비',24:'크라운 스테이크스',32:'노스 레저',40:'템스 챔피언 스테이크스',46:'윈터 클래식'},
+  jk:['에드워드 하워드','찰리 펨브로크','윌 애시퍼드','올리 래드클리프','엘리 브랜든','토비 웨일리','해리 칼튼','조지 벤틀리','소피 엘름스','잭 펠로우즈']},
+ fr:{rivals:['아라 드 몽타뉴','에퀴리 뒤 수드','샤토 루아 스테이블','하라 드 벨뷰'],names:['르 미스트랄','에투알 도레','벨 에포크','몽 쉐리','루아 솔레이','라 비 앙 로즈','봉 부아야주','샤토 블랑','플뢰르 드 리스','누아르 에클라','파리 누이','르 그랑 블루','마들렌','생 제르맹','오르 뒤 마탱','리브 고슈','몽마르트르','에스프리 리브르','라 무아','프루 데 투아','골루아즈','베르사유','르 니드','쉬페르 노바','로망티크','부르봉 키드','샹젤리제','루즈 에 누아르','프로방스','뤼미에르','시크 마담','두 바르','코르사르','라방드','아르장 블루','르 쇼콜라','에르미타주','콩코르드','마르소','벨 아미'],f:'🇫🇷',n:'프랑스',d:'중장거리의 명가. 수의 센터 기본 장착으로 부상이 적어요.',money:8000,upkeep:1.15,prize:1.1,str:1.03,auc:1.05,lots:6,train:1,vet:1,
+  dists:[1600,2000,2100,2400,2400,3000],tracks:['불로뉴','벨뷰','리비에르','몽블루','라벤더빌'],
+  g1:{14:'프랭탕 2000기니',20:'루아르 더비',24:'센 대상',36:'라벤더 상',40:'에투알 상',46:'겨울 대상'},
+  jk:['앙리 르콩트','바스티앙 모렐','막상스 기베르','피에르 뒤부아','클레르 마르탱','루카 베르나르','앙투안 롤랑','쥘 모로','레아 퐁텐','위고 시몽']},
+ ae:{rivals:['팔콘 레이싱','알 자빌 스테이블','사막의 별 목장','알 나스르 레이싱'],names:['알 사이프','자밀 알 바흐르','사하라 나이트','알 나지마','술탄 알 레말','카심','디야브','하빕 알 리흐','알 마스','파리스','야스민','누르 알 파즈르','바드르','알 아사드','라이얀','사크르','무바라크','알 자위야','할라','자예드 스타','오아시스 킹','알 쿠라','타밈','나스르','아미르 알 사흐라','샤힌','마르얌','알 바라크','라시드','훔다','자하르','알 와디','알 샴스','미샬','알 하무르','아스와드','부르즈','카와키브','알 파라스','와피'],f:'🇦🇪',n:'두바이',d:'오일머니! 자금 2배·상금 1.4배지만 사육비도 비싸고 세계 최강 상대들이 몰려요.',money:16000,upkeep:1.6,prize:1.4,str:1.1,auc:1.4,lots:6,train:1,
+  dists:[1200,1600,1800,2000,2400],tracks:['알 와슬','오아시스','알 사흐라','듄 밸리','팔콘 베이'],
+  g1:{14:'오아시스 2000기니',20:'사막의 별 더비',24:'사막 그랑프리',40:'신기루 클래식',46:'골든 듄 월드컵'},
+  jk:['라시드 알 아흐마드','타리크 하산','유수프 칼릴','오마르 파루크','레일라 나세르','하미드 자이드','카림 사이프','아딜 무라드','노라 압둘라','파이살 아민']},
+ au:{rivals:['코알라 스터드','서던 크로스 레이싱','아웃백 스테이블','헌터밸리 팜'],names:['부메랑 키드','서던 크로스','아웃백 스타','코알라 킹','캥거루 잭','골든 비치','블루 마운틴','울룰루','부시 레인저','시드니 썬','멜버른 미스트','와틀 블룸','썬번트 컨트리','리프 라이더','딩고 대시','킬리 킬리','빌라봉','캡틴 쿡','서프 시티','레드 센터','이스터 브리즈','유칼립투스','워커바웃','퍼스 파이어','태즈 데빌','배러무디','스노위 리버','골드코스트','브리즈번 볼트','보틀브러시','킹 브라운','스완 리버','크록 헌터','웜뱃 워리어','쿠카부라','매틸다','바오밥','크리켓 클럽','라임스톤','와일드 브럼비'],f:'🇦🇺',n:'호주',d:'스프린트 천국. 사육비가 싸고 상대도 약간 쉬워요. 자금은 적은 편.',money:7000,upkeep:.75,prize:1,str:.95,auc:.85,lots:7,train:1,
+  dists:[1000,1200,1200,1400,1600,2000,3200],tracks:['하버사이드','레드 샌즈','실버 크릭','유칼리 파크','코럴 베이'],
+  g1:{16:'하버 컵',20:'서던 더비',34:'레드 센터 스프린트',36:'유칼립투스 플레이트',40:'사우던 크라운 컵',46:'골든 부츠'},
+  jk:['맷 브래드쇼','리엄 오코너','크레이그 월시','숀 패터슨','제이미 커','블레이크 손더스','케일라 맥스웰','탐 리버스','미셸 하딩','조시 펠'] }};
+const C=()=>COUNTRIES[G&&G.country||'kr'];
+let pendingFarm='';
+V.country=()=>`<h2 style="color:var(--g);margin:6px 0">어느 나라에서 목장을 열까?</h2><div class="mut" style="margin-bottom:10px">나라마다 자금·상금·말값·레이스 거리가 달라요.</div>
+ ${Object.entries(COUNTRIES).map(([k,c])=>`<button class="opt ${ui.country===k?'sel':''}" onclick="ui.country='${k}';render()"><div class="row"><span style="font-size:30px">${c.f}</span><div class="sp"><b style="font-size:16px">${c.n}</b><div class="mut">${c.d}</div></div></div>
+ ${ui.country===k?`<div style="margin-top:8px">${[['시작 자금',won(c.money)],['상금',`×${c.prize}`],['사육비',`×${c.upkeep}`],['말값',`×${c.auc}`],['상대 수준',`×${c.str}`],['경매 매물',`${c.lots}두`]].map(x=>`<span class="tag">${x[0]} <b>${x[1]}</b></span>`).join('')}
+  <div class="mut" style="margin-top:4px">주요 G1: ${Object.values(c.g1).slice(0,4).join(' · ')}</div></div>`:''}</button>`).join('')}
+ <h3 style="margin-top:12px">게임 모드</h3><div class="modes">${Object.entries(MODES).map(([k,m])=>`<button class="opt ${(ui.mode||'normal')===k?'sel':''}" style="margin:0" onclick="ui.mode='${k}';render()"><b>${m.n}</b><div class="mut">${m.d}${m.x>1?` · 점수 ×${m.x}`:''}</div></button>`).join('')}</div>
+ <div class="row" style="margin-top:6px"><button class="btn ghost" onclick="screen='title';render()">뒤로</button><button class="btn gold sp" style="padding:14px;font-size:16px" ${ui.country?'':'disabled'} onclick="newGame()">${ui.country?COUNTRIES[ui.country].f+' '+COUNTRIES[ui.country].n+'에서 시작 → 경매장으로':'나라를 고르세요'}</button></div>`;
+
+let AU=null;
+const RIVALS=['청룡 목장','은하 레이싱','바람의 언덕','황금말굽 클럽'];
+function startAuction(mode){
+ mode=mode||'open';let lots;
+ if(mode!=='open'&&G.mode==='pure'){toast('🧬 순혈주의 모드에선 경매에 참가할 수 없어요');return}
+ if(mode==='market'||mode==='elite'){lots=(mode==='elite'?G.elite:G.market).slice();if(!lots.length)return}else{
+ const qs=[380,440,520,600,720,350+520*Math.pow(Math.random(),1.4)];while(qs.length<C().lots)qs.push(350+480*Math.pow(Math.random(),1.5));qs.sort(()=>Math.random()-.5);
+ _lotTmp=[];qs.forEach((q,i)=>_lotTmp.push(genHorse(i<3?3:2,q)));lots=_lotTmp.slice().sort(()=>Math.random()-.5);_lotTmp=[];}
+ AU={mode,lots,idx:0,won:0,rivals:G.rv.map(r=>({n:r.n,i:r.i,max:lots.map(h=>r.horses.length>=6?0:Math.round(h.price*R(.55,1.3)/10)*10)})),timer:null};
+ openLot();screen='auction';ui={tab:ui.tab||'stable',sheet:null,report:null};render();window.scrollTo(0,0);
+ AU.timer=setInterval(()=>{if(screen==='auction'&&AU.state==='open'){auTick();render()}},1000);
+}
+const rvReserve=rv=>Math.max(1000,(rv.horses.length+1)*400);
+const auInc=p=>Math.max(50,Math.round(p*.06/10)*10);
+const auNext=()=>AU.leader?AU.price+auInc(AU.price):AU.price;
+function openLot(){const h=AU.lots[AU.idx];AU.price=Math.max(100,Math.round(h.price*.4/10)*10);AU.leader=null;AU.count=0;AU.state='open';AU.log=[];AU.result=''}
+function auBid(who){AU.price=auNext();AU.leader=who;AU.count=0;AU.log.unshift(`${who==='나'?'<b>나</b>':who} — ${won(AU.price)}`);AU.log=AU.log.slice(0,5)}
+function auTick(){
+ const np=auNext(),cap=AU.mode==='open'?3:6,c=AU.rivals.filter(r=>{const rv=G.rv[r.i];return r.max[AU.idx]>=np&&AU.leader!==r.n&&rv.horses.length<cap&&np<=rv.money-rvReserve(rv)});
+ if(c.length&&Math.random()<(AU.leader?.7:.9))auBid(pick(c).n);
+ else if(++AU.count>=3)auSold();
+}
+function playerBid(){if(AU.state!=='open'||AU.leader==='나'||G.money<auNext()||G.horses.length>=capNow())return;auBid('나');render()}
+function auPass(){while(AU.state==='open'){if(AU.leader==='나'){auSold();break}auTick()}render()}
+function auSold(){
+ const h=AU.lots[AU.idx];AU.state='sold';
+ if(AU.leader==='나'){G.money-=AU.price;h.price=AU.price;G.horses.push(h);AU.won++;sfx.coin();if(sk('nego')){const rb=Math.round(AU.price*.05*sk('nego'));G.money+=rb;log(`🤝 협상가 환급 +${won(rb)}`)}
+  const real=pgrade(capAvg(h)),est=pgrade(estShown(h));
+  AU.result=`🔨 <b>낙찰!</b> ${esc(h.name)}를 ${won(AU.price)}에 손에 넣었다.<br>훈련사 평가 실제 잠재력: <b style="font-size:18px">${real}</b> ${GORD.indexOf(real)<GORD.indexOf(est)?'😥 (추정보다 낮다...)':GORD.indexOf(real)>GORD.indexOf(est)?'🤩 (추정보다 높다! 대박!)':'(추정대로)'}`;
+  log(`🔨 경매에서 <b>${esc(h.name)}</b> 낙찰 (${won(AU.price)}) · 잠재력 ${real}`);
+ }else if(AU.leader){const rv=G.rv.find(r=>r.n===AU.leader);if(rv){rv.money-=AU.price;h.own=rv.i;h.price=AU.price;rv.horses.push(h)}
+  AU.result=`${AU.leader}이(가) ${won(AU.price)}에 낙찰했다. 레이스에서 만날지도...`;}
+ else AU.result='입찰자가 없어 유찰되었다.';
+}
+function auNextLot(){AU.idx++;if(AU.idx>=AU.lots.length||(AU.mode==='open'&&G.horses.length>=capNow()))return endAuction();openLot();render();window.scrollTo(0,0)}
+function endAuction(){
+ clearInterval(AU.timer);const lines=[];
+ if(AU.mode!=='open'){const n=AU.won;if(AU.mode==='elite'){G.elite=[];G.eliteDone=true}else{G.market=[];G.marketDone=true}AU=null;
+  screen='main';ui={tab:'market',sheet:null,report:{title:'🔨 정기 경매 종료',lines:[n?`${n}두 낙찰! 마구간에서 확인하세요.`:'이번엔 낙찰받지 못했어요.','다음 정기 경매는 4주 뒤예요.']}};save();render();window.scrollTo(0,0);return}
+ for(const rv of G.rv)while(rv.horses.length<2){const h=genHorse(3,R(380,450));h.own=rv.i;const c=Math.min(h.price,Math.max(0,rv.money));rv.money-=c;h.price=c;rv.horses.push(h)}
+ if(!G.horses.length){const h=genHorse(3,400);h.price=Math.min(1200,G.money);G.money-=h.price;G.horses.push(h);
+  lines.push(`경매에서 한 마리도 못 사서, 유찰된 3세마 <b>${esc(h.name)}</b>를 ${won(h.price)}에 인수했어요.`)}
+ lines.push(`🐴 마구간: ${G.horses.map(h=>`<b>${esc(h.name)}</b>(${h.age}세)`).join(', ')}`,`💰 남은 자금 ${won(G.money)}`,
+  '🏁 3세마는 바로 미승리전에, 2세마는 3월부터 신마전에 나갈 수 있어요. 데뷔 전에도 무료 🏁 시범 경주로 달려볼 수 있어요!','🧢 레이스 탭에서 출주 등록 → 기수·작전을 고르세요.','📖 확인을 누르면 튜토리얼이 시작돼요 (건너뛰기 가능)');
+ AU=null;refreshMarket();genWeekRaces();
+ screen='main';ui={tab:'stable',sheet:null,report:{title:'경매 종료 · 목장 개장!',lines}};save();render();window.scrollTo(0,0);
+}
+V.auction=()=>{const A=AU,h=A.lots[A.idx],cap=capNow(),full=G.horses.length>=cap,np=auNext(),me=A.leader==='나';
+ return `<div class="hdr"><div class="row"><span class="nm">${C().f} 🔨 ${A.mode==='open'?'오프닝':A.mode==='elite'?'👑 프리미엄':'정기'} 경매</span><span class="sp"></span><span>로트 ${A.idx+1}/${A.lots.length}</span></div>
+ <div class="chips"><span class="chip">💰 ${won(G.money)}</span><span class="chip">🐴 낙찰 ${G.horses.length}/${cap}</span><span class="chip">경쟁 ${A.rivals.length}곳</span></div>
+ <div class="chips">${G.rv.map(r=>`<span class="chip" style="background:#00000033">${esc(r.n)} 💰${won(Math.max(0,r.money))} · ${r.horses.length}두</span>`).join('')}</div></div>
+ <div class="card"><div class="row"><span style="font-size:24px">${coatDot(h)}</span><div class="sp"><b style="font-size:17px">${esc(h.name)}</b><div class="mut">${h.coat}${h.mark!=='없음'?'·'+h.mark:''} ${h.sex==='M'?'♂':'♀'} ${h.age}세 · 추정 잠재력 <b style="color:var(--g)">${pgrade(estShown(h))}</b>${sk('eye')?' 🔍':''} · 중마장 ${h.mud} · ${h.age>=3?'즉시 출주 가능':'3월 데뷔 · 시범 경주는 바로 가능'}</div></div></div>
+ ${STATS.map(([k,n,c])=>`<div class="stline"><span class="k" style="color:${c}">${n}</span><div class="bar"><i style="width:${h.s[k]/4}%;background:${c}"></i></div><span class="v">${h.s[k]}</span></div>`).join('')}
+ <div>${Object.keys(DCATN).map(k=>`<span class="tag">${DCATN[k]} <b>${h.apt[k]}</b></span>`).join('')}</div>${trHTML(h)?`<div style="margin-top:4px">${trHTML(h)}</div>${trList(h)}`:''}</div>
+ <div class="card" style="text-align:center"><div class="mut">현재가</div><div class="disp" style="font-size:38px;color:${me?'var(--g)':'var(--ink)'}">${won(A.price)}</div>
+ <div style="font-weight:900;min-height:22px">${A.state==='sold'?'':A.leader?`최고 입찰: ${me?'🙋 나':A.leader}`:'입찰 대기 중...'} <span style="color:var(--bad)">${A.state==='open'?['','하나...','둘...'][A.count]||'':''}</span></div>
+ ${A.state==='open'?`<div class="row" style="margin-top:10px"><button class="btn ghost" onclick="auPass()">${me?'이대로 낙찰 대기 ⏩':'패스'}</button><button class="btn gold sp" style="padding:14px;font-size:16px" ${me||full||G.money<np?'disabled':''} onclick="playerBid()">✋ ${won(np)} 입찰</button></div>
+  ${full?'<div class="mut" style="margin-top:6px">마구간이 가득 찼어요</div>':G.money<np&&!me?'<div class="mut" style="margin-top:6px;color:var(--bad)">자금 부족</div>':''}`
+ :`<div style="margin:8px 0 12px">${A.result}</div><button class="btn gold" style="width:100%;padding:13px" onclick="auNextLot()">${A.idx+1<A.lots.length&&!(A.mode==='open'&&full)?'다음 로트 ▶':'경매 종료 · 목장으로'}</button>`}</div>
+ <div class="card mut" style="font-size:13px">${A.log.map(l=>`<div>${l}</div>`).join('')||'경매사: "자, 시작가 '+won(A.price)+'부터 갑니다!"'}</div>
+ ${A.state==='open'&&(G.horses.length||A.mode==='market')?`<button class="btn ghost" style="width:100%" onclick="endAuction()">경매 그만하고 목장으로</button>`:''}
+ <div class="mut" style="margin-top:8px">💡 라이벌 목장도 나와 똑같이 시작 자금 안에서만 입찰하고, 최대 3두까지만 살 수 있어요. 잠재력은 추정치예요. 낙찰 후 훈련사가 실제 잠재력을 알려줘요. 마구간은 최대 ${cap}두. 자금을 다 쓰면 사육비를 못 낼 수 있어요!</div>`};
+
+/* ===== 화면 ===== */
+V.title=()=>{const s=loadSave();return `<div class="title-wrap"><div class="big-emoji">🏇</div><h1>마주의 꿈</h1><div class="mut" style="margin:6px 0 26px">말을 사고, 키우고, 기수를 고용해 G1을 노려라</div>
+ ${s?`<button class="btn gold" style="width:100%;font-size:17px;padding:15px;margin-bottom:10px" onclick="migrate(loadSave());screen='main';ui={tab:'stable',sheet:null,report:null};render()">이어하기 · ${(COUNTRIES[s.country||'kr']||{}).f||''} ${esc(s.farm)} 목장 (${wl(s.week)})</button>`:''}
+ <div class="card" style="text-align:left"><div class="mut" style="margin-bottom:6px">목장 이름</div><input class="name" id="farm" maxlength="8" placeholder="예: 초록">
+ <button class="btn" style="width:100%;margin-top:10px;padding:14px" onclick="pendingFarm=($('#farm').value||'').trim();ui.country=null;ui.mode='normal';screen='country';render();window.scrollTo(0,0)">새 게임 시작</button>${s?'<div class="mut" style="margin-top:6px">새 게임을 시작하면 기존 저장이 덮어씌워져요.</div>':''}</div></div>
+ <button class="btn ghost" style="width:100%;margin-bottom:10px" onclick="screen='import';render()">📥 백업 코드로 불러오기</button>
+ ${(()=>{const h=loadHOF();return h.length?`<div class="card"><b>🏛️ 명예의 전당 (10년 커리어)</b>${h.map((e,i)=>`<div class="row" style="padding:4px 0"><b>${i+1}.</b><span>${e.f} ${esc(e.farm)}</span><span class="mut">${e.mode} · G1 ${e.g1}승</span><span class="sp"></span><b style="color:var(--gold)">${e.grade}</b> <span class="mut">${e.score}</span></div>`).join('')}</div>`:''})()}
+ <div class="card mut" style="line-height:1.6">🏇 <b>마주의 꿈</b>은 경매에서 경주마를 사고, 훈련시키고, 기수를 고용해 G1 우승을 노리는 무료 경마 경영 웹게임이에요. 라이벌 목장과 경쟁하고, 교배로 나만의 혈통을 만들고, 해외 원정까지! 진행 상황은 이 브라우저에 자동 저장돼요.</div>
+ <div class="card mut">💡 매주 말마다 훈련 메뉴를 정하고, 레이스에 출주 등록(기수·작전 선택) 후 <b>다음 주</b>를 누르면 진행돼요. 피로가 쌓이면 부상 위험! 사육비가 매주 나가니 상금으로 목장을 꾸려가세요.</div>`};
+V.main=()=>{
+ const cap=FAC.stable.lv[G.fac.stable],ent=G.entries.length;
+ return `<div class="hdr"><div class="row"><span class="nm">${silkSVG(G.silk,26)} ${C().f} ${esc(G.farm)} 목장</span><span class="sp"></span><span style="font-size:13px">${wl(G.week)}</span><button class="btn sm" style="background:#ffffff22;color:#fff;padding:4px 8px;margin-left:4px" onclick="toggleSnd()">${SND?'🔊':'🔇'}</button></div>
+ <div class="chips"><span class="chip">💰 ${won(G.money)}</span><span class="chip">🎖️ Lv${olv()}${spts()>0?' ✨':''} · 명성 ${G.rep}</span><span class="chip">🐴 ${G.horses.length}/${cap}</span><span class="chip">🏆 ${G.tot.wins}승 · 중상 ${G.tot.g}승</span></div>
+ ${G.debt>0?`<div style="margin-top:8px;background:#c0392b;padding:6px 10px;border-radius:10px;font-size:13px">⚠️ 적자 ${G.debt}주째! ${bankLim()}주 연속이면 파산합니다.</div>`:''}</div>
+ ${V[ui.tab]()}
+ <div class="nav"><div class="in"><div class="row"><button class="btn gold next sp" style="width:auto" onclick="advance()">다음 주 ▶ ${ent?`<span style="font-size:13px">(출주 ${ent}건)</span>`:''}</button><button class="btn" style="padding:13px 12px" onclick="autoRun(12)">⏩ 자동</button></div>
+ <div class="tabs">${[['stable','🐴','마구간'],['races','🏁','레이스'],['market','🔨','경매장'],['jockeys','🧢','스태프'],['farm','🏡','목장']].map(t=>`<button class="${ui.tab===t[0]?'on':''}" onclick="ui.tab='${t[0]}';render();window.scrollTo(0,0)"><span class="ic">${t[1]}</span>${t[2]}</button>`).join('')}</div></div></div>
+ ${ui.sheet?SHEETS[ui.sheet.type]():''}${ui.report?reportHTML():ui.event?eventHTML():G.tut>=0&&!ui.sheet?tutHTML():''}`;
+};
+function horseCard(h){
+ const e=G.entries.find(x=>x.hid===h.id),r=e&&G.weekRaces.find(x=>x.id===e.rid);
+ return `<div class="card hc"><div class="row" onclick="ui.sheet={type:'horse',id:${h.id}};render()" style="cursor:pointer">
+  <span style="font-size:22px">${coatDot(h)}</span><div class="sp"><div class="hn">${esc(h.name)}</div><div>${trHTML(h)}</div><div class="mut">${h.sex==='M'?'♂':'♀'}${h.age}세 · ${clsOf(h)} · ${h.starts}전 ${h.wins}승 · 잠재력 ${pgrade(capAvg(h))}</div></div>
+  <span style="font-size:22px">${CONDS[h.cond].e}</span><span class="mut">›</span></div>
+  <div class="row" style="margin-top:8px"><span class="mut" style="width:30px">피로</span><div class="bar"><i style="width:${h.fatigue}%;background:${h.fatigue>65?'#ef4444':h.fatigue>40?'#f59e0b':'#22c55e'}"></i></div><span class="mut" style="width:26px;text-align:right">${h.fatigue}</span></div>
+  <div style="margin-top:4px">${h.inj?`<span class="tag bad">🩹 부상 ${h.inj}주</span>`:''}${r?`<span class="tag ok">🏁 이번 주 ${esc(r.n)} 출주</span>`:''}${h.fatigue>65&&!h.inj?'<span class="tag bad">부상 위험</span>':''}</div>
+  ${h.inj||r?'':(()=>{const rp=recPlan(h);return `<div class="plans">${Object.entries(PLANS).map(([k,p])=>`<button class="${h.plan===k?'sel':''}" style="position:relative" onclick="setPlan(${h.id},'${k}')">${rp.k===k?'<span style="position:absolute;top:-7px;right:-3px;font-size:13px">⭐</span>':''}<span class="ic">${p.ic}</span>${p.n}</button>`).join('')}</div><div class="mut" style="margin-top:4px">⭐ 추천: ${PLANS[rp.k].n} — ${rp.why}</div>`})()}
+ </div>`;
+}
+V.stable=()=>`<button class="btn gold" style="width:100%;margin-bottom:8px;padding:12px" onclick="autoAll()">⭐ 추천대로 한 번에 (훈련 + 출주 등록)</button>
+ <div class="row" style="margin-bottom:6px;flex-wrap:wrap"><h3 class="sp" style="margin:0">마구간</h3>${Object.entries(SORTS).map(([k,n])=>`<button class="btn sm ${(ui.sort||'def')===k?'':'ghost'}" style="padding:4px 8px" onclick="ui.sort='${k}';render()">${n}</button>`).join('')}</div>${G.horses.length?sortedHorses().map(horseCard).join(''):'<div class="card mut">말이 없어요. 경매장에서 말을 사세요!</div>'}`;
+V.races=()=>{
+ const RC=recRaces();const up=[];for(let i=1;i<=12&&up.length<4;i++){const g=GRADED.find(x=>x.w===woy(G.week+i));if(g)up.push([G.week+i,g])}
+ const PL=G.plans[G.week]||[];return `<button class="btn gold" style="width:100%;margin-bottom:8px;padding:12px" onclick="autoAll()">⭐ 추천 레이스 한 번에 등록</button>
+ <div class="row" style="margin-bottom:4px;flex-wrap:wrap"><span class="mut">🎬 레이스 보기</span><span class="sp"></span>${Object.entries(VIEWS).map(([k,n])=>`<button class="btn sm ${(G.view||'all')===k?'':'ghost'}" style="padding:4px 8px" onclick="G.view='${k}';save();render()">${n}</button>`).join('')}</div>
+ <div class="row" style="margin-bottom:4px"><span class="mut">🎙️ 출주마 소개 (해설·음성)</span><span class="sp"></span><button class="btn sm ${G.intro===false?'ghost':''}" style="padding:4px 8px" onclick="G.intro=G.intro===false;save();render()">${G.intro===false?'꺼짐':'켜짐'}</button></div>
+ <div class="row"><h3 class="sp">이번 주 레이스</h3><button class="btn sm ghost" onclick="ui.sheet={type:'cal'};render()">📅 달력</button></div>${PL.length?`<div class="card" style="background:#fff8e1">📌 이번 주 출전 계획: <b>${PL.map(id=>hById(id)).filter(Boolean).map(h=>esc(h.name)).join(', ')}</b> — 중상 레이스에 등록하세요!</div>`:''}<div class="mut" style="margin-bottom:8px">⭐ = 이길 가능성과 상금을 따져 추천하는 레이스 (말마다 1개)</div>${G.weekRaces.map(r=>{const es=G.entries.filter(e=>e.rid===r.id);
+ const rc=RC[r.id]||[];return `<div class="card" style="${rc.length?'border:2px solid var(--gold)':''}"><div class="row">${grTag(r)}<b>${rc.length?'⭐ ':''}${esc(r.n)}</b><span class="sp"></span><span class="mut">${goingIc(r.going)} ${r.d}m ${DCATN[DCAT(r.d)]}</span></div>
+ <div class="mut" style="margin:4px 0">${r.cls==='PR'?'누구나 출주 (2세 포함) · 무료 · 상금·전적 없음 · 능력치 소폭 상승 · 기수 호흡 +1':`${r.abroad?'🌏 해외 원정 · 중상 우승마 · 명성 40':r.age?AGEN[r.age]+' · 오픈마':CLS[r.cls].n} · 1착 ${won(racePrize(r))} · ${r.abroad?'원정비':'등록비'} ${won(raceFee(r))}`} · 마장 ${r.going}</div>
+ ${(()=>{const rv=G.rvEntries.filter(e=>e.rid===r.id).map(e=>rvH(e.hid)).filter(Boolean);return rv.length?`<div class="mut" style="color:#b91c1c">⚔️ 라이벌: ${rv.map(h=>`${rvTag(h)} (${esc(G.rv[h.own].n)})`).join(', ')}</div>`:''})()}
+ ${es.map(e=>`<div class="row" style="background:#fff8e1;border-radius:10px;padding:6px 8px;margin:4px 0"><span>🐴 <b>${esc(hById(e.hid).name)}</b> · 🧢 ${jById(e.jid).n} · ${e.strat}</span><span class="sp"></span><button class="btn sm ghost" onclick="cancelEntry(${e.hid})">취소</button></div>`).join('')}
+ ${rc.length?`<div style="font-size:13px;margin:4px 0;color:#8a5a00"><b>⭐ 추천 출주:</b> ${rc.map(id=>{const h=hById(id);return esc(h.name)+' ('+compare(h,r)[0]+')'}).join(', ')}</div>`:''}<button class="btn sm ${rc.length?'gold':''}" style="margin-top:4px" onclick="openEntry(${r.id})">+ 출주 등록</button></div>`}).join('')}
+ <h3>🌏 월드 시리즈</h3>${wsHTML()}
+ <h3>다가오는 중상 레이스</h3><div class="card">${up.map(([w,g])=>`<div class="row" style="padding:4px 0"><span class="gr ${g.g}">${g.g}</span><span>${C().g1[g.w]||g.n}</span><span class="sp"></span><span class="mut">${g.d}m · ${AGEN[g.age]} · ${wl(w).replace('년차','년')}</span></div>`).join('')||'<span class="mut">없음</span>'}</div>`;
+};
+V.market=()=>{const full=G.horses.length>=capNow(),next=4-G.week%4;
+ if(G.mode==='pure')return `<h3>🔨 경매장</h3><div class="card mut">🧬 순혈주의 모드에서는 경매에 참가할 수 없어요. 목장 탭 → 생산에서 교배로 말을 늘리세요!</div>`;
+ return `${G.elite.length&&!G.eliteDone?`<div class="card" style="border:2px solid var(--gold);background:#fff8e1"><b>👑 프리미엄 경매</b> <span class="mut">1년에 한 번 · 최상급 혈통</span>${G.elite.map(h=>`<div class="row" style="padding:5px 0">${coatDot(h)}<span>${esc(h.name)} <span class="mut">${h.sex==='M'?'♂':'♀'}${h.age}세</span></span><span class="sp"></span><span class="tag">추정 <b>${pgrade(estShown(h))}</b></span><b>${won(h.price)}~</b></div>`).join('')}<button class="btn gold" style="width:100%;margin-top:8px" onclick="startAuction('elite')">👑 프리미엄 경매 참가</button></div>`:''}
+ <h3>🔨 경매장</h3><div class="mut" style="margin-bottom:8px">4주마다 정기 경매가 열려요. 라이벌 목장과 입찰 경쟁! 내가 놓친 말은 라이벌 마구간으로 가서 레이스에서 다시 만날 수 있어요.</div>
+ ${G.marketDone||!G.market.length?`<div class="card mut">이번 경매는 끝났어요. 다음 경매까지 ${next}주</div>`:`<div class="card"><b>이번 출품마 ${G.market.length}두</b>
+ ${G.market.map(h=>`<div class="row" style="padding:5px 0;border-bottom:1px dashed var(--line)">${coatDot(h)}<span>${esc(h.name)} <span class="mut">${h.sex==='M'?'♂':'♀'}${h.age}세</span></span><span class="sp"></span><span class="tag">추정 <b>${pgrade(estShown(h))}</b></span></div>`).join('')}
+ <button class="btn gold" style="width:100%;margin-top:10px;padding:13px" onclick="startAuction('market')">🔨 경매 참가</button>${full?'<div class="mut" style="margin-top:6px">마구간이 가득 차서 구경만 할 수 있어요 (목장 탭에서 확장)</div>':''}</div>`}`};
+const jFee=j=>G.excl===j.id||j.appr?0:Math.round(j.fee*(1-.1*sk('scout')));
+const exSal=j=>Math.round(j.fee*.8*(1-.1*sk('scout')));
+function contract(id){const j=jById(id);if(G.rep<j.rep)return;G.excl=id;log(`✍️ ${j.n} 기수와 전속 계약 (주급 ${won(exSal(j))})`);toast(`✍️ ${j.n} 전속 계약!`);save();render()}
+function uncontract(){const j=jById(G.excl);G.excl=null;log(`📄 ${j.n} 기수와 전속 계약 해지`);save();render()}
+V.jockeys=()=>`<h3>🌱 견습 기수 육성</h3><div class="mut" style="margin-bottom:8px">우리 목장 소속 신인 기수를 키워요. 기승료 0원, 탈수록·이길수록 성장해요 (재능 ★이 높을수록 크게 성장). 최대 2명 · 주급은 기량에 비례.</div>
+ ${G.jockeys.filter(j=>j.appr).map(j=>`<div class="card" style="border:2px solid #22c55e"><div class="row"><span style="font-size:22px">🌱</span><div class="sp"><b>${esc(j.n)}</b> <span class="tag ok">견습</span><div class="mut">특기 ${j.style} · 재능 ${talent(j.cap)} · ${j.rides}기승 ${j.wins}승 · 주급 ${won(apprSal(j))}</div></div><b>기량 ${j.skill.toFixed(1)}</b></div>
+  <div class="bar" style="margin-top:6px"><i style="width:${j.skill}%;background:#22c55e"></i></div><button class="btn sm ghost" style="margin-top:6px" onclick="fireAppr(${j.id})">방출</button></div>`).join('')}
+ ${G.jockeys.filter(j=>j.appr).length<2?`<div class="card"><b>🔎 스카우트 후보</b> <span class="mut">입단비 ${won(apprCost())}</span>${scoutList().map((c,i)=>`<div class="row" style="padding:6px 0;border-bottom:1px dashed var(--line)"><div class="sp"><b>${esc(c.n)}</b><div class="mut">기량 ${c.skill} · 특기 ${c.style} · 재능 ${talent(c.cap)}</div></div><button class="btn sm" ${G.money<apprCost()?'disabled':''} onclick="hireAppr(${i})">영입</button></div>`).join('')}</div>`:''}
+ <h3>🎓 조교사</h3><div class="mut" style="margin-bottom:8px">수석 조교사 1명을 고용할 수 있어요. 주급이 나가요.</div>
+ ${TRAINERS.map(t=>{const lock=G.rep<t.rep,on=G.trainer===t.id;return `<div class="card" style="${lock?'opacity:.55':''}${on?';border:2px solid var(--gold)':''}"><div class="row"><span style="font-size:22px">🎓</span><div class="sp"><b>${trName(t)}</b> ${on?'<span class="tag ok">고용 중</span>':''}<div class="mut">${t.d}</div></div><b>${won(Math.round(t.fee*(1-.1*sk('scout'))))}/주</b></div>${lock?`<div class="mut" style="margin-top:4px">🔒 명성 ${t.rep} 이상 필요</div>`:on?`<button class="btn sm ghost" style="margin-top:6px" onclick="fireTr()">해고</button>`:`<button class="btn sm" style="margin-top:6px" onclick="hireTr(${t.id})">${G.trainer?'교체 고용':'고용'}</button>`}</div>`}).join('')}
+ <h3>🧢 기수</h3><div class="mut" style="margin-bottom:8px">레이스마다 고용(기승료 + 상금 10%)하거나, <b>전속 계약</b>을 맺을 수 있어요. 전속 기수는 기승료 0원, 호흡이 2배 빨리 쌓여요. 대신 매주 주급이 나가요. (1명까지)</div>
+ ${G.jockeys.filter(j=>!j.appr).map(j=>{const lock=G.rep<j.rep,ex=G.excl===j.id;return `<div class="card" style="${lock?'opacity:.55':''}${ex?';border:2px solid var(--gold)':''}"><div class="row"><span style="font-size:22px">🧢</span><div class="sp"><b>${j.n}</b> ${ex?'<span class="tag ok">✍️ 전속</span>':''}${j.young?'<span class="tag ok">신인·성장형</span>':''}<div class="mut">특기 ${j.style} · ${j.rides}기승 ${j.wins}승</div></div><div style="text-align:right"><b>기량 ${Math.round(j.skill)}</b><div class="mut">${won(j.fee)}/회</div></div></div>
+ ${lock?`<div class="mut" style="margin-top:4px">🔒 명성 ${j.rep} 이상 필요</div>`:ex?`<button class="btn sm ghost" style="margin-top:6px" onclick="uncontract()">계약 해지</button>`:`<button class="btn sm" style="margin-top:6px" ${G.excl?'disabled':''} onclick="contract(${j.id})">전속 계약 (주급 ${won(exSal(j))})</button>`}</div>`}).join('')}`;
+V.farm=()=>{const ft=ui.ftab||'biz';return `<div class="subtabs">${[['biz','💼 경영'],['breed','🧬 생산'],['rec','📊 기록']].map(([k,n])=>`<button class="${ft===k?'on':''}" onclick="ui.ftab='${k}';render();window.scrollTo(0,0)">${n}</button>`).join('')}</div>${FT[ft]()}`};
+const FT={};
+FT.biz=()=>`<h3>🎖️ 마주 레벨 ${olv()} <span class="mut">(명성 40마다 +1)</span></h3><div class="card"><div class="row" style="margin-bottom:6px"><span>남은 스킬 포인트 <b style="color:var(--gold);font-size:18px">${spts()}</b></span><span class="sp"></span><span class="mut">다음 레벨까지 명성 ${40-G.rep%40}</span></div>
+ ${Object.entries(SKILLS).map(([k,v])=>`<div class="row" style="padding:5px 0;border-bottom:1px dashed var(--line)"><div class="sp"><b>${v.n}</b> <span class="tag">${'●'.repeat(sk(k))}${'○'.repeat(3-sk(k))}</span><div class="mut">${v.d} (단계당)</div></div><button class="btn sm" ${spts()<=0||sk(k)>=3?'disabled':''} onclick="learn('${k}')">+</button></div>`).join('')}</div>
+ <h3>💼 스폰서</h3><div class="card">${G.sponsor?(()=>{const sp=G.sponsor,pr=spProg();return `<b>${esc(sp.name)}</b> <span class="tag ok">계약 중</span><div style="margin:6px 0">목표: ${SPT[sp.t].n} ${sp.n}회 · 진행 <b>${Math.min(pr,sp.n)}/${sp.n}</b></div><div class="mut">마감 ${wl(sp.until)} · 성공 보상 ${won(sp.reward)} · 실패 시 계약금 ${won(sp.up)} 반환</div>`})()
+ :G.spOffers.length?G.spOffers.map((o,i)=>`<div class="row" style="padding:6px 0;border-bottom:1px dashed var(--line)"><div class="sp"><b>${esc(o.name)}</b><div class="mut">${o.w}주 안에 ${SPT[o.t].n} ${o.n}회 → ${won(o.reward)} (계약금 ${won(o.up)} 선지급)</div></div><button class="btn sm" onclick="signSp(${i})">계약</button></div>`).join(''):'<span class="mut">새 스폰서 제안은 12주마다 와요</span>'}</div>
+ <h3>🏦 은행</h3><div class="card">${mode()==='hard'?'<span class="mut">💀 하드코어 모드에선 대출이 불가능해요</span>':`<div class="row"><span>대출 잔액 <b>${won(G.loan)}</b></span><span class="sp"></span><span class="mut">한도 ${won(loanMax())} · 이자 주 0.4%</span></div>
+ <div class="row" style="margin-top:8px;flex-wrap:wrap">${[3000,10000].map(a=>`<button class="btn sm" ${G.loan+a>loanMax()?'disabled':''} onclick="borrow(${a})">${won(a)} 빌리기</button>`).join('')}${G.loan?`<button class="btn sm ghost" onclick="repay(${G.loan})">전액 상환</button>`:''}</div>`}</div>
+ <h3>✈️ 목장 이전</h3><div class="card"><div class="mut" style="margin-bottom:6px">다른 나라로 목장을 옮겨 새 리그에 도전해요. 말·시설·은퇴마·견습 기수는 함께 가고, 라이벌·기수진·레이스가 바뀌어요. 비용 ${won(moveCost())} · 3년차부터 · 3년에 한 번</div>
+ ${canMove()?`<div class="row" style="flex-wrap:wrap;gap:6px">${Object.entries(COUNTRIES).filter(([k])=>k!==G.country).map(([k,c])=>`<button class="btn sm ghost" ${G.money<moveCost()?'disabled':''} onclick="if(ui.mv==='${k}')relocate('${k}');else{ui.mv='${k}';render()}">${ui.mv===k?'정말 이전?':c.f+' '+c.n}</button>`).join('')}</div>`:`<span class="mut">${G.week<144?`${Math.ceil((144-G.week)/48)}년 뒤부터 가능`:`다음 이전까지 ${144-(G.week-G.movedW)}주`}</span>`}</div>
+ <h3>🏗️ 시설</h3>${Object.entries(FAC).map(([k,f])=>{const l=G.fac[k],max=l>=f.lv.length-1;return `<div class="card"><div class="row"><span style="font-size:24px">${f.ic}</span><div class="sp"><b>${f.n} Lv${l+1}</b><div class="mut">${f.d(f.lv[l])}${max?'':` → ${f.d(f.lv[l+1])}`}</div></div>${max?'<span class="tag ok">최대</span>':`<button class="btn sm" ${G.money<f.cost[l+1]?'disabled':''} onclick="upgrade('${k}')">${won(f.cost[l+1])}</button>`}</div></div>`}).join('')}
+ <div class="mut" style="margin:-4px 0 10px">시설은 매주 유지비가 나가요 (투자액의 0.2%). 현재 주 ${won(facUpkeep())}</div>`;
+FT.breed=()=>{const mares=G.retired.filter(h=>h.sex==='F'),y=Math.floor(G.week/48);
+ return `<h3>🧬 교배</h3><div class="card"><div class="mut" style="margin-bottom:6px">은퇴한 암말은 번식 암말이 돼요. 1년에 한 번 교배하면 다음 해 1월에 2세 망아지로 입사해요. 한계치·적성·특성·털색이 유전돼요!</div>
+ ${mares.length?mares.map(m=>`<div class="row" style="padding:5px 0">${coatDot(m)}<span>♀ <b>${esc(m.name)}</b> <span class="mut">잠재력 ${pgrade(capAvg(m))}</span></span><span class="sp"></span>${m.bred===y?'<span class="tag ok">교배 완료</span>':`<button class="btn sm" onclick="ui.sheet={type:'breed',mid:${m.id}};render()">교배</button>`}</div>`).join(''):'<div class="mut">번식 암말이 없어요. 암말(♀)을 은퇴시키면 생겨요.</div>'}
+ ${G.preg.length?`<div class="mut" style="margin-top:6px">🍼 출산 예정: ${G.preg.map(p=>`${esc(p.dam.name)}×${esc(p.sire.name)}`).join(', ')}</div>`:''}</div>
+ <h3>🌅 은퇴마 목장</h3><div class="card"><div class="mut" style="margin-bottom:6px">중상·G1 우승마를 보러 팬들이 찾아와 관광 수입이 생겨요. G1 우승마는 동상(${won(statueCost())})을 세우면 수입이 더 늘어요. 주간 관광 ${won(tourism())} · 종마 ${won(studIncome())}</div>
+ ${G.retired.length?G.retired.map(h=>`<div class="row" style="padding:5px 0;border-bottom:1px dashed var(--line)">${coatDot(h)}<div class="sp"><b>${h.statue?'🗿 ':''}${h.sex==='F'?'♀':'♂'} ${esc(h.name)}</b><div class="mut">${h.starts}전 ${h.wins}승 · G1 ${h.g1}승 · ${won(h.earn)}${tourOf(h)?` · 관광 주 ${won(tourOf(h))}`:''}</div></div>${h.g1>=1&&!h.statue?`<button class="btn sm" ${G.money<statueCost()?'disabled':''} onclick="buildStatue(${h.id})">🗿 동상</button>`:''}</div>`).join(''):'<span class="mut">아직 은퇴마가 없어요</span>'}</div>
+ <h3>🎨 승부복</h3><div class="card"><div class="row"><span style="font-size:0">${silkSVG(G.silk,48)}</span><div class="sp mut">레이스에서 우리 기수가 입는 옷이에요.</div><button class="btn sm" onclick="ui.sheet={type:'silk',k:{...G.silk}};render()">디자인</button></div></div>`};
+FT.rec=()=>{const st=standings(),y=Math.floor(G.week/48),cy=Math.min(10,y+1);
+ return `<h3>🗓️ 커리어 ${G.ended?'(엔딩 후 계속 플레이 중)':`${cy}/10년차`}</h3><div class="card"><div class="bar" style="height:10px"><i style="width:${Math.min(100,G.week/CAREER*100)}%;background:var(--gold)"></i></div>
+ <div class="mut" style="margin-top:6px">${G.ended?`최종 평가 <b>${G.ended.grade}</b> · ${G.ended.title} (${G.ended.score}점)`:`10년차가 끝나면 엔딩과 최종 평가가 나와요. 현재 예상 점수 <b>${endScore().toLocaleString()}</b> (${EGR.find(x=>endScore()>=x[0])[1]})`} · ${MODES[mode()].n} 모드</div></div>
+ <h3>🏆 ${y+1}년차 마주 순위</h3><div class="card"><table><tr><th>순위</th><th>목장</th><th>상금</th><th>승</th><th>G1</th></tr>
+ ${st.map((r,i)=>`<tr class="${r.me?'me':''}"><td class="rk">${i+1}</td><td>${esc(r.n)}</td><td>${won(r.earn)}</td><td>${r.wins}</td><td>${r.g1}</td></tr>`).join('')}</table><div class="mut" style="margin-top:6px">연말에 1위는 명성 +20 · 보너스 상금, 2위는 명성 +8</div></div>
+ <h3>⚔️ 라이벌 목장</h3><div class="card">${G.rv.map(r=>`<div style="padding:5px 0;border-bottom:1px dashed var(--line)">${silkSVG(r.silk,20)} <b>${esc(r.n)}</b> <span class="mut">${esc(r.owner)} · ${r.pers} · 💰${won(Math.max(0,r.money))} · 통산 ${r.tot.wins}승 · G1 ${r.tot.g1}승</span><div class="mut">${r.horses.map(h=>`${rvTag(h)}(${h.age}세 ${h.wins}승)`).join(' · ')||'보유마 없음'}</div></div>`).join('')}<div class="mut" style="margin-top:6px">🔥 = 내 말을 여러 번 이긴 숙적</div></div>
+ <button class="btn gold" style="width:100%;margin-bottom:10px;padding:13px" onclick="ui.sheet={type:'records'};render()">📚 기록실 · 업적 (${Object.keys(G.ach).length}/${ACH.length})</button>
+ <h3>📰 지난 신문</h3>${(G.news||[]).slice(0,4).map(n=>paperHTML(n.h,n.w)).join('')||'<div class="card mut">아직 없음</div>'}
+ <h3>최근 소식</h3><div class="card" style="font-size:13px;max-height:220px;overflow:auto">${G.log.map(l=>`<div style="padding:3px 0;border-bottom:1px dashed var(--line)">${l}</div>`).join('')}</div>
+ <button class="btn ghost" style="width:100%;margin-bottom:8px" onclick="ui.sheet={type:'backup'};render()">💾 세이브 백업 코드 만들기</button>
+ <div class="row"><button class="btn ghost sp" onclick="tutGo(0)">📖 튜토리얼 다시 보기</button><button class="btn ghost sp" onclick="save();screen='title';render()">저장하고 타이틀로</button></div>`};
+function facUpkeep(){return Math.round(Object.keys(FAC).reduce((a,k)=>a+FAC[k].cost.slice(0,G.fac[k]+1).reduce((x,y)=>x+y,0),0)*.002)}
+const SHEETS={};
+SHEETS.horse=()=>{const h=hById(ui.sheet.id);if(!h)return'';const v=horseValue(h);
+ return `<div class="overlay" onclick="if(event.target===this){ui.sheet=null;render()}"><div class="sheet">
+ <div class="row"><span style="color:${h.color};font-size:24px">●</span><h2 style="margin:0">${esc(h.name)}</h2><span class="sp"></span><span>${CONDS[h.cond].e} ${CONDS[h.cond].t}</span></div>
+ <div class="mut">${coatDot(h)}${h.coat||''}${h.mark&&h.mark!=='없음'?'·'+h.mark:''} · ${h.sex==='M'?'♂ 수말':'♀ 암말'} · ${h.age}세 · ${clsOf(h)} · ${h.starts}전 ${h.wins}승 (중상 ${h.g}, G1 ${h.g1}) · 획득 ${won(h.earn)}</div><div class="mut">중마장(비·불량) 적성 <b>${h.mud||'B'}</b>${h.sire?` · 부 ${esc(h.sire)} / 모 ${esc(h.dam)}`:''}${h.home?' · 🏡 자가생산':''}</div>
+ <div class="card" style="margin-top:10px">${STATS.map(([k,n,c])=>`<div class="stline"><span class="k" style="color:${c}">${n}</span><div class="bar"><i style="width:${h.s[k]/12}%;background:${c}"></i><u style="left:${h.cap[k]/12}%;width:2px;background:#0006"></u></div><span class="v">${h.s[k]}</span><span class="r" style="color:${c}">${srank(h.s[k])}</span></div>`).join('')}
+ <div class="mut">세로선 = 한계치(훈련사 평가). 잠재력 ${pgrade(capAvg(h))} · ${h.age>=5?'⚠️ 성장 둔화기':'성장기'}</div>
+ <div style="margin-top:6px">${Object.keys(DCATN).map(k=>`<span class="tag">${DCATN[k]} <b>${h.apt[k]}</b></span>`).join('')}</div>${(h.tr||[]).length?`<div style="margin-top:6px">${trHTML(h)}</div>${trList(h)}`:'<div class="mut" style="margin-top:6px">특성 없음</div>'}</div>
+ <div class="card"><b>전적</b><table>${h.rec.slice().reverse().slice(0,8).map(x=>`<tr><td class="mut">${x.w}</td><td>${x.g?`<span class="gr ${x.g}">${x.g}</span> `:''}${esc(x.n)}</td><td class="mut">${x.j}</td><td class="rk">${x.rank}착</td></tr>`).join('')||'<tr><td class="mut">출주 기록 없음</td></tr>'}</table></div>
+ ${G.horses.length>1?`<div class="mut" style="margin-bottom:4px">⚖️ 비교하기</div><div class="row" style="flex-wrap:wrap;gap:4px;margin-bottom:10px">${G.horses.filter(x=>x.id!==h.id).map(x=>`<button class="btn sm ghost" style="padding:4px 8px" onclick="ui.sheet={type:'cmp',a:${h.id},b:${x.id}};render()">${esc(x.name)}</button>`).join('')}</div>`:''}
+ <div class="row"><button class="btn red sm" onclick="sell(${h.id})">${ui.sheet.ask==='sell'?'정말 매각?':'매각 ('+won(v)+')'}</button><button class="btn ghost sm" onclick="retire(${h.id})">${ui.sheet.ask==='retire'?'정말 은퇴?':'은퇴'}</button><span class="sp"></span><button class="btn sm" onclick="ui.sheet=null;render()">닫기</button></div>
+ <div class="mut" style="margin-top:6px">${h.sex==='F'?'은퇴하면 번식 암말이 되어 교배할 수 있어요.':'은퇴하면 종마가 되어 중상 우승 수에 따라 매주 종마 수입이 들어오고, 내 암말과 무료로 교배할 수 있어요.'}</div></div></div>`};
+SHEETS.silk=()=>{const k=ui.sheet.k,sw=(f)=>SILKC.map(c=>`<div class="swatch ${k[f]===c?'sel':''}" style="background:${c};box-shadow:0 0 0 1px #0003" onclick="ui.sheet.k.${f}='${c}';render()"></div>`).join('');
+ return `<div class="overlay" onclick="if(event.target===this){ui.sheet=null;render()}"><div class="sheet"><div class="row"><h2 style="margin:0">🎨 승부복 디자인</h2><span class="sp"></span><button class="btn sm ghost" onclick="ui.sheet=null;render()">✕</button></div>
+ <div style="text-align:center;margin:12px 0">${silkSVG(k,90)}</div>
+ <b>바탕색</b><div class="row" style="flex-wrap:wrap;margin:6px 0 10px">${sw('c1')}</div><b>무늬색</b><div class="row" style="flex-wrap:wrap;margin:6px 0 10px">${sw('c2')}</div>
+ <b>무늬</b><div class="row" style="flex-wrap:wrap;gap:6px;margin:6px 0 12px">${Object.entries(SILKP).map(([p,n])=>`<button class="opt ${k.p===p?'sel':''}" style="width:auto;margin:0;padding:6px 10px" onclick="ui.sheet.k.p='${p}';render()">${silkSVG({...k,p},22)} ${n}</button>`).join('')}</div>
+ <button class="btn gold" style="width:100%;padding:13px" onclick="G.silk={...ui.sheet.k};ui.sheet=null;toast('🎨 승부복 저장!');save();render()">이 디자인으로 저장</button></div></div>`};
+SHEETS.backup=()=>{const code=exportCode();return `<div class="overlay" onclick="if(event.target===this){ui.sheet=null;render()}"><div class="sheet"><div class="row"><h2 style="margin:0">💾 세이브 백업</h2><span class="sp"></span><button class="btn sm ghost" onclick="ui.sheet=null;render()">✕</button></div>
+ <div class="mut" style="margin:6px 0 8px">아래 코드를 복사해서 메모장이나 메시지에 보관하세요. 다른 기기의 타이틀 화면에서 <b>📥 백업 코드로 불러오기</b>에 붙여넣으면 이어할 수 있어요. (${Math.round(code.length/1024)}KB)</div>
+ <textarea class="code" id="bk" readonly onclick="this.select()">${code}</textarea><button class="btn gold" style="width:100%;margin-top:10px;padding:13px" onclick="copyCode()">📋 코드 복사</button></div></div>`};
+SHEETS.cal=()=>{const out=[],w0=G.week;
+ for(let w=w0+1;w<=w0+24;w++){const x=woy(w),gr=GRADED.find(g=>g.w===x),ab=ABROAD.find(a=>a.w===x&&a.c!==G.country);
+  const items=[];if(gr)items.push({w,g:gr.g,n:C().g1[x]||gr.n,d:gr.d,age:gr.age,cls:gr.g});if(ab){const cc=COUNTRIES[ab.c];items.push({w,g:'G1',n:`${cc.f} ${cc.g1[ab.k]}`,d:ab.d,age:'3+',cls:'G1',abroad:ab.c})}
+  for(const it of items){const sw=G.week;G.week=w;const el=G.horses.map(h=>{const yAdd=Math.floor(w/48)-Math.floor(sw/48);const fh={...h,inj:0,age:h.age+yAdd};return {h,why:eligible(fh,it)}});G.week=sw;it.el=el;out.push(it)}}
+ const pl=G.plans;return `<div class="overlay" onclick="if(event.target===this){ui.sheet=null;render()}"><div class="sheet"><div class="row"><h2 style="margin:0">📅 레이스 달력</h2><span class="sp"></span><button class="btn sm ghost" onclick="ui.sheet=null;render()">✕</button></div>
+ <div class="mut" style="margin:6px 0">앞으로 24주의 중상·해외 레이스예요. 말 이름을 눌러 <b>📌 출전 계획</b>을 세우면 그 주에 레이스 탭에서 알려줘요. (회색 = 지금 조건 미달)</div>
+ ${out.map(it=>`<div class="card" style="margin:6px 0"><div class="row">${it.abroad?'<span class="gr G1">🌏 G1</span>':`<span class="gr ${it.g}">${it.g}</span>`}<b>${esc(it.n)}</b><span class="sp"></span><span class="mut">${wl(it.w).replace('년차','년')}</span></div>
+ <div class="mut">${it.d}m ${DCATN[DCAT(it.d)]} · ${AGEN[it.age]}${it.abroad?' · 중상 우승마':''}</div>
+ <div>${it.el.map(({h,why})=>{const on=(pl[it.w]||[]).includes(h.id);return `<span class="plan ${on?'on':''}" style="${why&&!on?'opacity:.45':''}" onclick="togglePlan(${it.w},${h.id})">${on?'📌 ':''}${esc(h.name)} <span style="font-size:10px">${h.apt[DCAT(it.d)]}</span></span>`}).join('')}</div></div>`).join('')||'<div class="mut">예정된 중상 레이스가 없어요</div>'}</div></div>`};
+function togglePlan(w,id){const a=G.plans[w]=G.plans[w]||[];const i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.push(id);save();render()}
+SHEETS.cmp=()=>{const a=hById(ui.sheet.a),b=hById(ui.sheet.b);if(!a||!b)return'';const col=(x,y)=>x>y?'color:var(--g);font-weight:900':x<y?'color:var(--mut)':'';
+ const row=(n,va,vb,fa,fb)=>`<tr><td style="text-align:right;${col(va,vb)}">${fa??va}</td><td style="text-align:center" class="mut">${n}</td><td style="${col(vb,va)}">${fb??vb}</td></tr>`;
+ return `<div class="overlay" onclick="if(event.target===this){ui.sheet=null;render()}"><div class="sheet"><div class="row"><h2 style="margin:0">⚖️ 비교</h2><span class="sp"></span><button class="btn sm ghost" onclick="ui.sheet={type:'horse',id:${a.id}};render()">◀</button><button class="btn sm ghost" onclick="ui.sheet=null;render()">✕</button></div>
+ <table style="margin-top:10px"><tr><th style="text-align:right">${coatDot(a)}${esc(a.name)}</th><th></th><th>${coatDot(b)}${esc(b.name)}</th></tr>
+ ${row('나이',-a.age,-b.age,a.age+'세',b.age+'세')}${STATS.map(([k,n])=>row(n,a.s[k],b.s[k])).join('')}${row('합계',statSum(a),statSum(b))}${row('잠재력',capAvg(a),capAvg(b),pgrade(capAvg(a)),pgrade(capAvg(b)))}
+ ${Object.keys(DCATN).map(k=>row(DCATN[k],AORD.indexOf(a.apt[k]),AORD.indexOf(b.apt[k]),a.apt[k],b.apt[k])).join('')}${row('중마장',AORD.indexOf(a.mud),AORD.indexOf(b.mud),a.mud,b.mud)}
+ ${row('전적',a.wins,b.wins,`${a.starts}전 ${a.wins}승`,`${b.starts}전 ${b.wins}승`)}${row('G1',a.g1,b.g1)}${row('피로',-a.fatigue,-b.fatigue,a.fatigue,b.fatigue)}</table>
+ <div class="row" style="margin-top:8px;align-items:flex-start"><div class="sp">${trHTML(a)||'<span class="mut">특성 없음</span>'}</div><div class="sp" style="text-align:right">${trHTML(b)||'<span class="mut">특성 없음</span>'}</div></div></div></div>`};
+SHEETS.records=()=>{const all=[...G.horses,...G.retired],top=all.slice().sort((a,b)=>b.earn-a.earn).slice(0,5);
+ return `<div class="overlay" onclick="if(event.target===this){ui.sheet=null;render()}"><div class="sheet"><div class="row"><h2 style="margin:0">📚 기록실</h2><span class="sp"></span><button class="btn sm ghost" onclick="ui.sheet=null;render()">✕</button></div>
+ <h3 style="margin-top:12px">🏅 업적 ${Object.keys(G.ach).length}/${ACH.length}</h3><div class="ach">${ACH.map(([id,n,d])=>`<div class="${G.ach[id]!==undefined?'on':''}"><b>${G.ach[id]!==undefined?'🏅':'🔒'} ${n}</b><div class="mut">${d}</div></div>`).join('')}</div>
+ <h3>🐎 내 명마 TOP 5 (획득 상금)</h3><div class="card">${top.length?top.map((h,i)=>`<div class="row" style="padding:3px 0"><b>${i+1}.</b><span>${esc(h.name)}</span><span class="mut">${h.starts}전 ${h.wins}승 · G1 ${h.g1}</span><span class="sp"></span><span>${won(h.earn)}</span></div>`).join(''):'<span class="mut">아직 없음</span>'}</div>
+ <h3>⚔️ 라이벌 상대 전적</h3><div class="card">${G.rv.map((r,i)=>{const x=G.h2h[i]||{w:0,l:0};return `<div class="row" style="padding:3px 0"><span>${esc(r.n)}</span><span class="sp"></span><b style="color:var(--g)">${x.w}승</b>&nbsp;<b style="color:var(--bad)">${x.l}패</b></div>`}).join('')}<div class="mut">같은 레이스에서 누가 먼저 들어왔는지 기준</div></div>
+ <h3>🏆 역대 G1 우승마</h3><div class="card"><table>${G.g1hist.map(x=>`<tr class="${x.me?'me':''}"><td class="mut">${x.y}년</td><td>${esc(x.n)}</td><td>${esc(x.h)}</td><td class="mut">${esc(x.o)}</td></tr>`).join('')||'<tr><td class="mut">아직 기록 없음</td></tr>'}</table></div>
+ <div class="mut">통산 ${G.tot.starts}전 ${G.tot.wins}승 · 3착 이내 ${G.tot.top3}회 · 중상 ${G.tot.g}승 · G1 ${G.tot.g1}승 · 리딩 오너 ${G.leadN}회</div></div></div>`};
+SHEETS.breed=()=>{const m=G.retired.find(x=>x.id===ui.sheet.mid);const own=G.retired.filter(h=>h.sex!=='F'),pub=publicStuds();
+ const row=(h,fee)=>`<button class="opt" ${G.money<fee?'disabled':''} onclick="breed(${m.id},${h.id})"><div class="row"><b>♂ ${esc(h.name)}</b><span class="mut">잠재력 ${pgrade(capAvg(h))} · G1 ${h.g1}승</span><span class="sp"></span><b>${fee?won(fee):'무료'}</b></div><div class="mut">${Object.keys(DCATN).map(k=>`${DCATN[k]} ${h.apt[k]}`).join(' · ')} · 중마장 ${h.mud||'B'}</div></button>`;
+ return `<div class="overlay" onclick="if(event.target===this){ui.sheet=null;render()}"><div class="sheet"><div class="row"><h2 style="margin:0;font-size:20px">🧬 ${esc(m.name)}의 짝 고르기</h2><span class="sp"></span><button class="btn sm ghost" onclick="ui.sheet=null;render()">✕</button></div>
+ <div class="mut" style="margin:4px 0 10px">♀ ${esc(m.name)} · 잠재력 ${pgrade(capAvg(m))} · ${Object.keys(DCATN).map(k=>`${DCATN[k]} ${m.apt[k]}`).join(' · ')}</div>
+ ${own.length?`<h3>내 종마</h3>${own.map(h=>row(h,0)).join('')}`:''}<h3>공용 종마 (종부료)</h3>${pub.map(h=>row(h,h.fee)).join('')}</div></div>`};
+SHEETS.entry=()=>{const s=ui.sheet,r=G.weekRaces.find(x=>x.id===s.rid);
+ const busyH=new Set(G.entries.map(e=>e.hid)),busyJ=new Set(G.entries.filter(e=>{const rr=G.weekRaces.find(x=>x.id===e.rid);return rr&&rr.cls!=='PR'}).map(e=>e.jid));
+ const h=s.hid&&hById(s.hid),j=s.jid&&jById(s.jid),cost=entryCost(r,j);
+ const step=(n,label,val)=>`<button class="opt ${s.step===n?'sel':''}" style="flex:1;padding:6px;margin:0;text-align:center" ${n>1&&!h||n>2&&!j?'disabled':''} onclick="ui.sheet.step=${n};render()"><div class="mut">${n}. ${label}</div><b style="font-size:12px">${val||'-'}</b></button>`;
+ let body='';
+ if(s.step===1){const rcs=recRaces()[r.id]||[];body=G.horses.map(x=>{const why=busyH.has(x.id)?'이번 주 다른 레이스 출주':eligible(x,r);const c=!why&&compare(x,r);
+  return `<button class="opt ${s.hid===x.id?'sel':''} ${why?'dis':''}" ${why?'disabled':''} onclick="ui.sheet.hid=${x.id};ui.sheet.step=2;render()"><div class="row"><b>${esc(x.name)}</b><span class="mut">${x.age}세 · 적성 ${x.apt[DCAT(r.d)]}${r.going!=='양호'?' · 중마장 '+(x.mud||'B'):''} · ${CONDS[x.cond].e} · 피로 ${x.fatigue}</span><span class="sp"></span>${why?`<span class="mut">${why}</span>`:`${rcs.includes(x.id)?'⭐ ':''}<span class="tag ${c[1]}">${c[0]}</span>`}</div></button>`}).join('')||'<div class="mut">말이 없어요</div>';}
+ else if(s.step===2)body=G.jockeys.map(x=>{const why=G.rep<x.rep?`명성 ${x.rep} 필요`:r.cls!=='PR'&&busyJ.has(x.id)?'이번 주 예약됨':G.money<entryCost(r,x)?'자금 부족':'';const fam=h.fam[x.id]||0;
+  return `<button class="opt ${s.jid===x.id?'sel':''} ${why?'dis':''}" ${why?'disabled':''} onclick="ui.sheet.jid=${x.id};ui.sheet.step=3;render()"><div class="row"><b>${x.n}</b><span class="mut">기량 ${Math.round(x.skill)} · 특기 ${x.style}${fam?` · 호흡 <span style="color:#e11d48">${'♥'.repeat(Math.min(5,Math.ceil(fam/2)))}</span>`:''}</span><span class="sp"></span>${why?`<span class="mut">${why}</span>`:`<b>${x.appr?'🌱 견습':G.excl===x.id?'✍️ 전속':won(x.fee)}</b>`}</div></button>`}).join('');
+ else body=`<div class="strat" style="display:grid;grid-template-columns:1fr 1fr;gap:6px">${['맡김',...Object.keys(STRAT)].map(x=>`<button class="opt ${s.strat===x?'sel':''}" style="margin:0" onclick="ui.sheet.strat='${x}';render()"><b>${x==='맡김'?'🧢 기수 맡김':x}${x===j.style?' ⭐':''}</b><div class="mut">${x==='맡김'?`${j.n}의 판단 (특기 ${j.style})`:STRATD[x]}</div></button>`).join('')}</div>
+  <div class="mut" style="margin-top:6px">⭐ = ${j.n}의 특기 작전 (보너스)</div>
+  <button class="btn gold" style="width:100%;margin-top:12px;padding:14px;font-size:16px" ${G.money>=cost?'':'disabled'} onclick="confirmEntry()">🏁 출주 등록 (비용 ${won(cost)})</button>`;
+ return `<div class="overlay" onclick="if(event.target===this){ui.sheet=null;render()}"><div class="sheet">
+ <div class="row">${grTag(r)}<h2 style="margin:0;font-size:20px">${esc(r.n)}</h2><span class="sp"></span><button class="btn sm ghost" onclick="ui.sheet=null;render()">✕</button></div><div class="mut">${r.d}m ${DCATN[DCAT(r.d)]} · ${goingIc(r.going)} ${r.going} · 1착 ${won(racePrize(r))}${r.abroad?' · 원정비 포함':''}</div>
+ <div class="row" style="margin:12px 0">${step(1,'출주마',h&&esc(h.name))}${step(2,'기수',j&&j.n)}${step(3,'작전',j&&(s.strat==='맡김'?'맡김':s.strat))}</div>
+ ${body}</div></div>`};
+function reportHTML(){const r=ui.report;return `<div class="overlay"><div class="sheet">${r.news?paperHTML(r.news,G.week):''}<h2 style="margin:0 0 6px">${r.title}</h2><ul class="rep">${r.lines.map(l=>`<li>${l}</li>`).join('')}</ul><button class="btn gold" style="width:100%;padding:13px;margin-top:8px" onclick="ui.report=null;nextEvent()">확인</button></div></div>`}
+
+function render(){const sh=document.querySelector('.sheet'),key=ui.sheet?ui.sheet.type+(ui.sheet.step||''):'',top=sh&&render.k===key?sh.scrollTop:0;
+ $('#app').innerHTML=V[screen]();render.k=key;const n=document.querySelector('.sheet');if(n&&top)n.scrollTop=top;if(screen==='run')initCanvas()}
+
+/* ===== 행동 ===== */
+function setPlan(id,k){hById(id).plan=k;render()}
+function buy(id){const h=G.market.find(x=>x.id===id);if(!h||G.money<h.price)return;if(G.horses.length>=FAC.stable.lv[G.fac.stable])return toast('마구간이 가득 찼어요');
+ G.money-=h.price;G.market=G.market.filter(x=>x!==h);G.horses.push(h);log(`🛒 <b>${esc(h.name)}</b> 구매 (${won(h.price)}). 훈련사 평가 잠재력 ${pgrade(capAvg(h))}`);
+ toast(`🐴 ${esc(h.name)} 입사! 실제 잠재력 ${pgrade(capAvg(h))}`);save();render()}
+function removeHorse(h){G.horses=G.horses.filter(x=>x!==h);const e=G.entries.find(x=>x.hid===h.id);if(e)cancelEntry(h.id,true)}
+function sell(id){const h=hById(id),v=horseValue(h);if(ui.sheet.ask!=='sell'){ui.sheet.ask='sell';return render()}removeHorse(h);G.money+=v;log(`💸 ${esc(h.name)} 매각 (+${won(v)})`);ui.sheet=null;save();render()}
+function retire(id){const h=hById(id);if(ui.sheet.ask!=='retire'){ui.sheet.ask='retire';return render()}doRetire(h);ui.sheet=null;save();if((ui.evQ||[]).length&&!ui.report&&!ui.event)nextEvent();else render()}
+function doRetire(h){removeHorse(h);G.retired.push(h);if(h.g1>=1)(ui.evQ=ui.evQ||[]).push(ceremony(h));log(`🌅 <b>${esc(h.name)}</b> 은퇴. ${h.starts}전 ${h.wins}승 · ${h.sex==='F'?'번식 암말로 교배 가능':'종마'+(studOf(h)?` (수입 주 ${won(studOf(h))})`:'')}`)}
+const studOf=h=>h.sex==='F'?0:h.g*15+h.g1*60;
+const studIncome=()=>G.retired.reduce((a,h)=>a+studOf(h),0);
+function upgrade(k){const f=FAC[k],l=G.fac[k],c=f.cost[l+1];if(G.money<c)return;G.money-=c;G.fac[k]++;log(`🔨 ${f.n} Lv${l+2}로 확장`);toast(`${f.ic} ${f.n} 업그레이드!`);save();render()}
+function openEntry(rid){ui.sheet={type:'entry',rid,step:1,hid:null,jid:null,strat:'맡김'};render()}
+function confirmEntry(){const s=ui.sheet,r=G.weekRaces.find(x=>x.id===s.rid),j=jById(s.jid),cost=entryCost(r,j);if(G.money<cost)return;
+ G.money-=cost;G.entries.push({rid:s.rid,hid:s.hid,jid:s.jid,strat:s.strat,cost});ui.sheet=null;toast('🏁 출주 등록 완료');save();render()}
+function cancelEntry(hid,silent){const e=G.entries.find(x=>x.hid===hid);if(!e)return;G.money+=e.cost;G.entries=G.entries.filter(x=>x!==e);if(!silent){save();render()}}
+
+/* ===== 주 진행 ===== */
+function advance(){ui.sheet=null;G.wkNews=[];
+ const races=[...new Set(G.entries.map(e=>e.rid))].map(id=>G.weekRaces.find(r=>r.id===id));
+ RS={queue:races.filter(watchRace),idx:0,results:[]};for(const r of races.filter(r=>!watchRace(r)))RS.results.push(...simInstant(r));
+ if(RS.queue.length)prepRace();else weekEnd();
+}
+function buildField(race,mine){
+ const runners=[],used=new Set();
+ for(const e of mine){const h=hById(e.hid);runners.push(mkRunner(h,'p',race,e));used.add(h.name)}
+ for(const e of G.rvEntries.filter(x=>x.rid===race.id)){const h=rvH(e.hid);if(!h||h.inj)continue;runners.push(mkRunner(h,'r',race,null));used.add(h.name)}
+ const o=raceStr(race),cs=COLORS.filter(c=>!runners.some(r=>r.color===c)),pool=namePool(race.abroad);
+ while(runners.length<10){let n,t=0;do{n=pick(pool);t++}while(used.has(n)&&t<60);used.add(n);
+  const src={name:n,color:cs[runners.length%cs.length]||pick(COLORS),apt:{sprint:'B',mile:'B',mid:'B',long:'B'},s:{}};
+  src.apt[DCAT(race.d)]=pick(['A','A','A','B']);for(const [k] of STATS)src.s[k]=Math.round(o*R(.85,1.15));
+  runners.push(mkRunner(src,'x',race,null))}
+ runners.sort(()=>Math.random()-.5).forEach((r,i)=>{r.lane=i;r.no=i+1});return runners;
+}
+function prepRace(){
+ const race=RS.queue[RS.idx],mine=G.entries.filter(e=>e.rid===race.id);
+ const rf=buildField(race,mine),rvr=rf.find(x=>x.kind==='r');RS.talk=rvr?{rv:G.rv[rvr.own],t:ownerLine(G.rv[rvr.own],'pre',rvr.name,(rf.find(x=>x.isP)||{}).name)}:null;
+ Object.assign(RS,{race,runners:rf,time:0,fast:false,done:false,live:true,photo:false,slow:false,hf:0,flags:{},comm:'각 마 게이트 인 완료...',cv:null});
+ setPopularity(rf,race);
+ if(G.intro===false){startRun();return}
+ RS.ii=-1;RS.tok=Math.random();RS.introLine='🎙️ 잠시 후 '+race.n+' 출주마를 소개합니다!';screen='intro';render();window.scrollTo(0,0);
+ const tok=RS.tok;setTimeout(()=>{if(RS&&RS.tok===tok)introNext()},900);
+}
+/* ===== 출주마 소개 ===== */
+const GATEC=[['#ffffff','#111'],['#111111','#fff'],['#dc2626','#fff'],['#2563eb','#fff'],['#facc15','#111'],['#16a34a','#fff'],['#f97316','#111'],['#ec4899','#111'],['#06b6d4','#111'],['#7c3aed','#fff'],['#a3a3a3','#111'],['#84cc16','#111']];
+function setPopularity(rf,race){const need=Math.max(50,.27*race.d-200),sc=r=>(r.s.spd+r.s.pow*.4+r.s.guts*.2+r.s.wit*.2)*r.apt*r.mul*(.75+.25*Math.min(1,r.hp/need/1.6))*R(.97,1.03);
+ [...rf].sort((a,b)=>sc(b)-sc(a)).forEach((r,i)=>{r.pop=i+1;r.odds=(1.4+Math.pow(i,1.45)*.95+R(0,.4)).toFixed(1)})}
+function speak(t){if(!SND)return;try{const S=window.speechSynthesis;if(!S)return;S.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF\uFE0F]/gu,''));u.lang='ko-KR';u.rate=1.15;u.pitch=1.05;S.speak(u)}catch(e){}}
+function stopSpeak(){try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
+const FLAV=['몸 상태가 좋아 보입니다','다크호스로 꼽힙니다','최근 훈련 내용이 좋았습니다','오늘은 어떤 모습을 보여줄까요','관계자들이 주목하는 한 마리','차분하게 패독을 돌고 있습니다'];
+function introText(r,race){const n=`${r.no}번 ${r.name}`;
+ if(r.isP)return `${n}! 우리 ${G.farm} 목장의 말입니다. 기수는 ${r.jname}. 현재 ${r.pop}번 인기!`;
+ if(r.kind==='r'){const rv=G.rv[r.own];return r.nem?`${n}! ${rv.n}의 숙적이 또 나타났습니다! ${r.pop}번 인기.`:`${n}, ${rv.n}의 출전마. ${r.pop}번 인기입니다.`}
+ if(r.pop===1)return `${n}, 오늘의 1번 인기! 단승 ${r.odds}배입니다.`;
+ return `${n}, ${pick(FLAV)}.`}
+function introNext(){if(!RS||screen!=='intro')return;const rs=[...RS.runners].sort((a,b)=>a.no-b.no);RS.ii++;
+ if(RS.ii<rs.length){const r=rs[RS.ii];RS.introLine=introText(r,RS.race);speak(RS.introLine);if(r.isP)sfx.coin();render();const tok=RS.tok;setTimeout(()=>{if(RS&&RS.tok===tok)introNext()},r.isP||r.nem||r.pop===1?2300:1500)}
+ else{RS.introLine='자, 각 마 게이트에 들어갑니다... 출발 준비 완료!';speak(RS.introLine);render();const tok=RS.tok;setTimeout(()=>{if(RS&&RS.tok===tok&&screen==='intro')startRun()},1800)}}
+function startRun(){if(!RS)return;RS.tok=null;stopSpeak();sfx.gate();screen='run';render();window.scrollTo(0,0);requestAnimationFrame(loop)}
+const V_intro=()=>{const r0=RS.race,rs=[...RS.runners].sort((a,b)=>a.no-b.no);return `<div class="row" style="margin-bottom:8px">${grTag(r0)}<b class="disp" style="font-size:18px">${esc(r0.n)}</b><span class="sp"></span><span class="mut">${goingIc(r0.going)} ${r0.d}m ${DCATN[DCAT(r0.d)]}</span></div>
+ <div class="card" style="background:#24301f;color:#fff;min-height:64px"><div class="row"><span style="font-size:26px">🎙️</span><div class="sp" style="font-weight:700;font-size:15px;line-height:1.45">${esc(RS.introLine)}</div></div></div>
+ <div class="card" style="padding:6px 10px">${rs.map((r,i)=>{const on=i<=RS.ii,cur=i===RS.ii,[bg,fg]=GATEC[(r.no-1)%GATEC.length];return `<div class="row" style="padding:6px 0;border-bottom:1px dashed var(--line);opacity:${on?1:.28};${cur?'background:#fff8e1;margin:0 -10px;padding:6px 10px':''}">
+  <span style="display:inline-block;width:24px;height:24px;border-radius:6px;background:${bg};color:${fg};text-align:center;font-weight:900;line-height:24px;box-shadow:0 0 0 1px #0003">${r.no}</span>${silkSVG(r.silk,22)}
+  <div class="sp"><b>${on?esc(r.name):'???'}</b> ${on&&r.isP?'<span class="tag ok">★ 내 말</span>':''}${on&&r.kind==='r'?`<span class="tag bad">${r.nem?'🔥 숙적':'⚔️ 라이벌'}</span>`:''}${on&&r.isP?`<div class="mut">🧢 ${r.jname} · ${r.strat}</div>`:on&&r.kind==='r'?`<div class="mut">${esc(G.rv[r.own].n)}</div>`:''}</div>
+  ${on?`<div style="text-align:right"><b style="font-size:13px">${r.pop}인기</b><div class="mut">${r.odds}배</div></div>`:''}</div>`}).join('')}</div>
+ <button class="btn gold" style="width:100%;padding:13px" onclick="startRun()">${RS.ii>=rs.length?'🚩 출발!':'건너뛰고 바로 출발 ⏩'}</button>`};
+
+function quickRace(race){
+ const saved=RS;RS={race,runners:buildField(race,[]),time:0,flags:{}};let g=0;
+ while(RS.runners.some(r=>r.fin===null)&&g++<30000)simStep(.1);
+ const order=[...RS.runners].sort((a,b)=>a.fin-b.fin);RS=saved;return applyResults(race,order);
+}
+function mkRunner(src,kind,race,e){
+ const D=race.d,s={},isP=kind==='p';let mul=1,strat,jname='';
+ const fm=kind!=='x'?CONDS[src.cond].m*(src.fatigue>40?1-(src.fatigue-40)/400:1):R(.96,1.04);
+ for(const [k] of STATS)s[k]=src.s[k]*fm;
+ const need=(.27*D-200)/1.6;
+ if(isP){const j=jById(e.jid);jname=j.n;s.wit+=j.skill*3;
+  strat=e.strat;if(strat==='맡김'){strat=j.style;if(strat==='도주'&&s.sta<need*1.1)strat='선행';if(s.sta<need*.8)strat='선입'}
+  mul=1+(j.skill-60)/2000+(strat===j.style?.008:0)+Math.min(.012,(src.fam[j.id]||0)*.0015);
+ }else if(kind==='r'){strat=src.style||'선행';if(strat==='도주'&&s.sta<need*1.1)strat='선행';if(s.sta<need*.8)strat='선입';s.wit+=120;mul=1+R(0,.01)}
+ else{strat=pick(Object.keys(STRAT));mul=1+R(-.004,.012)}
+ const tr=kind!=='x'?(src.tr||[]):(Math.random()<.25?[pick(['막판 괴물','출발 귀재','철의 심장','승부사','외로운 늑대'])]:[]);
+ let hp=200+s.sta*1.6;mul*=1+R(-.02,.02);
+ if(tr.includes('철의 심장'))hp*=1.1;if(race.g==='G1'){if(tr.includes('큰 무대 체질'))mul*=1.02;if(tr.includes('긴장형'))mul*=.98}if(race.going&&race.going!=='양호'&&tr.includes('비의 신'))mul*=1.03;
+ if(kind!=='x')mul*=goingMul(src,race);else if(race.going&&race.going!=='양호')mul*=pick([1.02,1,1,.97]);
+ if(race.going==='불량')hp*=.87;else if(race.going==='다습')hp*=.94;
+ return {name:src.name,color:src.color,kind,isP,hid:kind!=='x'?src.id:null,own:kind==='r'?src.own:null,nem:kind==='r'&&(src.beatMe||0)>=2,jid:isP?e.jid:null,jname,s,apt:APTM[src.apt[DCAT(D)]],strat,mul,pos:0,v:0,hp,hpMax:hp,noise:0,nt:0,
+  delay:tr.includes('출발 귀재')?0:R(0,.5)*(1-Math.min(s.wit,1000)/1500),fin:null,tired:false,T:tr,lastRk:99,coatHex:kind!=='x'?coatHex(src):COATS[wpick(COATW)],mark:kind!=='x'?src.mark:pick(MARKS),silk:isP?G.silk:kind==='r'?G.rv[src.own].silk:randSilk(),ph:Math.random()*6};
+}
+function simStep(dt){
+ RS.time+=dt;const D=RS.race.d,maxP=Math.max(...RS.runners.map(x=>x.pos));
+ for(const r of RS.runners){
+  if(r.fin!==null||RS.time<r.delay)continue;
+  r.nt-=dt;if(r.nt<=0){r.nt=1;r.noise=R(-1,1)*.055*(1-Math.min(r.s.wit,1200)/1800)}
+  const st=STRAT[r.strat],p=r.pos/D,spurt=D-r.pos<Math.max(400,D*.22);
+  let m=spurt?st[2]+r.s.pow/3000:(p<.33?st[0]:st[1]);
+  if(r.T.length){if(spurt&&r.T.includes('막판 괴물'))m+=.02;if(p<.33&&r.T.includes('출발 귀재'))m+=.01;if(r.pos>=maxP&&r.T.includes('외로운 늑대'))m+=.015;
+   if(spurt&&D-r.pos<250&&r.T.includes('승부사')&&RS.runners.some(o=>o!==r&&o.fin===null&&Math.abs(o.pos-r.pos)<2))m+=.02}
+  let tg=(14.5+r.s.spd*.005)*r.apt*m*r.mul*(1+r.noise);
+  if(r.hp<=0){tg*=.8+Math.min(r.s.guts,1000)/5000;if(!r.tired){r.tired=true;if(r.isP)RS.comm=`${r.name}, 스태미나가 바닥났다! 버틸 수 있을까!`}}
+  r.v+=(tg-r.v)*Math.min(1,dt*(1+r.s.pow/400));
+  const dx=r.v*dt;r.pos+=dx;r.hp-=.25*m*m*dx;
+  if(r.pos>=D){r.fin=RS.time-(r.pos-D)/r.v;r.pos=D}
+ }
+ const ld=RS.runners.reduce((a,b)=>b.pos>a.pos?b:a),f=RS.flags;
+ if(!f.s&&RS.time>.6){f.s=1;RS.comm='게이트가 열렸습니다!'}
+ if(!RS.live)return;
+ const ord=[...RS.runners].sort((a,b)=>(a.fin??1e9)-(b.fin??1e9)||b.pos-a.pos),me=ord.filter(x=>x.isP),say=t=>{RS.comm=t;RS.lastSay=RS.time};
+ if(!f.q&&ld.pos>D*.2){f.q=1;say(`선두는 ${ld.name}, 2번手 ${ord[1].name}. ${me.length?`${me[0].name}는 ${ord.indexOf(me[0])+1}번째 위치`:''}`)}
+ if(!f.a&&ld.pos>D*.5){f.a=1;say(`레이스 중반! 여전히 ${ld.name}가 이끈다${ld.isP?' — 우리 말이 앞에 있다!':''}`)}
+ if(!f.b&&ld.pos>D-Math.max(400,D*.22)){f.b=1;say('마지막 직선! 각 마 일제히 스퍼트!')}
+ if(!f.t&&ld.pos>D-200){f.t=1;if(!RS.fast)sfx.cheer();const g=ord[0].pos-ord[1].pos;say(g<2?`남은 200m! ${ord[0].name}와 ${ord[1].name} 치열한 경합!!`:`남은 200m! ${ord[0].name}가 앞서간다!`)}
+ if(RS.time-(RS.chk||0)>1){RS.chk=RS.time;for(const x of me){const rk=ord.indexOf(x)+1;if(RS.time>5&&rk<x.lastRk&&rk<=5&&RS.time-(RS.lastSay||0)>1.5&&x.fin===null)say(`${x.name}, 제쳤다! ${rk}위로 올라섰다!`);x.lastRk=rk}}
+ if(!f.c&&ld.fin!==null){f.c=1;RS.comm=ld.isP?`🎉 ${ld.name}, 1착으로 골인!!`:`${ld.name}, 1착으로 골인!`}
+}
+V.run=()=>{const r=RS.race,mine=RS.runners.filter(x=>x.isP);return `<div class="row" style="margin-bottom:8px">${grTag(r)}<b class="disp" style="font-size:18px">${esc(r.n)}</b><span class="sp"></span><span class="mut">${r.d}m ${DCATN[DCAT(r.d)]}</span></div>
+ <div class="mut" style="margin-bottom:6px">${goingIc(r.going)} 마장 ${r.going}<br>${mine.map(m=>`🐴 <b>${esc(m.name)}</b> × 🧢 ${m.jname} (${m.strat})`).join('<br>')}${RS.runners.some(x=>x.kind==='r')?`<br><span style="color:#b91c1c">⚔️ 라이벌: ${RS.runners.filter(x=>x.kind==='r').map(x=>`${x.nem?'🔥':''}${esc(x.name)}`).join(', ')}</span>`:''}</div>
+ ${RS.talk?`<div class="bubble"><b>${esc(RS.talk.rv.owner)}</b> <span class="mut">(${esc(RS.talk.rv.n)} · ${RS.talk.rv.pers})</span><br>"${esc(RS.talk.t)}"</div>`:''}
+ <div style="position:relative"><canvas id="cv"></canvas><span class="slow" id="slow" style="display:none">SLOW ▶▶</span></div><div class="comm" id="comm"></div><div class="card" id="live"></div>
+ <button class="btn ghost" style="width:100%" onclick="RS.fast=true">⏩ 결과까지 빨리 보기</button>`};
+function initCanvas(){const cv=$('#cv'),dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=78+RS.runners.length*22+8;cv.style.height=H+'px';cv.width=W*dpr;cv.height=H*dpr;const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);RS.cv={ctx,W,H}}
+function draw(){
+ if(!RS.cv)return;const {ctx,W,H}=RS.cv,D=RS.race.d,rs=RS.runners;
+ const lead=Math.max(...rs.map(r=>r.pos)),span=180,cam=lead-span*.8,X=p=>(p-cam)/span*W,top=82,lh=22,gw=RS.race.going||'양호',ppm=W/span;
+ const sky=ctx.createLinearGradient(0,0,0,74);sky.addColorStop(0,gw==='양호'?'#7dd3fc':gw==='다습'?'#94a3b8':'#475569');sky.addColorStop(1,gw==='양호'?'#e0f2fe':'#cbd5e1');ctx.fillStyle=sky;ctx.fillRect(0,0,W,76);
+ const sc=STANDC[RS.race.abroad||G.country]||'#1f5c3a',seg=120,opx=cam*ppm*.5,cheer=RS.flags&&RS.flags.t,CR=['#ef4444','#3b82f6','#facc15','#22c55e','#f472b6','#fff','#a78bfa','#fb923c'];
+ for(let i=-1;i<W/seg+2;i++){const si=Math.floor(opx/seg)+i,x0=si*seg-opx;
+  ctx.fillStyle=sc;ctx.beginPath();ctx.moveTo(x0,30);ctx.lineTo(x0+seg,30);ctx.lineTo(x0+seg-6,20);ctx.lineTo(x0+6,20);ctx.fill();
+  ctx.fillStyle='#e7e5e4';ctx.fillRect(x0+2,30,seg-4,40);ctx.fillStyle='#a8a29e';ctx.fillRect(x0+2,30,2,40);
+  for(let r=0;r<4;r++)for(let c=0;c<12;c++){const k=Math.abs((si*131+r*17+c*7)%97);if(k<12)continue;const b=cheer?Math.sin(RS.time*14+c+r)*1.6:0;ctx.fillStyle=CR[k%CR.length];ctx.beginPath();ctx.arc(x0+10+c*9+(r%2)*4,36+r*9+b,2.6,0,7);ctx.fill()}}
+ ctx.fillStyle='#111';ctx.fillRect(6,4,104,30);ctx.strokeStyle='#facc15';ctx.lineWidth=1.5;ctx.strokeRect(6,4,104,30);
+ {const ld=[...rs].sort((a,b)=>(a.fin??1e9)-(b.fin??1e9)||b.pos-a.pos)[0];ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillStyle='#facc15';ctx.font='bold 11px sans-serif';ctx.fillText(`남은 ${Math.max(0,Math.round(D-lead))}m`,11,17);ctx.fillStyle='#fff';ctx.font='10px sans-serif';ctx.fillText(`1위 ${ld.name}`.slice(0,12),11,29)}
+ {const cx=W-48,cy=38,rx=40,ry=24;ctx.fillStyle='#2f7a50';ctx.beginPath();ctx.ellipse(cx,cy,rx+5,ry+5,0,0,7);ctx.fill();ctx.fillStyle='#86efac';ctx.beginPath();ctx.ellipse(cx,cy,rx-5,ry-5,0,0,7);ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,7);ctx.stroke();ctx.fillStyle='#fff';ctx.fillRect(cx-1,cy+ry-2,2,9);
+  for(const r of [...rs].sort((a,b)=>a.isP-b.isP)){const th=Math.PI/2-(r.pos/D)*Math.PI*2;ctx.beginPath();ctx.arc(cx+rx*Math.cos(th),cy+ry*Math.sin(th),r.isP?3.6:2.2,0,7);ctx.fillStyle=r.isP?'#ffd23f':r.kind==='r'?'#ef4444':'#1f2937';ctx.fill()}}
+ ctx.fillStyle='#fff';ctx.fillRect(0,76,W,3);for(let m=Math.floor(cam/10)*10;m<cam+span+10;m+=10){ctx.fillRect(X(m),74,1.5,6)}
+ for(let m=Math.floor(cam/20)*20;m<cam+span+20;m+=20){ctx.fillStyle=(Math.floor(m/20)%2)?'#3f8f52':'#46995a';ctx.fillRect(X(m),top-4,X(m+20)-X(m)+1,H-top+4)}
+ ctx.fillStyle='#fff';ctx.fillRect(0,top-6,W,3);ctx.fillRect(0,H-4,W,3);
+ ctx.font='bold 10px Noto Sans KR';ctx.textAlign='center';ctx.textBaseline='alphabetic';
+ for(let rem=Math.ceil((D-cam-span)/100)*100;rem<=D-cam+100;rem+=100){const x=X(D-rem);if(rem<=0||x<-20||x>W+20)continue;ctx.fillStyle='#ffffff55';ctx.fillRect(x,top-4,1,H-top);if(rem%200===0){ctx.fillStyle='#fff';ctx.fillText(rem+'m',x,top+8)}}
+ const fx=X(D);if(fx<W+10)for(let i=0;i<(H-top)/6;i++){ctx.fillStyle=i%2?'#fff':'#111';ctx.fillRect(fx-3,top-4+i*6,3,6);ctx.fillStyle=i%2?'#111':'#fff';ctx.fillRect(fx,top-4+i*6,3,6)}
+ ctx.textBaseline='middle';
+ for(const r of rs){const y=top+r.lane*lh+lh/2+2;let x=X(r.pos);const off=x<14;if(off)x=14;ctx.globalAlpha=off?.45:1;
+  if(r.fin===null)r.ph+=r.v*.045;drawHorse(ctx,x,y+1,r,r.ph);
+  ctx.fillStyle=r.isP?'#ffd23f':'#ffffffcc';ctx.font='bold 9px sans-serif';ctx.fillText(r.isP?'★':r.no,x-17,y);ctx.globalAlpha=1}
+ if(gw!=='양호'){ctx.strokeStyle='#ffffff88';ctx.lineWidth=1;const n=gw==='불량'?70:30;for(let i=0;i<n;i++){const x=(i*53+RS.time*380)%W,y=(i*97+RS.time*620)%H;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-3,y+9);ctx.stroke()}}
+ const ord=[...rs].sort((a,b)=>(a.fin??1e9)-(b.fin??1e9)||b.pos-a.pos);
+ $('#comm').textContent=RS.comm;
+ $('#live').innerHTML=rs.filter(r=>r.isP).map(m=>`<div class="row"><b style="width:auto">${esc(m.name)}</b><span class="tag">${ord.indexOf(m)+1}위</span><span class="sp"></span><span class="mut">남은 ${Math.max(0,Math.round(D-m.pos))}m</span></div><div class="row" style="margin:4px 0 8px"><span class="mut" style="width:52px">스태미나</span><div class="bar"><i style="width:${clamp(m.hp/m.hpMax*100,0,100)}%;background:#ef4444"></i></div></div>`).join('')+`<div class="mut">${ord.slice(0,4).map((r,i)=>`${i+1}. ${r.isP?'<b>'+esc(r.name)+'</b>':esc(r.name)}`).join(' · ')}</div>`;
+}
+function loop(){if(!RS||screen!=='run'||RS.done)return;
+ const D=RS.race.d,act=RS.runners.filter(r=>r.fin===null).sort((a,b)=>b.pos-a.pos);
+ RS.slow=!RS.fast&&act.length>1&&D-act[0].pos<120&&act[0].pos-act[1].pos<2.5&&RS.runners.filter(r=>r.fin!==null).length===0&&(act[0].isP||act[1].isP);
+ if(!RS.fast&&++RS.hf%(RS.slow?40:18)===0)sfx.hoof();
+ const n=RS.fast?40:RS.slow?1:4;for(let i=0;i<n;i++)simStep(.05);draw();const sb=$('#slow');if(sb)sb.style.display=RS.slow?'block':'none';
+ if(RS.runners.every(r=>r.fin!==null)){RS.done=true;const o=[...RS.runners].sort((a,b)=>a.fin-b.fin);
+  if(o[1].fin-o[0].fin<.05&&(o[0].isP||o[1].isP)){RS.photo=true;RS.comm='📸 사진 판정 중... 숨죽이고 기다립니다!';draw();setTimeout(finishRace,RS.fast?300:2000)}
+  else setTimeout(finishRace,RS.fast?200:1200);return}
+ requestAnimationFrame(loop)}
+function confetti(){for(let i=0;i<46;i++){const d=document.createElement('div');d.className='cf';d.style.cssText=`left:${R(0,100)}vw;background:${pick(['#ffd23f','#ef4444','#22c55e','#3b82f6','#ec4899','#fff'])};animation-duration:${R(1.6,3)}s;animation-delay:${R(0,.6)}s`;document.body.appendChild(d);setTimeout(()=>d.remove(),4000)}}
+const fmtT=t=>{const m=Math.floor(t/60),s=(t%60).toFixed(1);return `${m}:${s.padStart(4,'0')}`};
+const gapStr=dt=>{const l=dt*16/2.4;return l<.1?'코차':l<.3?'머리':l<.6?'목':l>10?'대차':(Math.round(l*4)/4)+'마신'};
+function practiceResults(race,order){const lines=[];
+ order.forEach((r,i)=>{if(!r.isP)return;const h=hById(r.hid),j=jById(r.jid);if(!h)return;const rank=i+1,k=rank===1?3:rank<=3?2:1,gs=[];
+  [...STATS].sort(()=>Math.random()-.5).slice(0,k).forEach(([st])=>{const v=Math.min(RI(4,8)*(rank===1?1.5:1)|0,h.cap[st]-h.s[st]);if(v>0){h.s[st]+=v;gs.push(`${SN[st]}+${v}`)}});
+  h.fatigue=Math.min(100,h.fatigue+12);h.raced=true;h.fam[j.id]=(h.fam[j.id]||0)+1;apprGrow(j,.3,lines);if(rank===1)h.cond=Math.min(4,h.cond+1);
+  lines.push(`🏁 시범 경주: <b>${esc(h.name)}</b> ${rank}착 — ${gs.join(' ')||'경험 축적'}${rank===1?' · 컨디션↑':''}`)});
+ return lines}
+function applyResults(race,order){
+ if(race.cls==='PR')return practiceResults(race,order);
+ if(race.abroad){const bi=order.findIndex(x=>x.isP);if(bi>=0){const ws=wsYear(),wk=woy(G.week);if(!ws.res.some(x=>x.w===wk)){const p=WSP[bi]||1;ws.pts+=p;ws.res.push({w:wk,rank:bi+1,p});news(8,`🌏 월드 시리즈: ${esc(order[bi].name)} ${bi+1}착 (+${p}pt, 누적 ${ws.pts}pt)`)}}}
+ const lines=[],lastP=order.reduce((a,r,i)=>r.isP?i:a,-1),hasP=lastP>=0,firstP=order.findIndex(r=>r.isP);
+ if(hasP){const seen={};order.forEach((r,i)=>{if(r.kind==='r'&&seen[r.own]===undefined)seen[r.own]=i});for(const k in seen){if(!G.h2h[k])G.h2h[k]={w:0,l:0};firstP<seen[k]?G.h2h[k].w++:G.h2h[k].l++}}
+ if(race.g==='G1'){const w=order[0];G.g1hist.unshift({y:Math.floor(G.week/48)+1,n:race.n,h:w.name,o:w.isP?G.farm+' (나)':w.kind==='r'?G.rv[w.own].n:'-',me:w.isP?1:0});G.g1hist=G.g1hist.slice(0,60)}
+ order.forEach((r,i)=>{const rank=i+1,prize=Math.round(racePrize(race)*RANKP[rank-1]);
+  if(r.kind!=='x'){const hh=r.kind==='p'?hById(r.hid):rvH(r.hid);if(hh){const y=Math.floor(G.week/48);if(!hh.sy||hh.sy.y!==y)hh.sy={y,w:0,g1:0,e:0};hh.sy.e+=prize;
+   if(rank===1){hh.sy.w++;if(race.g==='G1')hh.sy.g1++;hh.streak=(hh.streak||0)+1;const own=r.kind==='p'?'우리 목장':G.rv[hh.own].n;
+    if(race.g)news(race.g==='G1'?(r.kind==='p'?10:8):5,`${race.g==='G1'?'🏆':'🎖️'} ${esc(race.n)} — ${esc(hh.name)} 우승! (${esc(own)})`);else if(r.kind==='p')news(3,`🐴 ${esc(G.farm)} 목장 ${esc(hh.name)}, ${esc(race.n)} 1착`);
+    if(hh.streak>=3)news(7,`🔥 ${esc(hh.name)} ${hh.streak}연승 질주! 어디까지 가나`)}else hh.streak=0;
+   if(r.kind==='p'&&rank===1&&RS&&RS.photo&&RS.race===race)news(6,`📸 코차의 승부! ${esc(hh.name)} 사진 판정 끝에 승리`)}}
+  if(r.kind==='p'){const h=hById(r.hid),j=jById(r.jid);if(!h)return;const net=Math.round(prize*.9*(1+.04*sk('show')));
+   G.money+=net;h.earn+=prize;h.starts++;G.tot.starts++;G.tot.earn+=prize;j.rides++;h.fam[j.id]=(h.fam[j.id]||0)+(G.excl===j.id?2:1);G.season.me.earn+=prize;
+   if(j.young)j.skill=Math.min(86,j.skill+.4);apprGrow(j,.6+(rank===1?1.2:rank<=3?.4:0),lines);if(j.appr&&rank===1&&race.g==='G1')G.flags.apprG1=1;
+   if(rank<=3)G.tot.top3++;
+   if(rank===1){const F=G.flags;if(h.home)F.home=1;if(race.going==='불량')F.rain=1;if(RS&&RS.photo&&RS.race===race)F.photo=1;if(order.some(x=>x.nem))F.revenge=1;
+    if(race.g==='G1'){if(race.abroad)F.abroad=1;if(h.home)F.homeg1=1;if(race.n.includes('더비'))F.derby=1}}
+   let rg=0;if(rank===1){h.wins++;G.tot.wins++;j.wins++;G.season.me.wins++;rg=raceRep(race);if(race.g){h.g++;G.tot.g++;if(race.g==='G1'){h.g1++;G.tot.g1++;G.season.me.g1++}}if(j.young)j.skill=Math.min(86,j.skill+1)}else if(rank<=3)rg=Math.floor(raceRep(race)/3);
+   G.rep+=rg;h.fatigue=Math.min(100,h.fatigue+(race.abroad?40:25));if(rank===1)h.cond=Math.min(4,h.cond+1);
+   h.raced=true;h.rec.push({w:wl(G.week).replace('년차','년'),n:race.n,g:race.g,rank,j:j.n});
+   const msg=`${race.g?`<span class="gr ${race.g}">${race.g}</span> `:''}${esc(race.n)}: <b>${esc(h.name)}</b> ${rank}착${prize?` (+${won(net)})`:''}${rg?` · 명성 +${rg}`:''}`;
+   lines.push(msg);log((rank===1?'🏆 ':'🏁 ')+msg);
+   if(rank===1&&race.g==='G1')toast(race.abroad?`🌏🏆 ${esc(h.name)} 해외 G1 제패!!`:`🏆 ${esc(h.name)} G1 제패!`);
+  }else if(r.kind==='r'){const h=rvH(r.hid);if(!h)return;const rv=G.rv[h.own],ss=G.season.rv[h.own];
+   h.starts++;h.earn+=prize;ss.earn+=prize;rv.money+=Math.round(prize*.9);h.fatigue=Math.min(100,h.fatigue+25);h.raced=true;
+   if(rank===1){h.wins++;rv.tot.wins++;ss.wins++;if(race.g){h.g++;if(race.g==='G1'){h.g1++;rv.tot.g1++;ss.g1++}}}
+   h.rec.push({w:wl(G.week).replace('년차','년'),n:race.n,g:race.g,rank,j:''});if(h.rec.length>20)h.rec.shift();
+   if(hasP&&i<lastP&&rank<=3){h.beatMe=(h.beatMe||0)+1;if(h.beatMe===2)lines.push(`🔥 ${esc(rv.n)}의 <b>${esc(h.name)}</b>가 숙적이 됐다!`);news(6,`⚔️ ${esc(rv.n)} ${esc(h.name)}, ${esc(G.farm)} 목장의 숙적으로 떠오르다`)}
+   if(rank===1&&(race.g||hasP))lines.push(`⚔️ ${esc(rv.n)}의 ${rvTag(h)} ${race.g?`<span class="gr ${race.g}">${race.g}</span> `:''}${esc(race.n)} 우승`);
+  }});
+ return lines;
+}
+function finishRace(){if(RS.runners){const w=[...RS.runners].sort((a,b)=>a.fin-b.fin)[0];if(w.pop>=6)news(w.isP?9:5,`💥 대이변! ${w.pop}번 인기 ${esc(w.name)} 우승 (단승 ${w.odds}배)`)}
+ const race=RS.race,order=[...RS.runners].sort((a,b)=>a.fin-b.fin);
+ {const rvs=[...new Set(order.filter(x=>x.kind==='r').map(x=>x.own))],bp=order.findIndex(x=>x.isP),ph=order[bp];
+  RS.talk2=rvs.length?rvs.slice(0,2).map(i=>{const rv=G.rv[i],ri=order.findIndex(x=>x.kind==='r'&&x.own===i);return {rv,t:ownerLine(rv,ri<bp?'win':'lose',order[ri].name,ph&&ph.name)}}):null}
+ RS.results.push(...applyResults(race,order));RS.order=order;screen='result';render();window.scrollTo(0,0);if(order[0].isP&&race.cls!=='PR'){confetti();sfx.fanfare()}else if(order.findIndex(x=>x.isP)>4)sfx.sad();
+}
+const QUOTES=['최고의 말입니다! 마지막까지 믿었어요.','오늘은 말이 다 해줬습니다.','작전대로 완벽했어요!','이 말과라면 어디든 갈 수 있습니다.','관중 여러분 감사합니다!'];
+V.result=()=>{const o=RS.order,best=o.findIndex(r=>r.isP)+1,w=o[0];return `<div class="hdr" style="text-align:center"><div style="opacity:.7">${esc(RS.race.n)} 결과${RS.photo?' · 📸 사진 판정':''}</div><div class="disp" style="font-size:42px;color:var(--gold)">${best}착</div><div>${best===1?'🎉 우승!':best<=3?'👏 입상!':best<=5?'상금권 진입':'아쉬운 결과...'}</div></div>
+ ${best===1?`<div class="card" style="text-align:center;background:#fff8e1;border:2px solid var(--gold)"><div style="font-size:46px">🏆</div><div class="disp" style="font-size:20px;color:var(--g)">우승 세리머니</div>
+  <div style="margin:6px 0"><b>${esc(w.name)}</b> × 🧢 ${w.jname}</div><div class="mut">"${pick(QUOTES)}" — ${w.jname}</div>${RS.race.g==='G1'?`<div style="margin-top:6px;font-weight:900;color:#1d4ed8">${RS.race.abroad?'🌏 해외 ':''}G1 제패! 역사에 이름을 새겼다!</div>`:''}</div>`:''}
+ ${RS.talk2?RS.talk2.map(x=>`<div class="bubble"><b>${esc(x.rv.owner)}</b> <span class="mut">(${esc(x.rv.n)})</span><br>"${esc(x.t)}"</div>`).join(''):''}
+ <div class="card"><table><tr><th>착</th><th>마명</th><th>타임</th><th>착차</th></tr>${o.map((r,i)=>`<tr class="${r.isP?'me':''}"><td class="rk">${i+1}</td><td>${silkSVG(r.silk,14)} <span class="mut">${r.no}번</span> ${esc(r.name)}${r.pop?` <span class="mut" style="font-size:11px">(${r.pop}인기)</span>`:''}${r.isP?` <span class="mut">(${r.jname})</span>`:r.kind==='r'?` <span class="mut" style="color:#b91c1c">${r.nem?'🔥':''}${esc(G.rv[r.own].n)}</span>`:''}</td><td>${fmtT(r.fin)}</td><td class="mut">${i?gapStr(r.fin-o[i-1].fin):''}</td></tr>`).join('')}</table></div>
+ <button class="btn gold" style="width:100%;padding:14px" onclick="nextRace()">${RS.idx+1<RS.queue.length?'다음 레이스 보기':'주간 정산 보기'}</button>`};
+function nextRace(){RS.idx++;if(RS.idx<RS.queue.length)prepRace();else weekEnd()}
+
+const EVENTS=[
+ [()=>{const v=RI(3,10)*100;G.money+=v;return `💌 스폰서가 후원금을 보냈다! +${won(v)}`}],
+ [()=>{const h=pick(G.horses);if(!h)return'';h.cond=Math.min(4,h.cond+1);return `🥕 마을 아이들이 ${esc(h.name)}에게 당근을 줬다. 컨디션 상승`}],
+ [()=>{const h=pick(G.horses);if(!h)return'';h.fatigue=Math.min(100,h.fatigue+15);return `🌩️ 천둥 때문에 ${esc(h.name)}가 잠을 설쳤다. 피로 +15`}],
+ [()=>{G.rep+=1;return `📺 목장이 TV에 소개됐다! 명성 +1`}],
+ [()=>{const h=pick(G.horses);if(!h)return'';const k=pick(STATS)[0];h.s[k]=Math.min(h.cap[k],h.s[k]+10);return `✨ ${esc(h.name)}가 뭔가 깨달은 것 같다! ${SN[k]} +10`}],
+];
+function trainHorse(h,eff,vet,lines,isR){
+ const T=!isR&&G.trainer?trById(G.trainer):null;if(hasT(h,'노력파'))eff*=1.15;if(hasT(h,'유리 다리'))vet*=1.8;if(T&&T.spec==='heal')vet*=.5;if(!isR)vet*=1-.15*sk('doc');
+ if(h.raced){h.raced=false}
+ else if(h.inj>0){h.inj--;h.fatigue=Math.max(0,h.fatigue-20);if(!h.inj&&!isR)lines.push(`💚 ${esc(h.name)} 부상 완치!`)}
+ else{const plan=isR?recPlan(h).k:h.plan;
+  if(plan==='rest'){h.fatigue=Math.max(0,h.fatigue-35-(T&&T.spec==='heal'?10:0));if(Math.random()<.5)h.cond=Math.min(4,h.cond+1)}
+  else{const P=PLANS[plan],agem=[1,1,1,.6,.3][h.age-2]??.15,cm=CONDS[h.cond].m,gs=[];
+   const cmk=k=>(!isR&&campOn())?(CAMPS[G.camp.t].st[k]||1):1;
+   const add=(k,base)=>{const v=h.s[k],c=h.cap[k],room=Math.max(0,(c-v)/c);const g=room>0?Math.max(1,Math.round(base*cmk(k)*eff*agem*cm*R(.8,1.2)*Math.sqrt(room)*1.6)):0;h.s[k]=Math.min(c,v+g);if(g)gs.push(`${SN[k]}+${g}`)};
+   const tm=T?(T.spec==='all'?T.m:T.spec===plan?T.m:1):1;add(plan,14*tm);for(const [k,r] of Object.entries(P.sub))add(k,14*r*(T&&T.spec==='all'?T.m:1));
+   h.fatigue=Math.min(100,h.fatigue+(plan==='wit'?5:13));
+   if(h.fatigue>65&&Math.random()<(h.fatigue-65)*.006*vet){h.inj=RI(2,6);h.cond=Math.max(0,h.cond-1);if(!isR){lines.push(`🩹 <b>${esc(h.name)}</b> 훈련 중 부상! ${h.inj}주 ${h.inj>=4?'— 치료 방법을 골라야 해요':'휴양'}`);log(`🩹 ${esc(h.name)} 부상 (${h.inj}주)`);if(h.inj>=4)(ui.evQ=ui.evQ||[]).push(injuryEvent(h))}}
+   else if(!isR)h.lastGain=gs.join(' ');
+  }}
+ if(h.age>=6)for(const [k] of STATS)h.s[k]=Math.max(50,h.s[k]-RI(0,2));
+ h.fatigue=Math.max(0,h.fatigue-6);
+ if(hasT(h,'변덕쟁이')&&Math.random()<.3)h.cond=clamp(h.cond+pick([-2,-1,1,2]),0,4);
+ const x=Math.random();if(h.fatigue>60&&x<.35)h.cond=Math.max(0,h.cond-1);else if(x<.15)h.cond=Math.max(0,h.cond-1);else if(x>.82)h.cond=Math.min(4,h.cond+1);
+}
+function weekEnd(){
+ const lines=RS?RS.results.slice():[];RS=null;ui.evQ=[];
+ const played=new Set(G.entries.map(e=>e.rid));
+ for(const r of G.weekRaces)if(!played.has(r.id)&&G.rvEntries.some(e=>e.rid===r.id))lines.push(...quickRace(r));
+ const eff=FAC.train.lv[G.fac.train]*(C().train||1),vet=FAC.vet.lv[G.fac.vet];
+ for(const h of G.horses){trainHorse(h,eff*FAC.lab.lv[G.fac.lab],vet,lines,false);h.fatigue=Math.max(0,h.fatigue-FAC.pool.lv[G.fac.pool])}
+ for(const rv of G.rv)for(const h of rv.horses)trainHorse(h,G.mode==='hard'?1.2:1.05,.7,lines,true);
+ for(const rv of G.rv)rv.money-=Math.round(rv.horses.reduce((a,h)=>a+(h.age>=5?45:35),0)*C().upkeep*(G.week<24?.5:1));
+ const trained=G.horses.filter(h=>h.lastGain&&!h.inj);
+ if(trained.length)lines.push('🏋️ 훈련: '+trained.map(h=>`${esc(h.name)} (${h.lastGain})`).join(', '));
+ G.horses.forEach(h=>h.lastGain='');
+ const rookie=G.week<24,upkeep=Math.round(G.horses.reduce((a,h)=>a+(h.age>=5?45:35),0)*C().upkeep*(1-.08*sk('care'))*(rookie?.5:1)),fu=facUpkeep(),ex=G.excl?exSal(jById(G.excl)):0,stud=studIncome();
+ const tf=G.trainer?Math.round(trById(G.trainer).fee*(1-.1*sk('scout'))):0,li=Math.round(G.loan*.004),as=G.jockeys.filter(j=>j.appr).reduce((a,j)=>a+apprSal(j),0),wt=G.money>50000?Math.round((G.money-50000)*.01):0;
+ const tou=tourism();G.money+=stud+tou-upkeep-fu-ex-tf-li-as-wt;
+ for(const j of G.jockeys)if(j.appr)apprGrow(j,.12,lines);
+ if(campOn()&&CAMPS[G.camp.t].fat)G.horses.forEach(h=>h.fatigue=Math.max(0,h.fatigue-CAMPS[G.camp.t].fat));
+ lines.push(`💰 사육비 -${won(upkeep)}${rookie?' 🌱(신인 지원 50%)':''}${tou?` · 관광 수입 +${won(tou)}`:''}${fu?` · 시설 유지비 -${won(fu)}`:''}${ex?` · 전속 기수 주급 -${won(ex)}`:''}${tf?` · 조교사 주급 -${won(tf)}`:''}${li?` · 대출 이자 -${won(li)}`:''}${as?` · 견습 기수 주급 -${won(as)}`:''}${wt?` · 🏛️ 자산 관리비 -${won(wt)}`:''}${campOn()?` · ${CAMPS[G.camp.t].n} 중`:''}${stud?` · 종마 수입 +${won(stud)}`:''}`);
+ if(Math.random()<.15){const ev=pick(EVENTS)[0]();if(ev){lines.push(ev);log(ev)}}
+ if(G.sponsor){const sp=G.sponsor;if(spProg()>=sp.n){G.money+=sp.reward;G.flags.sponsor=1;lines.push(`💼 ${esc(sp.name)} 스폰서 목표 달성! +${won(sp.reward)}`);log(`💼 ${esc(sp.name)} 목표 달성`);G.sponsor=null}
+  else if(G.week>=sp.until){G.money-=sp.up;lines.push(`💼 ${esc(sp.name)} 계약 기간 만료... 목표 실패로 계약금 ${won(sp.up)} 반환`);G.sponsor=null}}
+ const bh=G.horses.filter(h=>!h.inj);if(bh.length&&Math.random()<.12)(ui.evQ=ui.evQ||[]).push(pick(BOND)(pick(bh)));
+ G.week++;G.entries=[];
+ if(woy(G.week)===0){
+  const st=standings(),y=Math.floor(G.week/48);{const aw=doAwards(y-1,lines);if(aw)(ui.evQ=ui.evQ||[]).push(aw)}
+  lines.push(`🏆 <b>${y}년차 마주 순위</b>: ${st.map((r,i)=>`${i+1}위 ${r.me?'<b>'+esc(r.n)+'</b>':esc(r.n)}`).join(' · ')}`);
+  const myRank=st.findIndex(r=>r.me)+1;
+  {const ws=G.ws;if(ws&&ws.y===y-1){if(ws.pts>=20){const b=Math.round(15000*C().prize);G.money+=b;G.rep+=30;G.wsWins=(G.wsWins||0)+1;lines.push(`🌏👑 <b>월드 시리즈 챔피언!</b> ${ws.pts}pt · +${won(b)}, 명성 +30`);log(`🌏👑 ${y}년 월드 시리즈 챔피언 (${ws.pts}pt)`);news(10,`🌏👑 ${esc(G.farm)} 목장, 월드 시리즈 제패!`)}else if(ws.pts>0)lines.push(`🌏 월드 시리즈 ${ws.pts}pt로 마감 (챔피언 기준 20pt)`)}}
+  if(myRank===1)G.leadN++;
+  if(myRank===1){const b=Math.round(5000*C().prize);G.money+=b;G.rep+=20;lines.push(`👑 리딩 오너 등극! 보너스 +${won(b)}, 명성 +20`);log(`👑 ${y}년차 리딩 오너 등극!`)}
+  else if(myRank===2){G.rep+=8;lines.push('🥈 마주 순위 2위! 명성 +8')}
+  G.season={me:{earn:0,wins:0,g1:0},rv:G.rv.map(()=>({earn:0,wins:0,g1:0}))};
+  lines.push(`🎆 <b>${y+1}년차</b>가 시작됐다! 모든 말이 한 살 먹었다.`);
+  for(const h of [...G.horses]){h.age++;if(h.age>=7){doRetire(h);lines.push(`🌅 ${esc(h.name)} 7세가 되어 은퇴 (${h.sex==='F'?'번식 암말':'종마'})`)}}
+  for(const rv of G.rv){rv.horses.forEach(h=>h.age++);rv.horses=rv.horses.filter(h=>!(h.age>=7||(h.age>=6&&Math.random()<.4)))}
+  const born=G.preg.filter(p=>p.due<=y);G.preg=G.preg.filter(p=>p.due>y);
+  for(const p of born){const f=makeFoal(p);if(G.horses.length<capNow()){G.horses.push(f);lines.push(`🍼 <b>${esc(f.name)}</b> 탄생! (${esc(p.dam.name)}×${esc(p.sire.name)}) 잠재력 <b>${pgrade(capAvg(f))}</b>`);log(`🍼 자가생산마 ${esc(f.name)} 입사 · 잠재력 ${pgrade(capAvg(f))}`)}
+   else{const v=Math.round(horseValue(f)*1.5);G.money+=v;lines.push(`🍼 ${esc(f.name)} 탄생했지만 마구간이 가득 차서 ${won(v)}에 판매됐다`)}}
+ }
+ {const x=woy(G.week),pz=C().prize;
+  if(x===0&&G.week>0){const v=Math.round(RI(3,8)*100*pz);G.money+=v;lines.push(`🎍 새해 복주머니! +${won(v)}`)}
+  if(x===12){G.horses.forEach(h=>h.cond=Math.min(4,h.cond+1));lines.push('🌸 벚꽃 축제! 모든 말 컨디션 상승')}
+  if(x===36){const v=Math.round(400*pz);G.rep+=2;G.money+=v;lines.push(`🍂 가을 팬 감사제! 명성 +2, 굿즈 수익 +${won(v)}`)}
+  if(x===26&&G.horses.length)(ui.evQ=ui.evQ||[]).push(campEvent());
+  if(x===47&&G.horses.length)(ui.evQ=ui.evQ||[]).push(xmasEvent());
+  if(G.camp&&G.week===G.camp.until){lines.push(`${CAMPS[G.camp.t].n} 종료! 말들이 목장으로 돌아왔다`);G.camp=null}}
+ if(G.week%12===0&&!G.sponsor)G.spOffers=[genOffer(),genOffer()];
+ if((woy(G.week)===2||woy(G.week)===26)&&G.week>=48){G.elite=[];for(let i=0;i<2;i++){const h=genHorse(2,R(860,1000));h.price=Math.round(h.price*3/100)*100;G.elite.push(h)}G.eliteDone=false;if(G.mode!=='pure')lines.push('👑 프리미엄 경매 개최! 최상급 혈통 2두 (경매장 탭)')}
+ if(G.week%4===0){refreshMarket();G.marketDone=false;lines.push('🔨 경매장에 새 출품마가 들어왔다! (경매장 탭)');
+  for(const rv of G.rv)if(rv.horses.length<3){const h=genHorse(2,R(430,680));if(rv.money-h.price>=rvReserve(rv)){rv.money-=h.price;h.own=rv.i;rv.horses.push(h)}}}
+ const gr=GRADED.find(x=>x.w===woy(G.week));if(gr)lines.push(`📣 이번 주 <span class="gr ${gr.g}">${gr.g}</span> ${C().g1[gr.w]||gr.n}(${gr.d}m) 개최!`);
+ const ab=ABROAD.find(x=>x.w===woy(G.week)&&x.c!==G.country);if(ab)lines.push(`🌏 해외 원정 기회! ${COUNTRIES[ab.c].f} ${COUNTRIES[ab.c].g1[ab.k]} (${ab.d}m) 출전 가능`);
+ if(G.money<0){G.debt++;lines.push(`⚠️ 적자 상태 ${G.debt}주째 (${bankLim()}주 연속이면 파산)${mode()!=='hard'?' — 목장 탭 은행에서 대출할 수 있어요':''}`)}else G.debt=0;
+ genWeekRaces();checkAch(lines);for(const k in G.plans)if(+k<G.week)delete G.plans[k];{const pl=(G.plans[G.week]||[]).map(id=>hById(id)).filter(Boolean);if(pl.length)lines.push(`📌 이번 주 출전 계획: ${pl.map(h=>'<b>'+esc(h.name)+'</b>').join(', ')}`)}
+ if(G.debt>=bankLim()&&mode()!=='hard'&&(G.rescueW===undefined||G.week-G.rescueW>=96)){
+  G.rescueW=G.week;G.debt=0;const cut=[];if(G.trainer){cut.push('조교사');G.trainer=null}if(G.excl){cut.push('전속 기수');G.excl=null}
+  const aid=Math.round(3000*C().prize);G.money=Math.max(G.money,0)+aid;
+  const msg=`🆘 경마협회 긴급 지원! +${won(aid)}${cut.length?` (${cut.join('·')} 계약 정리)`:''} — 2년에 한 번만 받을 수 있어요`;lines.push(msg);log(msg)}
+ if(G.debt>=bankLim()){screen='over';try{localStorage.removeItem('owner-save')}catch(e){}render();return}
+ const hl=makeNews();
+ if(G.week===CAREER&&!G.ended){ui.report=null;ui.evQ=[];doEnding();return}
+ save();screen='main';ui.report={title:`${wl(G.week-1)} 정산`,lines,news:hl};render();window.scrollTo(0,0);
+}
+V.over=()=>`<div class="title-wrap"><div style="font-size:64px">💸</div><h1 style="font-size:36px">파산...</h1><div class="mut" style="margin:10px 0 20px">${esc(G.farm)} 목장은 ${wl(G.week)}에 문을 닫았습니다.<br>통산 ${G.tot.starts}전 ${G.tot.wins}승 · 중상 ${G.tot.g}승 · G1 ${G.tot.g1}승</div><button class="btn gold" onclick="screen='title';render()">타이틀로</button></div>`;
+
+render();
+</script>
+</body>
+</html>
