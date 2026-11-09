@@ -292,7 +292,7 @@ function recRaces(){
 /* ===== 원클릭·자동 진행 ===== */
 function bestJockey(h,r,busyJ){const sc=j=>j.skill+(h.fam[j.id]||0)*.6+(G.excl===j.id||j.appr?6:0)-(r.cls==='PR'?0:jFee(j)/40);
  return G.jockeys.filter(j=>G.rep>=j.rep&&(r.cls==='PR'||!busyJ.has(j.id))&&G.money>=entryCost(r,j)).sort((a,b)=>sc(b)-sc(a))[0]}
-function autoAll(silent){let tn=0,en=0;const rc=recRaces();
+function autoAll(silent){sanitizeEntries();let tn=0,en=0;const rc=recRaces();
  for(const h of G.horses){if(G.entries.some(e=>e.hid===h.id)||h.inj)continue;const rp=recPlan(h).k;if(h.plan!==rp){h.plan=rp;tn++}}
  for(const [rid,hs] of Object.entries(rc))for(const hid of hs){const h=hById(hid),r=G.weekRaces.find(x=>x.id==rid);if(!h||!r||G.entries.some(e=>e.hid===hid))continue;
   const busyJ=new Set(G.entries.filter(e=>{const rr=G.weekRaces.find(x=>x.id===e.rid);return rr&&rr.cls!=='PR'}).map(e=>e.jid)),j=bestJockey(h,r,busyJ);if(!j)continue;
@@ -338,7 +338,8 @@ const talent=c=>'★'.repeat(clamp(Math.round((c-72)/6),1,4))+'☆'.repeat(4-cla
 function scoutList(){if(!ui.scout){const used=new Set(G.jockeys.map(j=>j.n));const pool=(APN[G.country]||APN.kr).filter(n=>!used.has(n));ui.scout=[0,1,2].map(i=>({n:pool[i]||pick(APN.kr)+' '+(i+2),skill:RI(44,54),cap:RI(76,97),style:pick(Object.keys(STRAT))}))}return ui.scout}
 function hireAppr(i){const c=scoutList()[i];if(G.money<apprCost()||G.jockeys.filter(j=>j.appr).length>=2)return;G.money-=apprCost();const id=Math.max(10,...G.jockeys.map(j=>j.id))+1;
  G.jockeys.push({id,n:c.n,skill:c.skill,cap:c.cap,style:c.style,fee:0,rep:0,appr:1,rides:0,wins:0,ms:0});ui.scout=null;log(`🌱 견습 기수 ${esc(c.n)} 입단!`);toast(`🌱 ${esc(c.n)} 입단!`);sfx.coin();save();render()}
-function fireAppr(id){G.jockeys=G.jockeys.filter(j=>j.id!==id);save();render()}
+function fireAppr(id){const n=G.entries.filter(e=>e.jid===id).length;for(const e of G.entries.filter(e=>e.jid===id))G.money+=e.cost||0;G.entries=G.entries.filter(e=>e.jid!==id);G.jockeys=G.jockeys.filter(j=>j.id!==id);if(G.excl===id)G.excl=null;if(n)toast(`출주 등록 ${n}건이 취소되고 비용이 환불됐어요`);save();render()}
+function sanitizeEntries(){if(!G||!G.entries)return;G.entries=G.entries.filter(e=>{const ok=hById(e.hid)&&jById(e.jid)&&G.weekRaces.some(r=>r.id===e.rid);if(!ok)G.money+=e.cost||0;return ok})}
 function apprGrow(j,amt,lines){if(!j.appr)return;const before=j.skill;j.skill=Math.min(j.cap,j.skill+amt);for(const m of [65,75,85,92])if(before<m&&j.skill>=m){const t=m>=92?'전설의 기수로 각성':m>=85?'일류 기수로 성장':m>=75?'중견 기수로 성장':'한 단계 성장';const msg=`🌱 견습 기수 ${esc(j.n)}, ${t}! (기량 ${m})`;log(msg);news(m>=85?7:4,msg);if(lines)lines.push(msg);toast(msg)}}
 /* ===== 합숙·계절 ===== */
 const CAMPS={sea:{n:'🏖️ 바다 합숙',d:'스태미나·근성 훈련 ×1.4, 피로 회복 +5',st:{sta:1.4,guts:1.4},fat:5,cost:800},mount:{n:'⛰️ 고원 합숙',d:'스피드·파워 훈련 ×1.4',st:{spd:1.4,pow:1.4},fat:0,cost:800},abroad:{n:'✈️ 해외 합숙',d:'모든 훈련 ×1.3',st:{spd:1.3,sta:1.3,pow:1.3,guts:1.3,wit:1.3},fat:3,cost:3000}};
@@ -535,6 +536,7 @@ function migrate(g){
  const on=ONAMES[G.country]||ONAMES.kr,ps=Object.keys(PERS);G.rv.forEach((r,i)=>{if(r.money===undefined)r.money=Math.round(20000*C().prize);if(!r.silk)r.silk=randSilk();if(!r.owner)r.owner=on[i%on.length];if(!r.pers)r.pers=ps[i%ps.length]});
  for(const h of [...G.horses,...G.retired,...G.market]){if(!h.sex)h.sex=pick(['M','F']);if(!h.mud)h.mud=pick(['A','B','B','C']);if(!h.style)h.style=pick(Object.keys(STRAT))}
  for(const r of G.weekRaces)if(!r.going)r.going='양호';
+ sanitizeEntries();
  return G;
 }
 
@@ -896,7 +898,7 @@ function confirmEntry(){const s=ui.sheet,r=G.weekRaces.find(x=>x.id===s.rid),j=j
 function cancelEntry(hid,silent){const e=G.entries.find(x=>x.hid===hid);if(!e)return;G.money+=e.cost;G.entries=G.entries.filter(x=>x!==e);if(!silent){save();render()}}
 
 /* ===== 주 진행 ===== */
-function advance(){ui.sheet=null;G.wkNews=[];
+function advance(){ui.sheet=null;G.wkNews=[];sanitizeEntries();
  const races=[...new Set(G.entries.map(e=>e.rid))].map(id=>G.weekRaces.find(r=>r.id===id));
  RS={queue:races.filter(watchRace),idx:0,results:[]};for(const r of races.filter(r=>!watchRace(r)))RS.results.push(...simInstant(r));
  if(RS.queue.length)prepRace();else weekEnd();
@@ -955,7 +957,7 @@ function mkRunner(src,kind,race,e){
  const fm=kind!=='x'?CONDS[src.cond].m*(src.fatigue>40?1-(src.fatigue-40)/400:1):R(.96,1.04);
  for(const [k] of STATS)s[k]=src.s[k]*fm;
  const need=(.27*D-200)/1.6;
- if(isP){const j=jById(e.jid);jname=j.n;s.wit+=j.skill*3;
+ if(isP){const j=jById(e.jid)||{id:0,n:'대리 기수',skill:60,style:'선행'};jname=j.n;s.wit+=j.skill*3;
   strat=e.strat;if(strat==='맡김'){strat=j.style;if(strat==='도주'&&s.sta<need*1.1)strat='선행';if(s.sta<need*.8)strat='선입'}
   mul=1+(j.skill-60)/2000+(strat===j.style?.008:0)+Math.min(.012,(src.fam[j.id]||0)*.0015);
  }else if(kind==='r'){strat=src.style||'선행';if(strat==='도주'&&s.sta<need*1.1)strat='선행';if(s.sta<need*.8)strat='선입';s.wit+=120;mul=1+R(0,.01)}
@@ -1042,7 +1044,7 @@ function confetti(){for(let i=0;i<46;i++){const d=document.createElement('div');
 const fmtT=t=>{const m=Math.floor(t/60),s=(t%60).toFixed(1);return `${m}:${s.padStart(4,'0')}`};
 const gapStr=dt=>{const l=dt*16/2.4;return l<.1?'코차':l<.3?'머리':l<.6?'목':l>10?'대차':(Math.round(l*4)/4)+'마신'};
 function practiceResults(race,order){const lines=[];
- order.forEach((r,i)=>{if(!r.isP)return;const h=hById(r.hid),j=jById(r.jid);if(!h)return;const rank=i+1,k=rank===1?3:rank<=3?2:1,gs=[];
+ order.forEach((r,i)=>{if(!r.isP)return;const h=hById(r.hid),j=jById(r.jid)||{id:0,n:'대리 기수',skill:60};if(!h)return;const rank=i+1,k=rank===1?3:rank<=3?2:1,gs=[];
   [...STATS].sort(()=>Math.random()-.5).slice(0,k).forEach(([st])=>{const v=Math.min(RI(4,8)*(rank===1?1.5:1)|0,h.cap[st]-h.s[st]);if(v>0){h.s[st]+=v;gs.push(`${SN[st]}+${v}`)}});
   h.fatigue=Math.min(100,h.fatigue+12);h.raced=true;h.fam[j.id]=(h.fam[j.id]||0)+1;apprGrow(j,.3,lines);if(rank===1)h.cond=Math.min(4,h.cond+1);
   lines.push(`🏁 시범 경주: <b>${esc(h.name)}</b> ${rank}착 — ${gs.join(' ')||'경험 축적'}${rank===1?' · 컨디션↑':''}`)});
@@ -1059,7 +1061,7 @@ function applyResults(race,order){
     if(race.g)news(race.g==='G1'?(r.kind==='p'?10:8):5,`${race.g==='G1'?'🏆':'🎖️'} ${esc(race.n)} — ${esc(hh.name)} 우승! (${esc(own)})`);else if(r.kind==='p')news(3,`🐴 ${esc(G.farm)} 목장 ${esc(hh.name)}, ${esc(race.n)} 1착`);
     if(hh.streak>=3)news(7,`🔥 ${esc(hh.name)} ${hh.streak}연승 질주! 어디까지 가나`)}else hh.streak=0;
    if(r.kind==='p'&&rank===1&&RS&&RS.photo&&RS.race===race)news(6,`📸 코차의 승부! ${esc(hh.name)} 사진 판정 끝에 승리`)}}
-  if(r.kind==='p'){const h=hById(r.hid),j=jById(r.jid);if(!h)return;const net=Math.round(prize*.9*(1+.04*sk('show')));
+  if(r.kind==='p'){const h=hById(r.hid),j=jById(r.jid)||{id:0,n:'대리 기수',skill:60,rides:0,wins:0};if(!h)return;const net=Math.round(prize*.9*(1+.04*sk('show')));
    G.money+=net;h.earn+=prize;h.starts++;G.tot.starts++;G.tot.earn+=prize;j.rides++;h.fam[j.id]=(h.fam[j.id]||0)+(G.excl===j.id?2:1);G.season.me.earn+=prize;
    if(j.young)j.skill=Math.min(86,j.skill+.4);apprGrow(j,.6+(rank===1?1.2:rank<=3?.4:0),lines);if(j.appr&&rank===1&&race.g==='G1')G.flags.apprG1=1;
    if(rank<=3)G.tot.top3++;
