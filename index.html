@@ -927,17 +927,23 @@ function prepRace(){
 const GATEC=[['#ffffff','#111'],['#111111','#fff'],['#dc2626','#fff'],['#2563eb','#fff'],['#facc15','#111'],['#16a34a','#fff'],['#f97316','#111'],['#ec4899','#111'],['#06b6d4','#111'],['#7c3aed','#fff'],['#a3a3a3','#111'],['#84cc16','#111']];
 function setPopularity(rf,race){const need=Math.max(50,.27*race.d-200),sc=r=>(r.s.spd+r.s.pow*.4+r.s.guts*.2+r.s.wit*.2)*r.apt*r.mul*(.75+.25*Math.min(1,r.hp/need/1.6))*R(.97,1.03);
  [...rf].sort((a,b)=>sc(b)-sc(a)).forEach((r,i)=>{r.pop=i+1;r.odds=(1.4+Math.pow(i,1.45)*.95+R(0,.4)).toFixed(1)})}
-function speak(t){if(!SND)return;try{const S=window.speechSynthesis;if(!S)return;S.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF\uFE0F]/gu,''));u.lang='ko-KR';u.rate=1.15;u.pitch=1.05;S.speak(u)}catch(e){}}
+function speak(t,done,minMs){let fired=false;const fin=()=>{if(fired)return;fired=true;if(done)done()};const clean=t.replace(/[\u{1F300}-\u{1FAFF}☀-➿️]/gu,'');
+ const S=SND&&window.speechSynthesis;
+ if(!S||typeof SpeechSynthesisUtterance==='undefined'){setTimeout(fin,minMs||1500);return}
+ try{const u=new SpeechSynthesisUtterance(clean);u.lang='ko-KR';u.rate=1.3;u.pitch=1.05;const t0=Date.now();
+  u.onend=()=>{const w=Math.max(0,(minMs||0)-(Date.now()-t0));setTimeout(fin,w+150)};u.onerror=()=>setTimeout(fin,minMs||1500);
+  setTimeout(fin,Math.max(minMs||0,clean.length*260+2500));
+  if(S.speaking||S.pending)S.cancel();S.speak(u)}catch(e){setTimeout(fin,minMs||1500)}}
 function stopSpeak(){try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 const FLAV=['몸 상태가 좋아 보입니다','다크호스로 꼽힙니다','최근 훈련 내용이 좋았습니다','오늘은 어떤 모습을 보여줄까요','관계자들이 주목하는 한 마리','차분하게 패독을 돌고 있습니다'];
 function introText(r,race){const n=`${r.no}번 ${r.name}`;
  if(r.isP)return `${n}! 우리 ${G.farm} 목장의 말입니다. 기수는 ${r.jname}. 현재 ${r.pop}번 인기!`;
  if(r.kind==='r'){const rv=G.rv[r.own];return r.nem?`${n}! ${rv.n}의 숙적이 또 나타났습니다! ${r.pop}번 인기.`:`${n}, ${rv.n}의 출전마. ${r.pop}번 인기입니다.`}
  if(r.pop===1)return `${n}, 오늘의 1번 인기! 단승 ${r.odds}배입니다.`;
- return `${n}, ${pick(FLAV)}.`}
-function introNext(){if(!RS||screen!=='intro')return;const rs=[...RS.runners].sort((a,b)=>a.no-b.no);RS.ii++;
- if(RS.ii<rs.length){const r=rs[RS.ii];RS.introLine=introText(r,RS.race);speak(RS.introLine);if(r.isP)sfx.coin();render();const tok=RS.tok;setTimeout(()=>{if(RS&&RS.tok===tok)introNext()},r.isP||r.nem||r.pop===1?2300:1500)}
- else{RS.introLine='자, 각 마 게이트에 들어갑니다... 출발 준비 완료!';speak(RS.introLine);render();const tok=RS.tok;setTimeout(()=>{if(RS&&RS.tok===tok&&screen==='intro')startRun()},1800)}}
+ return Math.random()<.4?`${n}, ${pick(FLAV)}.`:`${n}.`}
+function introNext(){if(!RS||screen!=='intro')return;const rs=[...RS.runners].sort((a,b)=>a.no-b.no);RS.ii++;const tok=RS.tok,go=f=>()=>{if(RS&&RS.tok===tok&&screen==='intro')f()};
+ if(RS.ii<rs.length){const r=rs[RS.ii];RS.introLine=introText(r,RS.race);if(r.isP)sfx.coin();render();speak(RS.introLine,go(introNext),r.isP||r.nem||r.pop===1?2300:1500)}
+ else{RS.introLine='자, 각 마 게이트에 들어갑니다... 출발 준비 완료!';render();speak(RS.introLine,go(startRun),1800)}}
 function startRun(){if(!RS)return;RS.tok=null;stopSpeak();sfx.gate();screen='run';render();window.scrollTo(0,0);requestAnimationFrame(loop)}
 const V_intro=()=>{const r0=RS.race,rs=[...RS.runners].sort((a,b)=>a.no-b.no);return `<div class="row" style="margin-bottom:8px">${grTag(r0)}<b class="disp" style="font-size:18px">${esc(r0.n)}</b><span class="sp"></span><span class="mut">${goingIc(r0.going)} ${r0.d}m ${DCATN[DCAT(r0.d)]}</span></div>
  <div class="card" style="background:#24301f;color:#fff;min-height:64px"><div class="row"><span style="font-size:26px">🎙️</span><div class="sp" style="font-weight:700;font-size:15px;line-height:1.45">${esc(RS.introLine)}</div></div></div>
