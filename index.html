@@ -133,7 +133,9 @@ const RI=(a,b)=>Math.floor(R(a,b+1));
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const won=n=>{n=Math.round(n);const neg=n<0;n=Math.abs(n);const s=n>=10000?(Math.floor(n/10000)+'억'+(n%10000?' '+(n%10000).toLocaleString()+'만':''))+'원':n.toLocaleString()+'만원';return (neg?'-':'')+s};
+const nf=x=>{x=Math.round(Number(x)||0);return String(x).replace(/\B(?=(\d{3})+(?!\d))/g,',')};
+const won=n=>{n=Math.round(Number(n)||0);const neg=n<0;n=Math.abs(n);const jo=Math.floor(n/100000000),eok=Math.floor(n%100000000/10000),man=n%10000;
+ let s=jo?jo+'조'+(eok?' '+nf(eok)+'억':''):eok?nf(eok)+'억':'';if(!jo&&man)s+=(s?' ':'')+nf(man)+'만';if(!s)s='0만';return (neg?'-':'')+s+'원'};
 
 const STATS=[['spd','스피드','#3b82f6'],['sta','스태미나','#ef4444'],['pow','파워','#f59e0b'],['guts','근성','#ec4899'],['wit','지능','#10b981']];
 const SN=Object.fromEntries(STATS.map(s=>[s[0],s[1]]));
@@ -302,19 +304,21 @@ function simInstant(race){const saved=RS;RS={race,runners:buildField(race,G.entr
  while(RS.runners.some(r=>r.fin===null)&&g++<30000)simStep(.1);const order=[...RS.runners].sort((a,b)=>a.fin-b.fin);RS=saved;return applyResults(race,order)}
 const VIEWS={all:'전부 보기',graded:'중상·G1만',none:'결과만'};
 function watchRace(r){const v=G.view||'all';return v==='all'?true:v==='graded'?!!(r.g||r.abroad):false}
-function autoRun(maxW){ui.sheet=null;const all=[],start=G.week;let stop='';
+function autoRun(maxW){ui.sheet=null;const all=[],start=G.week,t0={...G.tot},m0=G.money;let stop='';
  for(let k=0;k<maxW;k++){autoAll(true);G.wkNews=[];
   RS={queue:[],idx:0,results:[]};const races=[...new Set(G.entries.map(e=>e.rid))].map(id=>G.weekRaces.find(r=>r.id===id));for(const r of races)RS.results.push(...simInstant(r));
-  const wk=wl(G.week);weekEnd();const rep=ui.report;ui.report=null;
-  if(rep){const imp=rep.lines.filter(l=>/🏆|🏁|🩹|🍼|🏅|🎆|👑|🎉|🌏|⚔️|🔥|🆘|⚠️|📣|🌱|💼|☀️|🎍|🌸|🍂|📌|🎖️/.test(l));if(imp.length)all.push(`<b style="color:var(--g)">— ${wk}</b>`,...imp)}
+  const wk=wl(G.week),keep=ui.evQ||[];weekEnd();ui.evQ=keep.concat(ui.evQ||[]);const rep=ui.report;ui.report=null;
+  if(rep){const imp=rep.lines.filter(l=>/착|🏆|🏁|🩹|🍼|🏅|🎆|👑|🎉|🌏|⚔️|🔥|🆘|⚠️|📣|🌱|💼|☀️|🎍|🌸|🍂|📌|🎖️|🔨|🚑/.test(l)&&!/^🏋️|^💰/.test(l));if(imp.length)all.push(`<b style="color:var(--g)">— ${wk}</b>`,...imp)}
   if(screen!=='main')return;
-  if((ui.evQ||[]).length){stop='결정할 일이 생겼어요';break}
+  if((ui.evQ||[]).length>=4){stop='결정할 일이 여러 개 쌓였어요';break}
   if(G.debt>0){stop='적자가 났어요';break}
-  if(!G.marketDone&&G.market.length&&G.week%4===0&&G.mode!=='pure'&&G.horses.length<capNow()){stop='정기 경매가 열렸어요';break}
-  if(G.elite.length&&!G.eliteDone&&G.mode!=='pure'){stop='프리미엄 경매가 열렸어요';break}
+  const lotMin=a=>Math.min(...a.map(h=>Math.max(100,Math.round(h.price*.4/10)*10)));
+  if(G.elite.length&&!G.eliteDone&&(woy(G.week)===2||woy(G.week)===26)&&G.mode!=='pure'&&G.horses.length<capNow()&&G.money>=lotMin(G.elite)){stop='프리미엄 경매가 열렸어요 (경매장 탭)';break}
   {const rc=recRaces(),big=G.weekRaces.find(r=>(r.g==='G1'||r.abroad)&&(rc[r.id]||[]).length);if(big){stop=`이번 주 ${big.n}에 ⭐ 추천 출주마가 있어요`;break}}
   if((G.plans[G.week]||[]).length){stop='📌 출전 계획 주간이에요';break}}
- ui.report={title:`⏩ ${G.week-start}주 자동 진행`,lines:[...(stop?[`<b>⏸️ 멈춤: ${stop}</b>`]:[]),...(all.length?all:['특별한 일 없이 지나갔어요'])],news:(G.news[0]||{}).h};render();window.scrollTo(0,0)}
+ const nev=(ui.evQ||[]).length;
+ const sum=`<b>📊 출주 ${G.tot.starts-t0.starts}회 · 1착 ${G.tot.wins-t0.wins}회${G.tot.g-t0.g?` · 중상 ${G.tot.g-t0.g}승`:''}${G.tot.g1-t0.g1?` · G1 ${G.tot.g1-t0.g1}승`:''} · 획득 상금 ${won(G.tot.earn-t0.earn)} · 자금 ${G.money>=m0?'+':''}${won(G.money-m0)}</b>`;
+ ui.report={title:`⏩ ${G.week-start}주 자동 진행`,lines:[...(stop?[`<b>⏸️ 멈춤: ${stop}</b>`]:[]),sum,...(nev?[`<b>💬 확인할 이야기 ${nev}개가 기다리고 있어요 (확인을 누르면 나와요)</b>`]:[]),...(all.length?all:['특별한 일 없이 지나갔어요'])],news:(G.news[0]||{}).h};render();window.scrollTo(0,0)}
 /* ===== 정렬·비교 ===== */
 const SORTS={def:'기본',age:'나이',pow:'능력',wins:'승수',fat:'피로'};
 function sortedHorses(){const a=[...G.horses],k=ui.sort||'def';if(k==='age')a.sort((x,y)=>x.age-y.age);else if(k==='pow')a.sort((x,y)=>statSum(y)-statSum(x));else if(k==='wins')a.sort((x,y)=>y.wins-x.wins||y.g1-x.g1);else if(k==='fat')a.sort((x,y)=>y.fatigue-x.fatigue);return a}
@@ -375,7 +379,7 @@ function addHOF(e){try{const h=loadHOF();h.push(e);h.sort((a,b)=>b.score-a.score
 function doEnding(){const sc=endScore(),[,gr,ti]=EGR.find(x=>sc>=x[0]);G.ended={score:sc,grade:gr,title:ti,week:G.week};
  addHOF({farm:G.farm,f:C().f,mode:MODES[mode()].n,score:sc,grade:gr,title:ti,g1:G.tot.g1});save();screen='ending';render();window.scrollTo(0,0);confetti();sfx.fanfare()}
 const V_ending=()=>{const e=G.ended,t=G.tot;return `<div class="title-wrap" style="padding:20px 0 10px"><div class="mut">${C().f} ${esc(G.farm)} 목장 · 10년 커리어 종료 · ${MODES[mode()].n} 모드</div>
- <div style="font-size:56px;margin:8px 0">🏆</div><div class="disp" style="font-size:72px;color:var(--gold);line-height:1">${e.grade}</div><h1 style="font-size:28px;margin:6px 0">${e.title}</h1><div class="mut">최종 점수 ${e.score.toLocaleString()}${MODES[mode()].x>1?` (도전 보너스 ×${MODES[mode()].x})`:''}</div></div>
+ <div style="font-size:56px;margin:8px 0">🏆</div><div class="disp" style="font-size:72px;color:var(--gold);line-height:1">${e.grade}</div><h1 style="font-size:28px;margin:6px 0">${e.title}</h1><div class="mut">최종 점수 ${e.score.toLocaleString('ko-KR')}${MODES[mode()].x>1?` (도전 보너스 ×${MODES[mode()].x})`:''}</div></div>
  <div class="card"><table>${[['통산 성적',`${t.starts}전 ${t.wins}승`],['중상 / G1',`${t.g}승 / <b>${t.g1}승</b>`],['리딩 오너',`${G.leadN}회`],['연말 시상',`${G.awards||0}회`],['업적',`${Object.keys(G.ach).length}/${ACH.length}`],['최종 자금',won(G.money)],['총 획득 상금',won(t.earn)]].map(r=>`<tr><td class="mut">${r[0]}</td><td style="text-align:right">${r[1]}</td></tr>`).join('')}</table></div>
  <div class="card"><b>🐎 최고의 말</b>${[...G.horses,...G.retired].sort((a,b)=>b.g1-a.g1||b.earn-a.earn).slice(0,3).map(h=>`<div class="row" style="padding:4px 0">${coatDot(h)}<b>${esc(h.name)}</b><span class="mut">${h.wins}승 · G1 ${h.g1}승</span><span class="sp"></span>${won(h.earn)}</div>`).join('')}</div>
  <div class="row"><button class="btn ghost sp" onclick="save();screen='title';render()">타이틀로</button><button class="btn gold sp" onclick="screen='main';render()">계속 플레이 ▶</button></div>`};
@@ -798,7 +802,7 @@ FT.breed=()=>{const mares=G.retired.filter(h=>h.sex==='F'),y=Math.floor(G.week/4
  <h3>🎨 승부복</h3><div class="card"><div class="row"><span style="font-size:0">${silkSVG(G.silk,48)}</span><div class="sp mut">레이스에서 우리 기수가 입는 옷이에요.</div><button class="btn sm" onclick="ui.sheet={type:'silk',k:{...G.silk}};render()">디자인</button></div></div>`};
 FT.rec=()=>{const st=standings(),y=Math.floor(G.week/48),cy=Math.min(10,y+1);
  return `<h3>🗓️ 커리어 ${G.ended?'(엔딩 후 계속 플레이 중)':`${cy}/10년차`}</h3><div class="card"><div class="bar" style="height:10px"><i style="width:${Math.min(100,G.week/CAREER*100)}%;background:var(--gold)"></i></div>
- <div class="mut" style="margin-top:6px">${G.ended?`최종 평가 <b>${G.ended.grade}</b> · ${G.ended.title} (${G.ended.score}점)`:`10년차가 끝나면 엔딩과 최종 평가가 나와요. 현재 예상 점수 <b>${endScore().toLocaleString()}</b> (${EGR.find(x=>endScore()>=x[0])[1]})`} · ${MODES[mode()].n} 모드</div></div>
+ <div class="mut" style="margin-top:6px">${G.ended?`최종 평가 <b>${G.ended.grade}</b> · ${G.ended.title} (${G.ended.score}점)`:`10년차가 끝나면 엔딩과 최종 평가가 나와요. 현재 예상 점수 <b>${endScore().toLocaleString('ko-KR')}</b> (${EGR.find(x=>endScore()>=x[0])[1]})`} · ${MODES[mode()].n} 모드</div></div>
  <h3>🏆 ${y+1}년차 마주 순위</h3><div class="card"><table><tr><th>순위</th><th>목장</th><th>상금</th><th>승</th><th>G1</th></tr>
  ${st.map((r,i)=>`<tr class="${r.me?'me':''}"><td class="rk">${i+1}</td><td>${esc(r.n)}</td><td>${won(r.earn)}</td><td>${r.wins}</td><td>${r.g1}</td></tr>`).join('')}</table><div class="mut" style="margin-top:6px">연말에 1위는 명성 +20 · 보너스 상금, 2위는 명성 +8</div></div>
  <h3>⚔️ 라이벌 목장</h3><div class="card">${G.rv.map(r=>`<div style="padding:5px 0;border-bottom:1px dashed var(--line)">${silkSVG(r.silk,20)} <b>${esc(r.n)}</b> <span class="mut">${esc(r.owner)} · ${r.pers} · 💰${won(Math.max(0,r.money))} · 통산 ${r.tot.wins}승 · G1 ${r.tot.g1}승</span><div class="mut">${r.horses.map(h=>`${rvTag(h)}(${h.age}세 ${h.wins}승)`).join(' · ')||'보유마 없음'}</div></div>`).join('')}<div class="mut" style="margin-top:6px">🔥 = 내 말을 여러 번 이긴 숙적</div></div>
